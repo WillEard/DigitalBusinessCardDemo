@@ -6,17 +6,19 @@ const userAuth = async (req, res, next) => {
     
     if(!token) 
     {
-        return res.json({success: false, message: 'Unauthorized. Try logging in again.'});
+        return res.json({success: false, message: 'User not signed in'});
     }
         
     try {
+       
+
        const tokenDecode = jwt.verify(token, process.env.JWT_SECRET);
 
        if (tokenDecode.id)
        {
         req.body.userId = tokenDecode.id;
        }else{
-        return res.json({success: false, message: 'Unauthorized. Try logging in again.'});
+        return res.json({success: false, message: 'User not signed in'});
        }
 
        next();

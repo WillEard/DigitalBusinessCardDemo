@@ -16,6 +16,7 @@ const Hero = () => {
     getUserData();
   }, [getUserData]);
 
+
   return (
     <>
       {userData ? (
