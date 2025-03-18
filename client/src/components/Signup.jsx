@@ -11,12 +11,17 @@ import axios from 'axios';
 const SignupForm = () => {
   const navigate = useNavigate();
 
-  const { backendUrl, setIsLoggedIn, getUserData } = useContext(AppContext);
+  const { backendUrl, setIsLoggedIn, getUserData, setAuthState } =
+    useContext(AppContext);
 
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+
+  const handleStateChange = () => {
+    setAuthState('Login'); // Send new state to the context
+  };
 
   const onSubmitHandler = async (e) => {
     try {
@@ -56,7 +61,7 @@ const SignupForm = () => {
 
   return (
     //Sign Up Form
-    <Container className="rounded border border-secondaryrounded text-dark mx-auto row align-items-center col-lg-5 mt-5 pt-2 pb-3">
+    <Container className="rounded text-dark mx-auto row align-items-center col-lg-5 mt-5 pt-2 pb-3">
       <h1 className="text-center">Sign Up</h1>
       <Form onSubmit={onSubmitHandler}>
         <Form.Group className="mb-3" controlId="formName">
@@ -71,7 +76,6 @@ const SignupForm = () => {
             />
           </FloatingLabel>
         </Form.Group>
-
         <Form.Group className="mb-3" controlId="formEmail">
           <FloatingLabel
             controlId="formEmail"
@@ -88,7 +92,6 @@ const SignupForm = () => {
             />
           </FloatingLabel>
         </Form.Group>
-
         <Form.Group className="mb-3" controlId="formPassword">
           <FloatingLabel
             controlId="formPassword"
@@ -108,7 +111,6 @@ const SignupForm = () => {
             <p>We&apos;ll never share your password with anyone else.</p>
           </Form.Text>
         </Form.Group>
-
         <Form.Group
           className="mb-3 text-center"
           controlId="formConfirmPassword"
@@ -128,9 +130,15 @@ const SignupForm = () => {
             />
           </FloatingLabel>
         </Form.Group>
-        <Button className="btn mt-1" variant="primary" type="submit">
-          Submit
-        </Button>
+        <Button className="btn mt-1" variant="dark" type="submit">
+          Sign Up
+        </Button>{' '}
+        <br />
+        <Form.Text className="text-secondary">
+          <a className="" onClick={handleStateChange}>
+            Have an account? Login here
+          </a>
+        </Form.Text>
       </Form>
     </Container>
   );

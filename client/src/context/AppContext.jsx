@@ -6,12 +6,15 @@ import axios from 'axios';
 export const AppContext = createContext();
 
 export const AppContextProvider = (props) => {
+  axios.defaults.withCredentials = true;
+
   AppContextProvider.propTypes = {
     children: PropTypes.node.isRequired,
   };
+  const [authState, setAuthState] = useState('Login');
   const backendUrl = import.meta.env.VITE_BACKEND_URL;
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [userData, setuserData] = useState(false);
+  const [userData, setUserData] = useState(false);
 
   const getAuthStatus = async () => {
     try {
@@ -23,7 +26,7 @@ export const AppContextProvider = (props) => {
         toast.error('Server Error 1: ' + data.message, {
           position: 'bottom-right',
           autoClose: 3000,
-          hideProgressBar: false,
+          hideProgressBar: true,
           closeOnClick: false,
           pauseOnHover: true,
           draggable: true,
@@ -35,7 +38,7 @@ export const AppContextProvider = (props) => {
       toast.error('Exception Error: ' + error.message, {
         position: 'bottom-right',
         autoClose: 3000,
-        hideProgressBar: false,
+        hideProgressBar: true,
         closeOnClick: false,
         pauseOnHover: true,
         draggable: true,
@@ -49,8 +52,8 @@ export const AppContextProvider = (props) => {
     try {
       const { data } = await axios.get(backendUrl + '/api/user/data');
       data.success
-        ? setuserData(data)
-        : toast.error('Server Error: Cannot get user data: ' + data.message, {
+        ? setUserData(data.userData)
+        : toast.error('Server Error: ' + data.message, {
             position: 'bottom-right',
             autoClose: 3000,
             hideProgressBar: false,
@@ -74,8 +77,10 @@ export const AppContextProvider = (props) => {
     isLoggedIn,
     setIsLoggedIn,
     userData,
-    setuserData,
+    setUserData,
     getUserData,
+    authState,
+    setAuthState,
   };
   return (
     <AppContext.Provider value={value}>{props.children}</AppContext.Provider>

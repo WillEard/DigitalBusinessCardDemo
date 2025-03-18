@@ -5,16 +5,26 @@ import Footer from '../components/Footer';
 import { useState } from 'react';
 import SignupForm from '../components/Signup';
 import { Navigate } from 'react-router-dom';
+import { useContext } from 'react';
+import { AppContext } from '../context/AppContext';
 
 const Login = () => {
   // Login / Sign Up / logged in
-  const [state, setState] = useState('Log In');
+  //const [state, setState] = useState('Login');
 
+  const { authState, setAuthState, isLoggedIn } = useContext(AppContext);
+  console.log(isLoggedIn);
   return (
     <Container>
       <Navbar />
-      <>{state === 'Logged In' ? <Navigate to="/" /> : null}</>
-      <div>{state === 'Sign Up' ? <SignupForm /> : <LoginForm />}</div>
+      <>
+        {isLoggedIn ? (
+          <Navigate to="/" />
+        ) : (
+          <div>{authState === 'Sign Up' ? <SignupForm /> : <LoginForm />}</div>
+        )}
+      </>
+
       <Footer />
     </Container>
   );

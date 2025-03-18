@@ -12,10 +12,15 @@ import { toast } from 'react-toastify';
 const LoginForm = () => {
   const navigate = useNavigate();
 
-  const { backendUrl, setIsLoggedIn, getUserData } = useContext(AppContext);
+  const { backendUrl, setIsLoggedIn, getUserData, setAuthState } =
+    useContext(AppContext);
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+
+  const handleStateChange = () => {
+    setAuthState('Sign Up'); // Send new state to the context
+  };
 
   const onSubmitHandler = async (e) => {
     try {
@@ -103,17 +108,21 @@ const LoginForm = () => {
               required
             />
           </FloatingLabel>
-          <Form.Text className="text-dark">
+          <Form.Text className="text-dark lead">
             We&apos;ll never share your password with anyone else.
           </Form.Text>
           <br />
+
+          <Button className="btn btn-md mt-2 mb-2" variant="dark" type="submit">
+            Login
+          </Button>
+          <br />
           <Form.Text className="text-secondary">
-            Forgot your password?
+            <a className="" onClick={handleStateChange}>
+              New? Create an account here
+            </a>
           </Form.Text>
         </Form.Group>
-        <Button className="btn btn-md" variant="dark" type="submit">
-          Login
-        </Button>
       </Form>
     </Container>
   );

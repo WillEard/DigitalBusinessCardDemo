@@ -14,8 +14,7 @@ const Hero = () => {
 
   useEffect(() => {
     getUserData();
-  }, [getUserData]);
-
+  }, []);
 
   return (
     <>
@@ -24,7 +23,7 @@ const Hero = () => {
           data-bs-theme="dark"
           className="mt-3 mb-5 p-4 shadow-4 rounded-3 bg-body-tertiary text-light"
         >
-          <h2>Hey {userData ? userData.name : null}!</h2>
+          <h2>Hey {userData.name}, </h2>
           <h4 className="display-6">Here is an overview for today.</h4>
           <hr />
           <Row className="m-auto">

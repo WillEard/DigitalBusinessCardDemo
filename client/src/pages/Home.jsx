@@ -7,16 +7,15 @@ import Hero from '../components/Hero';
 
 const Home = () => {
   return (
-    <>
+    <div style={{ backgroundColor: '#F5F5F5' }}>
       <Container>
         <Navbar />
 
-        {/* Only show if user is authenticated*/}
         <Hero />
 
         <Footer />
       </Container>
-    </>
+    </div>
   );
 };
 

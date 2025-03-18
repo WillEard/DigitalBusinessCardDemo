@@ -4,6 +4,8 @@ import userModel from '../models/userModel.js';
 import transporter from '../config/nodemailer.js';
 import date from 'date-and-time';
 
+import { EMAIL_VERIFY_TEMPLATE, PASSWIRD_RESET_TEMPLATE } from '../config/emailTemplates.js';
+
 // Registration
 export const register = async (req, res) => {
     const {name, email, password} = req.body;
@@ -127,7 +129,8 @@ export const sendVerifyOtp = async (req, res) => {
         from: process.env.SENDER_EMAIL,
         to: user.email,
         subject: "Verify your email",
-        text: `Verify your email using the following code: ${otp} `,
+        //text: `Verify your email using the following code: ${otp}`, 
+        html: EMAIL_VERIFY_TEMPLATE.replace("{{otp}}", otp).replace("{{email}}", user.email)
        };
 
        await transporter.sendMail(mailOptions);
@@ -215,7 +218,8 @@ export const sendResetOTP = async (req, res) => {
             from: process.env.SENDER_EMAIL,
             to: user.email,
             subject: "Password Reset",
-            text: `Reset your password by using the code: ${otp}. It will expire after 15 minutes.`,
+            //text: `Reset your password by using the code: ${otp}. It will expire after 15 minutes.`,
+            html: PASSWIRD_RESET_TEMPLATE.replace("{{otp}}", otp).replace("{{email}}", user.email)
         };
 
         await transporter.sendMail(mailOptions);

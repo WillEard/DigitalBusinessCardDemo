@@ -6,6 +6,7 @@ import VerifyEmail from './pages/VerifyEmail';
 import ResetPass from './pages/ResetPass';
 import NotFound from './pages/NotFound';
 import Intake from './pages/Intake';
+import Settings from './pages/Settings';
 import { ToastContainer } from 'react-toastify';
 
 const App = () => {
@@ -18,6 +19,7 @@ const App = () => {
         <Route path="/intake" element={<Intake />} />
         <Route path="/verify-email" element={<VerifyEmail />} />
         <Route path="/reset-pass" element={<ResetPass />} />
+        <Route path="/settings" element={<Settings />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </div>

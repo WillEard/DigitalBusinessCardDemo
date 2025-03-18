@@ -5,12 +5,44 @@ import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import { useNavigate } from 'react-router-dom';
 import { AppContext } from '../context/AppContext';
+import axios from 'axios';
+import { toast } from 'react-toastify';
 
 const Navigation = () => {
   const navigate = useNavigate();
 
   const { userData, backendUrl, setUserData, setIsLoggedIn } =
     useContext(AppContext);
+
+  const sendVerifyOTP = async () => {
+    try {
+      axios.defaults.withCredentials = true;
+      const { data } = await axios.post(
+        backendUrl + '/api/auth/send-verify-otp'
+      );
+
+      if (data.success) {
+        navigate('/verify-email');
+        toast.success(data.message);
+      } else {
+        toast.error(data.message);
+      }
+    } catch (error) {
+      toast.error(error.message);
+    }
+  };
+
+  const logout = async () => {
+    try {
+      axios.defaults.withCredentials = true;
+      const { data } = await axios.post(backendUrl + '/api/auth/logout');
+      data.success && setIsLoggedIn(false);
+      data.success && setUserData(false);
+      navigate('/');
+    } catch (error) {
+      toast.error(error.message);
+    }
+  };
 
   return (
     <Navbar
@@ -22,7 +54,7 @@ const Navigation = () => {
       className="bg-body-tertiary rounded-bottom m-auto shadow-sm "
     >
       <Container>
-        <Navbar.Brand href="/">Fitness App</Navbar.Brand>
+        <Navbar.Brand href="/">Health Bot </Navbar.Brand>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="justify-content-center mx-auto">
@@ -33,35 +65,42 @@ const Navigation = () => {
             <Nav.Link href="/workouts">Workouts</Nav.Link>
           </Nav>
           <Nav>
-            <NavDropdown title="More" id="collapsible-nav-dropdown">
-              <NavDropdown.Item href="/settings">Settings</NavDropdown.Item>
-              <NavDropdown.Item href="/fitness-plus">
-                Fitness Friend+
-              </NavDropdown.Item>
-              <NavDropdown.Divider />
-              {userData ? (
-                <NavDropdown.Item
-                  onClick={() => navigate('/logout')}
-                  eventKey={2}
-                  className="fw-bold"
-                >
-                  Logout
-                </NavDropdown.Item>
-              ) : (
-                <NavDropdown.Item
-                  onClick={() => navigate('/Authenticate')}
-                  eventKey={2}
-                  className="fw-bold"
-                >
-                  Login
-                </NavDropdown.Item>
-              )}
-            </NavDropdown>
             {userData ? (
-              <Nav.Link href="/profile" className="fw-bold">
-                {userData.name}
+              <>
+                <NavDropdown title="Account" id="collapsible-nav-dropdown">
+                  <NavDropdown.Item href="/settings">Settings</NavDropdown.Item>
+                  <NavDropdown.Item href="/fitness-plus">
+                    Fitness Friend+
+                  </NavDropdown.Item>
+                  {!userData.isVerified ? (
+                    <NavDropdown.Item onClick={sendVerifyOTP}>
+                      Verify Account
+                    </NavDropdown.Item>
+                  ) : (
+                    <NavDropdown.Item disabled>Verified</NavDropdown.Item>
+                  )}
+
+                  <NavDropdown.Divider />
+                  <NavDropdown.Item
+                    onClick={logout}
+                    eventKey={2}
+                    className="fw-bold"
+                  >
+                    Logout
+                  </NavDropdown.Item>
+                </NavDropdown>
+                <Nav.Link
+                  href="/profile"
+                  className="fw-bold border rounded border-light"
+                >
+                  {userData.name[0].toUpperCase()}
+                </Nav.Link>
+              </>
+            ) : (
+              <Nav.Link href="/Authenticate" className="fw-bold">
+                Login
               </Nav.Link>
-            ) : null}
+            )}
           </Nav>
         </Navbar.Collapse>
       </Container>
