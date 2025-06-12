@@ -1,6 +1,7 @@
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken'; 
 import userModel from '../models/userModel.js';
+import cvModel from '../models/cvModel.js';
 import transporter from '../config/nodemailer.js';
 import date from 'date-and-time';
 
@@ -8,9 +9,9 @@ import { EMAIL_VERIFY_TEMPLATE, PASSWIRD_RESET_TEMPLATE } from '../config/emailT
 
 // Registration
 export const register = async (req, res) => {
-    const {name, email, password} = req.body;
+    const {name, email, password, phoneNumber, education, experience, skills, certifications, projects, languages, hobbies, achievements} = req.body;
 
-    if (!name || !email || !password)
+    if (!name || !email || !password || !phoneNumber)
     {
         return res.status(400).json({message: "Please fill in all fields"});
     }
@@ -25,9 +26,13 @@ export const register = async (req, res) => {
         
         const hashedPW = await bcrypt.hash(password, 10);
 
-        const user = new userModel({name, email, password: hashedPW});
-
+        const user = new userModel({name, email, password: hashedPW, phoneNumber});
         await user.save();
+
+        const cv = new cvModel({ user_id: user._id, education, experience, skills, certifications, projects, languages, hobbies, achievements});
+        await cv.save();
+
+
 
         const token = jwt.sign({id: user._id}, process.env.JWT_SECRET, {expiresIn: '7d'});
 
@@ -57,6 +62,13 @@ export const register = async (req, res) => {
 
     } catch (error) {
         return res.json({success: false, message: error.message});
+    }
+
+    try {
+        
+
+    } catch (error) {
+        
     }
 }
 

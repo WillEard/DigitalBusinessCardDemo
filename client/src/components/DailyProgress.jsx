@@ -1,6 +1,6 @@
 import Container from 'react-bootstrap/esm/Container';
 import ProgressBar from 'react-bootstrap/ProgressBar';
-import IntakeModal from './IntakeModal';
+import CVModal from './CVModal';
 
 const DailyProgressBar = () => {
   return (

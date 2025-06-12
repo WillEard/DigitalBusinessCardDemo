@@ -54,24 +54,19 @@ const Navigation = () => {
       className="bg-body-tertiary rounded-bottom m-auto shadow-sm "
     >
       <Container>
-        <Navbar.Brand href="/">Health Bot </Navbar.Brand>
+        <Navbar.Brand href="/">DigiCard Prototype</Navbar.Brand>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="justify-content-center mx-auto">
             <Nav.Link href="/">Home</Nav.Link>
-            <Nav.Link href="/intake">Intake</Nav.Link>
-            <Nav.Link href="/meals">Meals</Nav.Link>
-            <Nav.Link href="/nutrition">Nutrition</Nav.Link>
-            <Nav.Link href="/workouts">Workouts</Nav.Link>
+            <Nav.Link href="/profile">Profile</Nav.Link>
           </Nav>
           <Nav>
             {userData ? (
               <>
                 <NavDropdown title="Account" id="collapsible-nav-dropdown">
                   <NavDropdown.Item href="/settings">Settings</NavDropdown.Item>
-                  <NavDropdown.Item href="/fitness-plus">
-                    Fitness Friend+
-                  </NavDropdown.Item>
+                  
                   {!userData.isVerified ? (
                     <NavDropdown.Item onClick={sendVerifyOTP}>
                       Verify Account

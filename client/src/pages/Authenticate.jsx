@@ -13,7 +13,7 @@ const Login = () => {
   //const [state, setState] = useState('Login');
 
   const { authState, setAuthState, isLoggedIn } = useContext(AppContext);
-  console.log(isLoggedIn);
+  //console.log(isLoggedIn);
   return (
     <Container>
       <Navbar />
