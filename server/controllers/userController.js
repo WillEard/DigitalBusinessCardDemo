@@ -1,7 +1,7 @@
 import userModel from '../models/userModel.js';
-import { isAuthenticated } from "./authController.js";
+// Removed unused isAuthenticated import
 
-export const getUserData = async (req, res) => { 
+const getUserData = async (req, res) => { 
     try {
          const {userId} = req.body;
 
@@ -14,9 +14,13 @@ export const getUserData = async (req, res) => {
          res.json({success: true, userData: {
             name: user.name,
             isVerified: user.isVerified,
+            email: user.email,
+            phoneNumber: user.phoneNumber
          }});
 
     } catch (error) {
         res.json({success: false, message: error.message});
     }
 }
+
+export { getUserData };

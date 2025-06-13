@@ -279,3 +279,34 @@ export const resetPassword = async (req, res) => {
         return res.json({success: false, message: error.message});
     }
 }
+
+export const saveCV = async (req, res) => {
+    const {userId, education, experience, skills, certifications, projects, languages, hobbies, achievements} = req.body;
+
+    if (!userId) {
+        return res.json({success: false, message: "User ID is required"});
+    }
+
+    try {
+        const cv = await cvModel.findOne({user_id: userId});
+
+        if (!cv) {
+            return res.json({success: false, message: "CV not found for this user"});
+        }
+
+        cv.education = education;
+        cv.experience = experience;
+        cv.skills = skills;
+        cv.certifications = certifications;
+        cv.projects = projects;
+        cv.languages = languages;
+        cv.hobbies = hobbies;
+        cv.achievements = achievements;
+
+        await cv.save();
+
+        return res.json({success: true, message: "CV saved successfully"});
+    } catch (error) {
+        return res.json({success: false, message: error.message});
+    }
+}

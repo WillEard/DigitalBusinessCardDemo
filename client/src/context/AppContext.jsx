@@ -68,6 +68,28 @@ export const AppContextProvider = (props) => {
     }
   };
 
+  const getOtherUserData = async (userId) => {
+    try {
+      const { data } = await axios.get(`${backendUrl}/api/user/${userId}`);
+      if (data.success) {
+        return data.userData; // Return the other user's data
+      } else {
+        toast.error('Server Error: ' + data.message, {
+          position: 'bottom-right',
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: false,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: 'dark',
+        });
+      }
+    } catch (error) {
+      toast.error(error.message);
+    }
+  };
+
   useEffect(() => {
     getAuthStatus();
   }, []);
@@ -79,6 +101,7 @@ export const AppContextProvider = (props) => {
     userData,
     setUserData,
     getUserData,
+    getOtherUserData,
     authState,
     setAuthState,
   };

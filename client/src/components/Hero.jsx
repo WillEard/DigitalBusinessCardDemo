@@ -8,11 +8,15 @@ import { AppContext } from '../context/AppContext';
 import Button from 'react-bootstrap/esm/Button';
 import QRCode from "react-qr-code";
 import CVModal from './CVModal';
+import ListGroup from 'react-bootstrap/ListGroup';
+
 
 const Hero = () => {
   const percentage = 66;
 
   const { userData, getUserData } = useContext(AppContext);
+
+  const profileUrl = `/users/WillEard`;
 
   useEffect(() => {
     getUserData();
@@ -21,6 +25,7 @@ const Hero = () => {
   return (
     <>
       {userData ? (
+        <>
         <Container
           data-bs-theme="dark"
           className="mt-3 mb-5 p-4 shadow-4 rounded-3 bg-body-tertiary text-light"
@@ -34,22 +39,38 @@ const Hero = () => {
                 <QRCode
                   size={128}
                   style={{ height: "auto", maxWidth: "100%", width: "100%" }}
-                  value={"www.google.com"}
+                  value={profileUrl}
                   viewBox={`0 0 256 256`}
                 />
               </div>
-          </Col>
-          <Col className='col-12 col-md-6 col-lg-6'>
-            <CVModal/>
-            <hr />
-            <p>Share your QR code amongst others to show your CV & skills.</p>
-          </Col>
-
-          
-
-          
+            </Col>
+            <Col className='col-12 col-md-6 col-lg-6'>
+              <CVModal/>
+              <hr />
+              <p>Share your QR code amongst others to show your CV & skills.</p>
+            </Col>
           </Row>
         </Container>
+        <Container data-bs-theme="dark"
+          className="mt-3 mb-5 p-4 shadow-4 rounded-3 bg-body-tertiary text-light">
+          <h4 className="display-6">ToDo.</h4>
+
+        <ListGroup className="w-75" as="ol" numbered>
+            <h4>MUST WORK</h4>
+            <ListGroup.Item as="li">Rework backend to account for requesting OTHER user's data and not just logged in user.</ListGroup.Item>
+            <ListGroup.Item as="li">Alter backend API endpoint to allow profile/:id requests, allows for linking to a specific users information.</ListGroup.Item>
+            <ListGroup.Item as="li">Generate QR code that links directly to user / also ability to scan another users QR.</ListGroup.Item>
+            <ListGroup.Item as="li">Saveable CV information.</ListGroup.Item>
+            <hr />
+            <h4>SHOULD WORK</h4>
+            <ListGroup.Item as="li">Perfeclty Responsive with correct sizing in forms.</ListGroup.Item>
+            <hr />
+            <h4>COULD WORK</h4>
+            <ListGroup.Item as="li">Free/Premium subscription system with added features.</ListGroup.Item>
+        </ListGroup>
+
+        </Container>
+        </>
       ) : (
         <Container className="container text-sm-center p-5 bg-light mt-4 bg-dark text-light rounded">
           <h1>Join Digicard Today</h1>

@@ -84,6 +84,7 @@ const Navigation = () => {
                     Logout
                   </NavDropdown.Item>
                 </NavDropdown>
+                
                 <Nav.Link
                   href="/profile"
                   className="fw-bold border rounded border-light"
