@@ -15,6 +15,7 @@ const SignupForm = () => {
     useContext(AppContext);
 
   const [name, setName] = useState('');
+  const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
@@ -31,6 +32,7 @@ const SignupForm = () => {
 
       const { data } = await axios.post(backendUrl + '/api/auth/register', {
         name,
+        username,
         email,
         password,
       });
@@ -72,6 +74,18 @@ const SignupForm = () => {
               value={name}
               type="text"
               placeholder="Enter name"
+              required
+            />
+          </FloatingLabel>
+        </Form.Group>
+        <Form.Group className="mb-3" controlId="formUsername">
+          <FloatingLabel controlId="formUsername" label="Username" className="mb-3">
+            {' '}
+            <Form.Control
+              onChange={(e) => setUsername(e.target.value)}
+              value={username}
+              type="text"
+              placeholder="Enter username"
               required
             />
           </FloatingLabel>

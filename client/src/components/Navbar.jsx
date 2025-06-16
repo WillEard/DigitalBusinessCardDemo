@@ -59,13 +59,13 @@ const Navigation = () => {
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="justify-content-center mx-auto">
             <Nav.Link href="/">Home</Nav.Link>
-            <Nav.Link href="/profile">Profile</Nav.Link>
+            <Nav.Link href="/account">Account</Nav.Link>
           </Nav>
           <Nav>
             {userData ? (
               <>
                 <NavDropdown title="Account" id="collapsible-nav-dropdown">
-                  <NavDropdown.Item href="/settings">Settings</NavDropdown.Item>
+                  <NavDropdown.Item href="/account">Account</NavDropdown.Item>
                   
                   {!userData.isVerified ? (
                     <NavDropdown.Item onClick={sendVerifyOTP}>

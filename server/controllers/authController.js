@@ -9,9 +9,9 @@ import { EMAIL_VERIFY_TEMPLATE, PASSWIRD_RESET_TEMPLATE } from '../config/emailT
 
 // Registration
 export const register = async (req, res) => {
-    const {name, email, password, phoneNumber, education, experience, skills, certifications, projects, languages, hobbies, achievements} = req.body;
+    const {name, username, email, password, phoneNumber, education, experience, skills, certifications, projects, languages, hobbies, achievements} = req.body;
 
-    if (!name || !email || !password || !phoneNumber)
+    if (!name || !email || !password || !username)
     {
         return res.status(400).json({message: "Please fill in all fields"});
     }
@@ -26,7 +26,7 @@ export const register = async (req, res) => {
         
         const hashedPW = await bcrypt.hash(password, 10);
 
-        const user = new userModel({name, email, password: hashedPW, phoneNumber});
+        const user = new userModel({name, username, email, password: hashedPW, phoneNumber});
         await user.save();
 
         const cv = new cvModel({ user_id: user._id, education, experience, skills, certifications, projects, languages, hobbies, achievements});

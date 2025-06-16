@@ -29,11 +29,12 @@ const Settings = () => {
         {/*PROFILE TAB*/}
         <Tab eventKey="daily" title="Profile" className="fw-bold">
           <Row className="justify-content-center">
-            <Col className="col-4">
+            <Col className="col-lg-3 col-sm-5">
               <Form.Group className="mb-3">
                 <Form.Label>Name</Form.Label>
                 <Form.Control placeholder={userData.name} disabled />
               </Form.Group>
+              
               {/*}
               <Form.Label>HealthBot+ Membership</Form.Label>
               <InputGroup className="mb-3">
@@ -49,7 +50,13 @@ const Settings = () => {
               </InputGroup>
               */}
             </Col>
-            <Col className="col-4">
+            <Col className='col-lg-3 col-sm-5'>
+              <Form.Group className="mb-3">
+                <Form.Label>Username</Form.Label>
+                <Form.Control placeholder={userData.username} disabled />
+              </Form.Group>
+            </Col>
+            <Col className="col-lg-3 col-sm-5">
               <Form.Group className="mb-3">
                 <Form.Label>Email Address</Form.Label>
                 <Form.Control placeholder={userData.email} disabled />

@@ -5,6 +5,7 @@ import cookieParser from 'cookie-parser';
 import connectDB from './config/mongodb.js';
 import authRouter from './routes/authRoutes.js';
 import userRouter from './routes/userRoutes.js';
+import cvRouter from './routes/cvRoutes.js';
 
 const app = express();
 const PORT = process.env.PORT || 4000;
@@ -22,6 +23,7 @@ app.get('/', (req, res) => res.send("API successfully working."));
 
 app.use('/api/auth', authRouter);
 app.use('/api/user', userRouter); 
+app.use('/api/cv', cvRouter);
 
 app.listen(PORT, (err) =>
     err

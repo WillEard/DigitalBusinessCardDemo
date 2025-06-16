@@ -18,8 +18,8 @@ const App = () => {
         <Route path="/Authenticate" element={<Login />} />
         <Route path="/verify-email" element={<VerifyEmail />} />
         <Route path="/reset-pass" element={<ResetPass />} />
-        <Route path="/settings" element={<Settings />} />
-        <Route path="/cv/:username" element={<CV />} />
+        <Route path="/account" element={<Settings />} />
+        <Route path="/cv/:username" element={<CV />} /> 
         <Route path="*" element={<NotFound />} />
       </Routes>
     </div>

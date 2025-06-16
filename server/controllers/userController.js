@@ -13,6 +13,7 @@ const getUserData = async (req, res) => {
 
          res.json({success: true, userData: {
             name: user.name,
+            username: user.username,
             isVerified: user.isVerified,
             email: user.email,
             phoneNumber: user.phoneNumber

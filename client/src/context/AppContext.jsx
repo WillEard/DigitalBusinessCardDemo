@@ -11,11 +11,14 @@ export const AppContextProvider = (props) => {
   AppContextProvider.propTypes = {
     children: PropTypes.node.isRequired,
   };
+
   const [authState, setAuthState] = useState('Login');
   const backendUrl = import.meta.env.VITE_BACKEND_URL;
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userData, setUserData] = useState(false);
+  const [cvData, setCVData] = useState(false);
 
+  
   const getAuthStatus = async () => {
     try {
       const { data } = await axios.get(backendUrl + '/api/auth/is-Auth');
@@ -68,25 +71,23 @@ export const AppContextProvider = (props) => {
     }
   };
 
-  const getOtherUserData = async (userId) => {
+  const getCVData = async (username) => {
+    
+
+    if (!username) {
+      console.warn('Username undefined in getCVData, skipping fetch');
+      return;
+    }
     try {
-      const { data } = await axios.get(`${backendUrl}/api/user/${userId}`);
-      if (data.success) {
-        return data.userData; // Return the other user's data
+      const { data } = await axios.get(`${backendUrl}/api/cv/${username}`);
+      // Backend returns raw CV data (not wrapped in { success: true, cvData: ... })
+      if (data) {
+        setCVData(data);
       } else {
-        toast.error('Server Error: ' + data.message, {
-          position: 'bottom-right',
-          autoClose: 3000,
-          hideProgressBar: false,
-          closeOnClick: false,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: 'dark',
-        });
+        toast.error('No CV data found');
       }
     } catch (error) {
-      toast.error(error.message);
+      toast.error(error.response?.data?.message || error.message);
     }
   };
 
@@ -99,9 +100,11 @@ export const AppContextProvider = (props) => {
     isLoggedIn,
     setIsLoggedIn,
     userData,
+    cvData,
     setUserData,
     getUserData,
-    getOtherUserData,
+    getCVData,
+    setCVData,
     authState,
     setAuthState,
   };
