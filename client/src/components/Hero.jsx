@@ -7,12 +7,17 @@ import { AppContext } from '../context/AppContext';
 import Button from 'react-bootstrap/esm/Button';
 import QRCode from "react-qr-code";
 import ListGroup from 'react-bootstrap/ListGroup';
+import { useNavigate } from 'react-router-dom';
 
 
 const Hero = () => {
   const { userData, getUserData } = useContext(AppContext);
+  const navigate = useNavigate();
 
-  const profileUrl = `/users/WillEard`;
+  const profileUrl = `/cv/${userData.username}`;
+
+
+
 
   useEffect(() => {
     getUserData();
@@ -41,7 +46,7 @@ const Hero = () => {
             </Col>
             <Col className='col-12 col-md-6 col-lg-8'>
                 <h4 className='fw-bold'>Share your QR code amongst others to show your CV & skills.</h4>
-                <Button>Add to Apple Wallet</Button><Button className='mx-2'>Add to Android Wallet</Button><Button>Copy to clipboard</Button>
+                <Button>Copy to clipboard</Button>
             </Col>
           </Row>
         </Container>
@@ -51,8 +56,7 @@ const Hero = () => {
 
         <ListGroup className="w-75" as="ol" numbered>
             <h4>MUST WORK</h4>
-            <ListGroup.Item as="li">Generate QR code that links directly to user / also ability to scan another users QR.</ListGroup.Item>
-            <ListGroup.Item as="li">Saveable CV information.</ListGroup.Item>
+            <ListGroup.Item as="li">ALL DONE</ListGroup.Item>
             <hr />
             <h4>SHOULD WORK</h4>
             <ListGroup.Item as="li">Perfeclty Responsive with correct sizing in forms.</ListGroup.Item>
@@ -68,8 +72,8 @@ const Hero = () => {
           <h1>Join Digicard Today</h1>
           <p className="lead">The all in one app to fuel your career.</p>
           <div className="btn-group">
-            <Button>SignUp</Button>
-            <Button className="btn-secondary">Login</Button>
+            <Button onClick={() => navigate('/Authenticate', { state: { authState: 'SignUp' } })}>SignUp</Button>
+            <Button onClick={() => navigate('/Authenticate', { state: { authState: 'Login' } })} className="btn-secondary">Login</Button>
           </div>
         </Container>
       )}

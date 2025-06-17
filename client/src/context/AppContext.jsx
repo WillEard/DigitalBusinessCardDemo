@@ -12,7 +12,7 @@ export const AppContextProvider = (props) => {
     children: PropTypes.node.isRequired,
   };
 
-  const [authState, setAuthState] = useState('Login');
+  const [authState, setAuthState] = useState('login');
   const backendUrl = import.meta.env.VITE_BACKEND_URL;
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userData, setUserData] = useState(false);
@@ -72,8 +72,7 @@ export const AppContextProvider = (props) => {
   };
 
   const getCVData = async (username) => {
-    
-
+  
     if (!username) {
       console.warn('Username undefined in getCVData, skipping fetch');
       return;
@@ -90,6 +89,8 @@ export const AppContextProvider = (props) => {
       toast.error(error.response?.data?.message || error.message);
     }
   };
+
+  
 
   useEffect(() => {
     getAuthStatus();

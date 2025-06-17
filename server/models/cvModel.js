@@ -13,6 +13,5 @@ const cvSchema = new mongoose.Schema({
     achievements: {type: String, default: 'Add your achievements here'},
 });
   
-const cvModel = mongoose.models.cv || mongoose.model('cv', cvSchema);
-
-export default cvModel;
+const CV = mongoose.models.CV || mongoose.model('CV', cvSchema);
+export default CV;

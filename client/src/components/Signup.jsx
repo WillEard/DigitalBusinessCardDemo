@@ -19,6 +19,7 @@ const SignupForm = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('');
 
   const handleStateChange = () => {
     setAuthState('Login'); // Send new state to the context
@@ -35,6 +36,7 @@ const SignupForm = () => {
         username,
         email,
         password,
+        phoneNumber
       });
 
       if (data.success) {
@@ -102,6 +104,22 @@ const SignupForm = () => {
               value={email}
               type="email"
               placeholder="Enter email"
+              required
+            />
+          </FloatingLabel>
+        </Form.Group>
+        <Form.Group className="mb-3" controlId="formPhoneNumber">
+          <FloatingLabel
+            controlId="formPhoneNumber"
+            label="Phone Number"
+            className="mb-3"
+          >
+            {' '}
+            <Form.Control
+              onChange={(e) => setPhoneNumber(e.target.value)}
+              value={phoneNumber}
+              type="number"
+              placeholder="Enter phone number"
               required
             />
           </FloatingLabel>

@@ -5,15 +5,28 @@ import Footer from '../components/Footer';
 import { useState } from 'react';
 import SignupForm from '../components/Signup';
 import { Navigate } from 'react-router-dom';
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import { AppContext } from '../context/AppContext';
+import { useLocation } from 'react-router-dom';
 
 const Login = () => {
   // Login / Sign Up / logged in
-  //const [state, setState] = useState('Login');
 
-  const { authState, setAuthState, isLoggedIn } = useContext(AppContext);
-  //console.log(isLoggedIn);
+  const location = useLocation();
+  const {isLoggedIn } = useContext(AppContext);
+  const navAuthState = location.state?.authState;
+  const [authState, setAuthState] = useState(navAuthState || 'Login');
+
+  useEffect(() => {
+    if (navAuthState) {
+      setAuthState(navAuthState);
+    }
+  }, [navAuthState]);
+
+  if (isLoggedIn) {
+    return <Navigate to="/" />;
+  }
+
   return (
     <Container>
       <Navbar />
@@ -21,7 +34,7 @@ const Login = () => {
         {isLoggedIn ? (
           <Navigate to="/" />
         ) : (
-          <div>{authState === 'Sign Up' ? <SignupForm /> : <LoginForm />}</div>
+          <div>{authState === 'SignUp' ? <SignupForm /> : <LoginForm />}</div>
         )}
       </>
 
