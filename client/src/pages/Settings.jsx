@@ -13,6 +13,8 @@ import { AppContext } from '../context/AppContext';
 import { Toast } from 'bootstrap';
 import { toast } from 'react-toastify';
 import axios from 'axios';
+import CircumIcon from "@klarr-agency/circum-icons-react"; // React
+
 
 const Settings = () => {
   const navigate = useNavigate();
@@ -88,7 +90,10 @@ const Settings = () => {
     <Container style={{ backgroundColor: '#D3D3D3' }}>
       <Navbar />
       <br />
-      <h1 className="text-start">Account</h1>
+      <div className="d-flex align-items-center">
+        <h1 className="text-start mb-0">Account</h1>
+        <CircumIcon name="user" style={{ marginLeft: '0.5rem' }} />
+      </div>
       <Tabs
         defaultActiveKey="daily"
         id="justify-tab-example"
@@ -97,9 +102,11 @@ const Settings = () => {
       >
         {/*PROFILE TAB*/}
         <Tab eventKey="daily" title="Profile" className="fw-bold">
+
           <Row className="justify-content-center">
             <Col className="col-lg-3 col-sm-5">
               <Form.Group className="mb-3">
+                
                 <Form.Label>Name</Form.Label>
                 <Form.Control placeholder={userData.name} disabled />
               </Form.Group>
@@ -133,7 +140,11 @@ const Settings = () => {
             </Col>
           </Row>
           <hr />
-          <h1>CV / Resume</h1>
+          <div className="d-flex align-items-center">
+            <h1 className="text-start mb-0">Account</h1>
+            <CircumIcon name="file_on" style={{ marginLeft: '0.5rem' }}/>
+          </div>
+
           <Row className='justify-content-center p-3'>
             <Col className='col-lg-6 col-sm-8'>
               <Form>

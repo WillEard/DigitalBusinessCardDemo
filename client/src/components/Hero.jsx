@@ -8,6 +8,7 @@ import Button from 'react-bootstrap/esm/Button';
 import QRCode from "react-qr-code";
 import ListGroup from 'react-bootstrap/ListGroup';
 import { useNavigate } from 'react-router-dom';
+import CircumIcon from "@klarr-agency/circum-icons-react"; // React
 
 
 const Hero = () => {
@@ -26,30 +27,50 @@ const Hero = () => {
   return (
     <>
       {userData ? (
-        <>
-        <Container
-          data-bs-theme="dark"
-          className="mt-3 mb-5 p-4 shadow-4 rounded-3 bg-body-tertiary text-light"
-        >
-          <h2>Hey {userData.name}, </h2>
-          <hr />
-          <Row className="">
-            <Col className='col-12 col-md-6 col-lg-2'>
-              <div style={{ height: "auto", margin: "", maxWidth: 196, width: "100%" }}>
-                <QRCode
-                  size={128}
-                  style={{ height: "auto", maxWidth: "100%", width: "100%" }}
-                  value={profileUrl}
-                  viewBox={`0 0 256 256`}
-                />
-              </div>
-            </Col>
-            <Col className='col-12 col-md-6 col-lg-8'>
-                <h4 className='fw-bold'>Share your QR code amongst others to show your CV & skills.</h4>
-                <Button>Copy to clipboard</Button>
-            </Col>
-          </Row>
-        </Container>
+      <>
+      <Container data-bs-theme="dark" className="mt-3 mb-3 p-4 shadow-4 rounded-3 bg-body-tertiary text-light">
+        <h2>Hey {userData.name}, </h2>
+      </Container>
+      <Row className="align-items-stretch">
+  {/* QR Code Column */}
+  <Col xs={12} md="auto" className="d-flex justify-content-center">
+    <div
+      data-bs-theme="dark"
+      style={{
+        width: 196,
+        height: 196,
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+      className="bg-body-tertiary mt-3 mb-3 p-4 shadow-4 rounded-3 text-light"
+    >
+      <QRCode
+        size={128}
+        style={{ height: "auto", maxWidth: "100%", width: "100%" }}
+        value={profileUrl}
+        viewBox="0 0 256 256"
+      />
+      
+    </div>
+  </Col>
+
+  {/* Text & Button Column */}
+  <Col xs={12} md className="d-flex">
+    <div
+      data-bs-theme="dark"
+      className="w-100 mt-3 mb-3 p-4 shadow-4 rounded-3 bg-body-tertiary text-light d-flex flex-column justify-content-between"
+    >
+      <h3 className="fw-bold">
+      <CircumIcon name="circle_chev_left"/>
+      Share your Digital Business Card
+      </h3>
+      <div className="mt-auto">
+        <Button>Copy to clipboard</Button>
+      </div>
+    </div>
+  </Col>
+</Row>
         <Container data-bs-theme="dark"
           className="mt-3 mb-5 p-4 shadow-4 rounded-3 bg-body-tertiary text-light">
           <h4 className="display-6">ToDo.</h4>
