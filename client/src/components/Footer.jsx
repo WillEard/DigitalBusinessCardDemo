@@ -5,7 +5,7 @@ import Nav from 'react-bootstrap/Nav';
 const Footer = () => {
   return (
     <Navbar
-      fixed="bottom"
+      
       bg="dark"
       data-bs-theme="dark"
       collapseOnSelect

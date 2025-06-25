@@ -4,6 +4,11 @@ import Footer from '../components/Footer';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import Hero from '../components/Hero';
+import Pricing from '../components/Pricing';
+import HomeContent from '../components/HomeContent';
+import { useNavigate } from 'react-router-dom';
+import PricingContainer from '../components/Pricing';
+
 
 const Home = () => {
   return (
@@ -12,6 +17,8 @@ const Home = () => {
         <Navbar />
 
         <Hero />
+        <HomeContent />
+        <Pricing />
 
         <Footer />
       </Container>

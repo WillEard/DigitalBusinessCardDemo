@@ -1,14 +1,14 @@
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import 'react-circular-progressbar/dist/styles.css';
+import Button from 'react-bootstrap/esm/Button';
+import { OverlayTrigger, Tooltip } from 'react-bootstrap';
+
 import { useContext, useEffect } from 'react';
 import { AppContext } from '../context/AppContext';
-import Button from 'react-bootstrap/esm/Button';
-import QRCode from "react-qr-code";
-import ListGroup from 'react-bootstrap/ListGroup';
 import { useNavigate } from 'react-router-dom';
-import CircumIcon from "@klarr-agency/circum-icons-react"; // React
+
+import QRCode from "react-qr-code";
 
 
 const Hero = () => {
@@ -16,9 +16,7 @@ const Hero = () => {
   const navigate = useNavigate();
 
   const profileUrl = `/cv/${userData.username}`;
-
-
-
+  const homeUrl = '/';
 
   useEffect(() => {
     getUserData();
@@ -26,79 +24,91 @@ const Hero = () => {
 
   return (
     <>
-      {userData ? (
-      <>
-      <Container data-bs-theme="dark" className="mt-3 mb-3 p-4 shadow-4 rounded-3 bg-body-tertiary text-light">
-        <h2>Hey {userData.name}, </h2>
-      </Container>
-      <Row className="align-items-stretch">
-  {/* QR Code Column */}
-  <Col xs={12} md="auto" className="d-flex justify-content-center">
-    <div
-      data-bs-theme="dark"
-      style={{
-        width: 196,
-        height: 196,
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-      }}
-      className="bg-body-tertiary mt-3 mb-3 p-4 shadow-4 rounded-3 text-light"
-    >
-      <QRCode
-        size={128}
-        style={{ height: "auto", maxWidth: "100%", width: "100%" }}
-        value={profileUrl}
-        viewBox="0 0 256 256"
-      />
+  {userData ? (
+    <>
+      <div className="bg-light py-5 text-dark">
+  <Container>
+    <Row className="align-items-center d-none d-md-flex">
+      {/* Desktop layout */}
+      <Col md={6} className="mb-4 mb-md-0">
+        <h1 className="display-4 fw-bold">Hey {userData.name?.split(' ')[0]},</h1>
+        <p className="lead mt-3">
+          You’re all set. Start sharing your QR to get noticed, connect faster, and stay professional on the go.
+        </p>
+        <div className="d-flex gap-3 mt-4">
+          <Button variant="primary" size="lg" onClick={() => navigate(profileUrl)}>
+            View My Digicard
+          </Button>
+        </div>
+      </Col>
+      <Col md={6} className="text-center">
+        <QRCode
+          size={128}
+          style={{ height: "auto", maxWidth: "50%", width: "100%" }}
+          value={profileUrl}
+          viewBox="0 0 256 256"
+        />
+      </Col>
+    </Row>
+
+    {/* Mobile layout */}
+    <Row className="d-flex d-md-none text-center">
+      <Col>
+        <QRCode
+          size={128}
+          style={{ height: "auto", maxWidth: "60%", width: "100%" }}
+          value={profileUrl}
+          viewBox="0 0 256 256"
+        />
+        <h1 className="display-5 fw-bold mt-4">Hey {userData.name?.split(' ')[0]},</h1>
+        <p className="lead mt-2 px-3">
+          Your DigiCard is ready. Share it with a scan and stand out instantly.
+        </p>
+        <div className="mt-3 my-auto d-flex flex-column gap-3">
+          <Button variant="primary" size="lg" onClick={() => navigate(profileUrl)}>View My Digicard</Button>
+          
+          <OverlayTrigger placement="top"overlay={ <Tooltip id="button-tooltip">Add to wallet is coming soon!</Tooltip>}>
+            <Button type="button" className="btn btn-dark btn-lg" size="lg">Add to wallet</Button>
+          </OverlayTrigger>
+
+          <button type="button" className="btn btn-secondary btn-lg" size="lg">Save QR to camera roll</button>
+          
+        </div>
+      </Col>
+    </Row>
+  </Container>
+</div>
+
       
-    </div>
-  </Col>
-
-  {/* Text & Button Column */}
-  <Col xs={12} md className="d-flex">
-    <div
-      data-bs-theme="dark"
-      className="w-100 mt-3 mb-3 p-4 shadow-4 rounded-3 bg-body-tertiary text-light d-flex flex-column justify-content-between"
-    >
-      <h3 className="fw-bold">
-      <CircumIcon name="circle_chev_left"/>
-      Share your Digital Business Card
-      </h3>
-      <div className="mt-auto">
-        <Button>Copy to clipboard</Button>
-      </div>
-    </div>
-  </Col>
-</Row>
-        <Container data-bs-theme="dark"
-          className="mt-3 mb-5 p-4 shadow-4 rounded-3 bg-body-tertiary text-light">
-          <h4 className="display-6">ToDo.</h4>
-
-        <ListGroup className="w-75" as="ol" numbered>
-            <h4>MUST WORK</h4>
-            <ListGroup.Item as="li">ALL DONE</ListGroup.Item>
-            <hr />
-            <h4>SHOULD WORK</h4>
-            <ListGroup.Item as="li">Perfeclty Responsive with correct sizing in forms.</ListGroup.Item>
-            <hr />
-            <h4>COULD WORK</h4>
-            <ListGroup.Item as="li">Free/Premium subscription system with added features.</ListGroup.Item>
-        </ListGroup>
-
-        </Container>
-        </>
-      ) : (
-        <Container className="container text-sm-center p-5 bg-light mt-4 bg-dark text-light rounded">
-          <h1>Join Digicard Today</h1>
-          <p className="lead">The all in one app to fuel your career.</p>
-          <div className="btn-group">
-            <Button onClick={() => navigate('/Authenticate', { state: { authState: 'SignUp' } })}>SignUp</Button>
-            <Button onClick={() => navigate('/Authenticate', { state: { authState: 'Login' } })} className="btn-secondary">Login</Button>
-          </div>
-        </Container>
-      )}
     </>
+  ) : (
+    <div className="bg-light py-5 text-dark">
+        <Container>
+          <Row className="align-items-center">
+            <Col md={6} className="mb-4 mb-md-0">
+              <h1 className="display-4 fw-bold">Your Digital CV. One Scan Away.</h1>
+              <p className="lead mt-3">
+                Create, customize, and share your professional identity in seconds.
+                Make a lasting impression with a single scan.
+              </p>
+              <div className="d-flex gap-3 mt-4">
+                <Button variant="primary" size="lg" onClick={() => navigate('/Authenticate', { state: { authState: 'SignUp' } })}>Create Your DigiCard</Button>
+                <Button variant="outline-secondary" size="lg" onClick={() => navigate('/Authenticate', { state: { authState: 'Login' } })}>Login</Button>
+              </div>
+            </Col>
+            <Col md={6} className="text-center">
+              <QRCode
+                size={128}
+                style={{ height: "auto", maxWidth: "50%", width: "100%" }}
+                value={homeUrl}
+                viewBox="0 0 256 256"
+              />
+            </Col>
+          </Row>
+        </Container>
+      </div>
+  )}
+</>
   );
 };
 

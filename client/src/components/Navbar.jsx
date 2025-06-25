@@ -58,8 +58,6 @@ const Navigation = () => {
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="justify-content-center mx-auto">
-            <Nav.Link href="/">Home</Nav.Link>
-            <Nav.Link href="/account">Account</Nav.Link>
           </Nav>
           <Nav>
             {userData ? (
@@ -93,9 +91,14 @@ const Navigation = () => {
                 </Nav.Link>
               </>
             ) : (
+              <>
+              <Nav.Link href="/Authenticate" className="fw-bold bg-primary text-white rounded">
+                Sign Up
+              </Nav.Link>
               <Nav.Link href="/Authenticate" className="fw-bold">
                 Login
-              </Nav.Link>
+              </Nav.Link></>
+              
             )}
           </Nav>
         </Navbar.Collapse>

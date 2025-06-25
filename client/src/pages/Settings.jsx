@@ -141,7 +141,7 @@ const Settings = () => {
           </Row>
           <hr />
           <div className="d-flex align-items-center">
-            <h1 className="text-start mb-0">Account</h1>
+            <h1 className="text-start mb-0">Resume</h1>
             <CircumIcon name="file_on" style={{ marginLeft: '0.5rem' }}/>
           </div>
 
