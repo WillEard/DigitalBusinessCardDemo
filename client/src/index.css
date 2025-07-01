@@ -8,3 +8,44 @@
 * {
   font-family: Roboto, Helvetica, Arial, sans-serif;
 }
+
+/* Custom Resume Dark Theme */
+body {
+  background-color: #1f1f1f;
+  color: #f3f4f6; /* Light gray text */
+}
+
+.resume-container {
+  background-color: #242424;
+  border-radius: 12px;
+  padding: 2rem;
+}
+
+.resume-label {
+  color: #d1d5db;
+  font-weight: 500;
+}
+
+.resume-input,
+.resume-textarea {
+  background-color: #1f2937; /* Dark slate */
+  color: #f9fafb;
+  border: 1px solid #374151;
+  border-radius: 8px;
+}
+
+.resume-input:focus,
+.resume-textarea:focus {
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 0.2rem rgba(59, 130, 246, 0.5);
+}
+
+.resume-btn {
+  background-color: #3b82f6;
+  border: none;
+  transition: 0.3s ease;
+}
+
+.resume-btn:hover {
+  background-color: #2563eb;
+}

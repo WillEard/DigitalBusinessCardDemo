@@ -7,9 +7,9 @@ import { Container, Row, Col, Card } from 'react-bootstrap';
 function PricingContainer() {
     return (
       <Container className="py-5 text-center">
-        <h1 className="mb-4 display-3">Our Pricing</h1>
+        <h1 className="mb-4 display-3 fw-bold">Pricing</h1>
         <p className="lead mb-5">
-          Choose the plan that fits your needs. Start for free or upgrade anytime. <span className='fw-bold'>(Must be verified)</span>
+          Choose the plan that fits your needs. Start for free or upgrade anytime.*
         </p>
   
         <Row className="justify-content-center">

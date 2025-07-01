@@ -6,7 +6,7 @@ const HomeContent = () => {
         <Container  className="py-1 px-4 bg-body-tertiary text-light text-white"> 
 
         {/* Panel 1: Text Left, Image Right */}
-        <Row className="align-items-center py-5 px-3 bg-dark rounded-top-3" > 
+        <Row className="align-items-center py-5 px-5 bg-dark rounded-top-3" > 
           <Col md={6} className="text-center text-md-start">
             <h2 className="fw-bold">Instantly Professional</h2>
             <p className="lead">
@@ -33,7 +33,7 @@ const HomeContent = () => {
         </Row>
   
         {/* Panel 2: Image Left, Text Right */}
-        <Row className="align-items-center py-5 px-3 flex-md-row-reverse bg-secondary">
+        <Row className="align-items-center py-5 px-5 flex-md-row-reverse" style={{ backgroundColor: '#2572FD' }}>
           <Col md={6} className="text-center text-md-start">
             <h2 className="fw-bold">Smart Networking</h2>
             <p className="lead">
@@ -60,7 +60,7 @@ const HomeContent = () => {
         </Row>
 
         {/* Panel 3: Text Left, Image Right */}
-        <Row className="align-items-center py-5 px-3 bg-dark">
+        <Row className="align-items-center py-5 px-5 bg-dark">
           <Col md={6} className="text-center text-md-start">
             <h2 className="fw-bold">Secure & Privacy-Focused</h2>
             <p className="lead">
@@ -86,7 +86,7 @@ const HomeContent = () => {
         </Row>
 
         {/* Panel 4: Image Left, Text Right */}
-        <Row className="align-items-center py-5 px-3 flex-md-row-reverse bg-secondary rounded-bottom-3">
+        <Row className="align-items-center py-5 px-5 flex-md-row-reverse rounded-bottom-3" style={{ backgroundColor: '#2572FD' }}>
           <Col md={6} className="text-center text-md-start">
             <h2 className="fw-bold">Effortless Setup & Customization</h2>
             <p className="lead">

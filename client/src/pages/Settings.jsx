@@ -87,7 +87,7 @@ const Settings = () => {
   };
 
   return (
-    <Container style={{ backgroundColor: '#D3D3D3' }}>
+    <Container className='bg-dark text-light'>
       <Navbar />
       <br />
       <div className="d-flex align-items-center">
@@ -97,8 +97,9 @@ const Settings = () => {
       <Tabs
         defaultActiveKey="daily"
         id="justify-tab-example"
-        className="mb-3"
+        className="mb-3 bg-primary rounded-top"
         justify
+
       >
         {/*PROFILE TAB*/}
         <Tab eventKey="daily" title="Profile" className="fw-bold">
@@ -107,7 +108,7 @@ const Settings = () => {
             <Col className="col-lg-3 col-sm-5">
               <Form.Group className="mb-3">
                 
-                <Form.Label>Name</Form.Label>
+                <Form.Label className='text-light'>Name</Form.Label>
                 <Form.Control placeholder={userData.name} disabled />
               </Form.Group>
               
@@ -128,13 +129,13 @@ const Settings = () => {
             </Col>
             <Col className='col-lg-3 col-sm-5'>
               <Form.Group className="mb-3">
-                <Form.Label>Username</Form.Label>
+                <Form.Label className='text-light'>Username</Form.Label>
                 <Form.Control placeholder={userData.username} disabled />
               </Form.Group>
             </Col>
             <Col className="col-lg-3 col-sm-5">
               <Form.Group className="mb-3">
-                <Form.Label>Email Address</Form.Label>
+                <Form.Label className='text-light'>Email Address</Form.Label>
                 <Form.Control placeholder={userData.email} disabled />
               </Form.Group>
             </Col>
@@ -149,55 +150,55 @@ const Settings = () => {
             <Col className='col-lg-6 col-sm-8'>
               <Form>
               <Form.Group className="mb-3" controlId="FullNameControlInput">
-                  <Form.Label>Full Name</Form.Label>
+                  <Form.Label className='text-light'>Full Name</Form.Label>
                   <Form.Control type="email" placeholder={cvData?.user?.name} disabled/>
               </Form.Group>
               <Form.Group className="mb-3" controlId="EmailControlInput">
-                  <Form.Label>Email address</Form.Label>
+                  <Form.Label className='text-light'>Email address</Form.Label>
                   <Form.Control type="email" placeholder={cvData?.user?.email} disabled/>
               </Form.Group>
               <Form.Group className="mb-3" controlId="PhoneNumberControlInput">
-                  <Form.Label>Phone Number</Form.Label>
+                  <Form.Label className='text-light'>Phone Number</Form.Label>
                   <Form.Control type="tel" onChange={e => setPhoneNumber(e.target.value)} value={phoneNumber} />
               </Form.Group>
                 
               <Form.Group className="mb-3" controlId="EducationControlInput">
-                <Form.Label>Education</Form.Label>
+                <Form.Label className='text-light'>Education</Form.Label>
                 <Form.Control as="textarea" onChange={e => setEducation(e.target.value)} rows={5} value={education}/>
               </Form.Group>
               <Form.Group className="mb-3" controlId="ExperienceControlInput">
-                <Form.Label>Experience</Form.Label>
+                <Form.Label className='text-light'>Experience</Form.Label>
                 <Form.Control as="textarea" rows={5} onChange={e => setExperience(e.target.value)}  value={experience} />
               </Form.Group>
               <Form.Group className="mb-3" controlId="SkillsControlInput">
-                <Form.Label>Skills</Form.Label>
+                <Form.Label className='text-light'>Skills</Form.Label>
                 <Form.Control as="textarea" rows={5} onChange={e => setSkills(e.target.value)}  value={skills}/>
               </Form.Group>
               <Form.Group className="mb-3" controlId="CerficationsControlInput">
-                <Form.Label>Certifications</Form.Label>
+                <Form.Label className='text-light'>Certifications</Form.Label>
                 <Form.Control as="textarea" rows={5} onChange={e => setCertifications(e.target.value)}  value={certifications}/>
               </Form.Group>
               <Form.Group className="mb-3" controlId="ProjectsControlInput">
-                <Form.Label>Projects</Form.Label>
+                <Form.Label className='text-light'>Projects</Form.Label>
                 <Form.Control as="textarea" rows={5} onChange={e => setProjects(e.target.value)}  value={projects}/>
               </Form.Group>
               <hr />
               <h3>Additional Personal Information</h3>
               <Form.Group className="mb-3" controlId="LanguagesControlInput">
-                <Form.Label>Languages</Form.Label>
+                <Form.Label className='text-light'>Languages</Form.Label>
                 <Form.Control as="textarea" rows={2} onChange={e => setLanguages(e.target.value)}  value={languages}/>
               </Form.Group>
               <Form.Group className="mb-3" controlId="HobbiesControlInput">
-                <Form.Label>Hobbies</Form.Label>
+                <Form.Label className='text-light'>Hobbies</Form.Label>
                 <Form.Control as="textarea" rows={3} onChange={e => setHobbies(e.target.value)}  value={hobbies}/>
               </Form.Group>
               <Form.Group className="mb-3" controlId="PersonalAchievementsControlInput">
-                <Form.Label>Personal Achievements</Form.Label>
+                <Form.Label className='text-light'>Personal Achievements</Form.Label>
                 <Form.Control as="textarea" rows={4} onChange={e => setAchievements(e.target.value)}  value={achievements}/>
               </Form.Group>
 
               <Button className="btn btn-primary justify-content-center" type="button"  onClick={handleSave} disabled={!userData?.username}>
-                  Save CV
+                  Update CV
               </Button>
              
               </Form>
@@ -208,12 +209,13 @@ const Settings = () => {
         {/*SECURITY TAB*/}
         <Tab eventKey="weekly" title="Security" className="fw-bold">
           <Row className="justify-content-center">
+
             <Col className="col-5">
-              <Form.Label>Password</Form.Label>
+              <Form.Label className='text-light'>Password</Form.Label>
               <InputGroup className="mb-3">
                 <Button href="/reset-pass"
-                  className="btn-md"
-                  variant="outline-dark"
+                  className="btn-md text-light bg-primary"
+                  variant="outline-primary"
                   id="button-addon1"
                 >
                   Change Password
@@ -225,22 +227,24 @@ const Settings = () => {
                   disabled
                 />
               </InputGroup>
+
               <Form.Group className="mb-3">
-                <Form.Label>Mobile Number</Form.Label>
+                <Form.Label className='text-light'>Mobile Number</Form.Label>
                 <Form.Control placeholder={userData.phoneNumber} disabled />
               </Form.Group>{' '}
             </Col>
+
             <Col className="col-5">
               <Form.Group className="mb-3">
-                <Form.Label>Verification</Form.Label>
+                <Form.Label className='text-light'>Verification</Form.Label>
                 <Form.Control
                   placeholder={userData.isVerified ? 'Verified' : 'Not Verified'}
                   disabled
                 />
               </Form.Group>{' '}
               <Form.Group className="mb-3">
-                <Form.Label>Delete Account</Form.Label>
-                <Button className="btn btn-primary d-block">
+                <Form.Label className='text-light'>Delete Account</Form.Label>
+                <Button className="btn btn-danger d-block">
                   Delete Account
                 </Button>
               </Form.Group>{' '}

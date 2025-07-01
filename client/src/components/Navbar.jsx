@@ -7,6 +7,8 @@ import { useNavigate } from 'react-router-dom';
 import { AppContext } from '../context/AppContext';
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import logo from '../assets/DigiCardLogo.jpg'
+import { Image } from 'react-bootstrap';
 
 const Navigation = () => {
   const navigate = useNavigate();
@@ -54,7 +56,7 @@ const Navigation = () => {
       className="bg-body-tertiary rounded-bottom m-auto shadow-sm "
     >
       <Container>
-        <Navbar.Brand href="/">DigiCard Prototype</Navbar.Brand>
+        <Navbar.Brand href="/">DigiCard Logo Here</Navbar.Brand>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="justify-content-center mx-auto">
@@ -92,10 +94,10 @@ const Navigation = () => {
               </>
             ) : (
               <>
-              <Nav.Link href="/Authenticate" className="fw-bold bg-primary text-white rounded">
+              <Nav.Link onClick={() => navigate('/Authenticate', { state: { authState: 'SignUp' } })} className="fw-bold bg-primary text-white rounded">
                 Sign Up
               </Nav.Link>
-              <Nav.Link href="/Authenticate" className="fw-bold">
+              <Nav.Link onClick={() => navigate('/Authenticate', { state: { authState: 'Login' } })} className="fw-bold">
                 Login
               </Nav.Link></>
               
