@@ -7,12 +7,12 @@ import Hero from '../components/Hero';
 import Pricing from '../components/Pricing';
 import HomeContent from '../components/HomeContent';
 import { useNavigate } from 'react-router-dom';
-import PricingContainer from '../components/Pricing';
+import FAQ from '../components/FAQ';
 
 
 const Home = () => {
   return (
-    <div style={{ backgroundColor: '#F5F5F5' }}>
+    <div className='bg-light'>
       <Container>
         {/* Navbar top of webpage */}
         <Navbar />
@@ -25,6 +25,9 @@ const Home = () => {
 
         {/* Pricing & Subscription section */}
         <Pricing />
+
+        {/* FAQ section */}
+        <FAQ />
 
         {/* Footer at bottom */}
         <Footer />

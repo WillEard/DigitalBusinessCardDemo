@@ -9,6 +9,8 @@ import axios from 'axios';
 import { toast } from 'react-toastify';
 import logo from '../assets/DigiCardLogo.jpg'
 import { Image } from 'react-bootstrap';
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 
 const Navigation = () => {
   const navigate = useNavigate();
@@ -57,16 +59,30 @@ const Navigation = () => {
     >
       <Container>
         <Navbar.Brand href="/">DigiCard Logo Here</Navbar.Brand>
-        <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+        <Navbar.Toggle aria-controls="responsive-navbar-nav" className='bg-primary'>
+          <span className="navbar-toggler-icon" /> </Navbar.Toggle>
         <Navbar.Collapse id="responsive-navbar-nav">
-          <Nav className="justify-content-center mx-auto">
+          <Nav className="justify-content-center mx-auto text-light">
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="#home">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="#pricing">Pricing</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="#howitworks">How it works</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="#faq">FAQ</a>
+            </li>
+
           </Nav>
           <Nav>
             {userData ? (
               <>
                 <NavDropdown title="Account" id="collapsible-nav-dropdown">
                   <NavDropdown.Item href="/account">Account</NavDropdown.Item>
-                  
+                
                   {!userData.isVerified ? (
                     <NavDropdown.Item onClick={sendVerifyOTP}>
                       Verify Account
@@ -86,7 +102,7 @@ const Navigation = () => {
                 </NavDropdown>
                 
                 <Nav.Link
-                  href="/profile"
+                  href="/account"
                   className="fw-bold border rounded border-light"
                 >
                   {userData.name[0].toUpperCase()}

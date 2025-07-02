@@ -211,22 +211,21 @@ const Settings = () => {
           <Row className="justify-content-center">
 
             <Col className="col-5">
-              <Form.Label className='text-light'>Password</Form.Label>
-              <InputGroup className="mb-3">
-                <Button href="/reset-pass"
-                  className="btn-md text-light bg-primary"
-                  variant="outline-primary"
-                  id="button-addon1"
-                >
-                  Change Password
-                </Button>
+              <Form.Group className="mb-3">
+                <Form.Label className="text-light">Password</Form.Label>
                 <Form.Control
                   placeholder="*******"
-                  aria-label="Example text with button addon"
-                  aria-describedby="basic-addon1"
                   disabled
                 />
-              </InputGroup>
+                <div className="mt-2">
+                  <Button
+                    href="/reset-pass"
+                    className="bg-primary text-light"
+                  >
+                    Change Password
+                  </Button>
+                </div>
+              </Form.Group>
 
               <Form.Group className="mb-3">
                 <Form.Label className='text-light'>Mobile Number</Form.Label>
@@ -237,17 +236,15 @@ const Settings = () => {
             <Col className="col-5">
               <Form.Group className="mb-3">
                 <Form.Label className='text-light'>Verification</Form.Label>
-                <Form.Control
-                  placeholder={userData.isVerified ? 'Verified' : 'Not Verified'}
-                  disabled
-                />
+                <Form.Control placeholder={userData.isVerified ? 'Verified' : 'Not Verified'} disabled />
               </Form.Group>{' '}
+
               <Form.Group className="mb-3">
                 <Form.Label className='text-light'>Delete Account</Form.Label>
-                <Button className="btn btn-danger d-block">
-                  Delete Account
-                </Button>
+                <Form.Control placeholder="Enter account password to delete" disabled />
+                <Button className="btn btn-danger d-block mt-2">Delete Account</Button>
               </Form.Group>{' '}
+              
             </Col>
           </Row>
         </Tab>

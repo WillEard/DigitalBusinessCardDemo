@@ -49,3 +49,19 @@ body {
 .resume-btn:hover {
   background-color: #2563eb;
 }
+
+.accordion-button.custom-header {
+  background-color: #212529; /* Dark background */
+  color: #fff;               /* White text */
+}
+
+.accordion-button.custom-header:not(.collapsed) {
+  background-color: #343a40; /* Slightly lighter when expanded */
+  color: #fff;
+}
+
+.accordion-body {
+  background-color: #fff;    /* White body */
+  color: #212529;            /* Dark text */
+}
+
