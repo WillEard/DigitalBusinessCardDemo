@@ -10,8 +10,10 @@ import { useNavigate } from 'react-router-dom';
 
 import QRCode from "react-qr-code";
 import { toPng } from 'html-to-image';
+import { BsQrCode } from "react-icons/bs";
+import { FaArrowTurnDown } from "react-icons/fa6";
 
-
+import CVModal from './CVModal';
 
 const Hero = () => {
   const { userData, getUserData } = useContext(AppContext);
@@ -55,15 +57,16 @@ const Hero = () => {
           <Row className="align-items-center d-none d-md-flex">
             {/* Left Column */}
             <Col md={6} className="mb-4 mb-md-0">
-              <h1 className="display-4 fw-bold">Hey {userData.name?.split(' ')[0]},</h1>
+              <h1 className="display-3 fw-bold">{userData.name?.split(' ')[0]}, ready to connect? <FaArrowTurnDown /></h1>
+              
+
               <p className="lead mt-3">
                 You’re all set. Start sharing your QR to get noticed, connect faster, and stay professional on the go.
               </p>
               <div className="d-flex gap-3 mt-4">
-                <Button variant="primary" size="lg" onClick={() => navigate(profileUrl)}>
-                  View My Digicard
-                </Button>
-                <Button variant="outline-secondary" size="lg" onClick={handleDownload}>
+                
+                <CVModal profileUrl={profileUrl}/>
+                <Button variant="outline-secondary" size="lg" onClick={handleDownload} >
                   Share QR
                 </Button>
               </div>

@@ -67,15 +67,14 @@ const Navigation = () => {
               <a class="nav-link active" aria-current="page" href="#home">Home</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="#pricing">Pricing</a>
+              <a class="nav-link active" aria-current="page" href="/#pricing">Pricing</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="#howitworks">How it works</a>
+              <a class="nav-link active" aria-current="page" href="/#howitworks">How it works</a>
             </li>
             <li class="nav-item">
               <a class="nav-link active" aria-current="page" href="#faq">FAQ</a>
             </li>
-
           </Nav>
           <Nav>
             {userData ? (
