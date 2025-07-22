@@ -12,7 +12,7 @@ import FAQ from '../components/FAQ';
 
 const Home = () => {
   return (
-    <div className='bg-light'>
+    <div className='ocean-background'>
       <Container>
         {/* Navbar top of webpage */}
         <Navbar />

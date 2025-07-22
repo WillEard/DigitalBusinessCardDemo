@@ -39,7 +39,7 @@ const Hero = () => {
 
     const link = document.createElement('a');
     link.href = dataUrl;
-    link.download = 'my-high-res-qr-code.png';
+    link.download = userData.name + ' DigiQR.png';
     link.click();
   } catch (err) {
     console.error('Error generating high-res QR:', err);
@@ -52,14 +52,13 @@ const Hero = () => {
     <>
   {userData ? (
     <>
-      <div id="home" className="bg-light py-5 px-5 text-dark">
+      <div id="home" className=" py-5 px-5 text-dark">
         <Container >
           <Row className="align-items-center d-none d-md-flex">
             {/* Left Column */}
             <Col md={6} className="mb-4 mb-md-0">
               <h1 className="display-3 fw-bold">{userData.name?.split(' ')[0]}, ready to connect? <FaArrowTurnDown /></h1>
-              
-
+            
               <p className="lead mt-3">
                 You’re all set. Start sharing your QR to get noticed, connect faster, and stay professional on the go.
               </p>

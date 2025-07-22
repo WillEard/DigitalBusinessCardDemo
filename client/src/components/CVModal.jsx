@@ -2,21 +2,27 @@ import { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
+import { Row } from 'react-bootstrap';
+import Col from 'react-bootstrap/Col';
 import { useNavigate } from 'react-router-dom';
 
 
-const CVModal = (profileUrl ) => {
+const CVModal = ({ profileUrl }) => {
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-
   const navigate = useNavigate();
 
   return (
     <>
-       <Button variant="primary" size="lg" onClick={handleShow}>
-        Open Dark Modal
+      <Button
+        className="border-0 shadow-none"
+        style={{ backgroundColor: "#4CAF50" }}
+        size="lg"
+        onClick={handleShow}
+      >
+        View Digicard
       </Button>
 
       <Modal
@@ -25,125 +31,90 @@ const CVModal = (profileUrl ) => {
         centered
         backdrop="static"
         keyboard={false}
-        bg="dark"
-        data-bs-theme="dark"
+        size="lg"
+        
       >
-        <Modal.Header  closeButton className="text-light border-0">
-          <Modal.Title>My DigiCard<hr /></Modal.Title>
-          
+        <Modal.Header closeButton className="text-light border-0" style={{ backgroundColor: '#126782' }}>
+          <Modal.Title className="w-100" >
+            My DigiCard
+            <hr className="mt-2" />
+          </Modal.Title>
         </Modal.Header>
-        <Modal.Body className="bg-dark text-light">
-          <Form.Group className="mb-3 ">
-            <Form.Label className='text-light'>Full Name</Form.Label>
-            <Form.Control placeholder="Jon Smith" disabled />
-          </Form.Group>
-          <Form.Group className="mb-3">
-            <Form.Label className='text-light'>Email Address</Form.Label>
-            <Form.Control placeholder="JonSmith@gmail.com" disabled />
-          </Form.Group>
-          <Form.Group className="mb-3">
-            <Form.Label className='text-light'>Phone Number</Form.Label>
-            <Form.Control placeholder="JonSmith@gmail.com" disabled />
-          </Form.Group>
-          <Form.Group className="mb-3">
-            <Form.Label className='text-light'>Education</Form.Label>
-            <Form.Control as="textarea" placeholder="JonSmith@gmail.com" disabled />
-          </Form.Group>
-          <Form.Group className="mb-3">
-            <Form.Label className='text-light'>Experience</Form.Label>
-            <Form.Control as="textarea" placeholder="JonSmith@gmail.com" disabled />
-          </Form.Group>
-          <Form.Group className="mb-3">
-            <Form.Label className='text-light'>Skills</Form.Label>
-            <Form.Control as="textarea" placeholder="JonSmith@gmail.com" disabled />
-          </Form.Group>
-          <Form.Group className="mb-3">
-            <Form.Label className='text-light'>Certifications</Form.Label>
-            <Form.Control as="textarea" placeholder="JonSmith@gmail.com" disabled />
-          </Form.Group>
-          <Form.Group className="mb-3">
-            <Form.Label className='text-light'>Projects</Form.Label>
-            <Form.Control as="textarea" placeholder="JonSmith@gmail.com" disabled />
-          </Form.Group>
-          <Form.Group className="mb-3">
-            <Form.Label className='text-light'>Languages</Form.Label>
-            <Form.Control as="textarea" placeholder="JonSmith@gmail.com" disabled />
-          </Form.Group>
-          <Form.Group className="mb-3">
-            <Form.Label className='text-light'>Hobbies</Form.Label>
-            <Form.Control as="textarea" placeholder="JonSmith@gmail.com" disabled />
-          </Form.Group>
-          <Form.Group className="mb-3">
-            <Form.Label className='text-light'>Personal Achievements</Form.Label>
-            <Form.Control as="textarea" placeholder="JonSmith@gmail.com" disabled />
-          </Form.Group>
 
-          <hr />
+        <Modal.Body className="px-4 py-3" style={{ backgroundColor: '#E6F4EA' }}>
+          <Form>
+            <Row className="gy-4 gx-5">
+              <Col md={6}>
+                <Form.Group>
+                  <Form.Label className="text-dark">Full Name</Form.Label>
+                  <Form.Control className="p-3" placeholder="Jon Smith" disabled />
+                </Form.Group>
+
+                <Form.Group>
+                  <Form.Label className="text-dark mt-3">Phone Number</Form.Label>
+                  <Form.Control className="p-3" placeholder="123-456-7890" disabled />
+                </Form.Group>
+
+                <Form.Group>
+                  <Form.Label className="text-dark mt-3">Education</Form.Label>
+                  <Form.Control className="p-3" as="textarea" rows={2} placeholder="University of XYZ" disabled />
+                </Form.Group>
+
+                <Form.Group>
+                  <Form.Label className="text-dark mt-3">Skills</Form.Label>
+                  <Form.Control className="p-3" as="textarea" rows={2} placeholder="JavaScript, React" disabled />
+                </Form.Group>
+
+                <Form.Group>
+                  <Form.Label className="text-dark mt-3">Projects</Form.Label>
+                  <Form.Control className="p-3" as="textarea" rows={2} placeholder="MyPortfolio.com" disabled />
+                </Form.Group>
+
+                <Form.Group>
+                  <Form.Label className="text-dark mt-3">Hobbies</Form.Label>
+                  <Form.Control className="p-3" as="textarea" rows={2} placeholder="Gaming, Hiking" disabled />
+                </Form.Group>
+              </Col>
+
+              <Col md={6}>
+                <Form.Group>
+                  <Form.Label className="text-dark">Email Address</Form.Label>
+                  <Form.Control className="p-3" placeholder="JonSmith@gmail.com" disabled />
+                </Form.Group>
+
+                <Form.Group>
+                  <Form.Label className="text-dark mt-3">Experience</Form.Label>
+                  <Form.Control className="p-3" as="textarea" rows={2} placeholder="2 years at XYZ" disabled />
+                </Form.Group>
+
+                <Form.Group>
+                  <Form.Label className="text-dark mt-3">Certifications</Form.Label>
+                  <Form.Control className="p-3" as="textarea" rows={2} placeholder="AWS, PMP" disabled />
+                </Form.Group>
+
+                <Form.Group>
+                  <Form.Label className="text-dark mt-3">Languages</Form.Label>
+                  <Form.Control className="p-3" as="textarea" rows={2} placeholder="English, Spanish" disabled />
+                </Form.Group>
+
+                <Form.Group>
+                  <Form.Label className="text-dark mt-3">Personal Achievements</Form.Label>
+                  <Form.Control className="p-3" as="textarea" rows={2} placeholder="Built an app used by 10K+ users" disabled />
+                </Form.Group>
+              </Col>
+            </Row>
+          </Form>
         </Modal.Body>
-        <Modal.Footer className="bg-dark border-0">
+
+        <Modal.Footer className="border-0 px-4 pb-4 pt-2" style={{ backgroundColor: '#126782' }}>
           <Button variant="secondary" onClick={handleClose}>
             Close
           </Button>
-          <Button variant="primary" onClick={() => navigate(profileUrl.profileUrl)}>
+          <Button variant="success" onClick={() => navigate(profileUrl.profileUrl)}>
             Edit
           </Button>
         </Modal.Footer>
       </Modal>
-    { /*  
-      <Button variant="primary" onClick={handleShow}>
-        My CV
-      </Button>
-
-      <Modal show={show} onHide={handleClose}>
-        <Modal.Header closeButton>
-          <Modal.Title>My CV</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <Form.Group className="mb-3">
-            <Form.Label>Full Name</Form.Label>
-            <Form.Control placeholder="Jon Smith" disabled />
-          </Form.Group>
-          <Form.Group className="mb-3">
-            <Form.Label>Email Address</Form.Label>
-            <Form.Control placeholder="JonSmith@gmail.com" disabled />
-          </Form.Group>
-          <Form.Group className="mb-3">
-            <Form.Label>Phone Number</Form.Label>
-            <Form.Control placeholder="XXXXX XXX XXX" disabled />
-          </Form.Group>
-          <Form.Group className="mb-3">
-            <Form.Label>Profile</Form.Label>
-            <Form.Control placeholder="Experienced in XYZ" disabled />
-          </Form.Group>
-          <Form.Group className="mb-3">
-            <Form.Label>Employment History</Form.Label>
-            <Form.Control placeholder="Job 1
-            Job 2
-            Job 3" disabled />
-          </Form.Group>
-          <Form.Group className="mb-3">
-            <Form.Label>Skills</Form.Label>
-            <Form.Control placeholder="Talking, Walking.." disabled />
-          </Form.Group>
-          <Form.Group className="mb-3">
-            <Form.Label>Education</Form.Label>
-            <Form.Control placeholder="School, College, University, Course..." disabled />
-          </Form.Group>
-          <Form.Group className="mb-3">
-            <Form.Label>Hobbies</Form.Label>
-            <Form.Control placeholder="Travelling, Learning.." disabled />
-          </Form.Group>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
-            Close
-          </Button>
-          <Button variant="primary" onClick={handleClose}>
-            Save Changes
-          </Button>
-        </Modal.Footer>
-      </Modal>
-      */}
     </>
   );
 };

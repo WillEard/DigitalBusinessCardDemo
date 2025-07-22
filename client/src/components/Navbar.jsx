@@ -51,29 +51,27 @@ const Navigation = () => {
   return (
     <Navbar
       sticky="top"
-      bg="dark"
-      data-bs-theme="dark"
       collapseOnSelect
       expand="lg"
-      className="bg-body-tertiary rounded-bottom m-auto shadow-sm "
+      className="rounded-bottom m-auto shadow-sm " style={{ backgroundColor: '#219EBC' }}
     >
       <Container>
         <Navbar.Brand href="/">DigiCard Logo Here</Navbar.Brand>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" className='bg-primary'>
           <span className="navbar-toggler-icon" /> </Navbar.Toggle>
         <Navbar.Collapse id="responsive-navbar-nav">
-          <Nav className="justify-content-center mx-auto text-light">
+          <Nav className="justify-content-center mx-auto ">
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="#home">Home</a>
+              <a class="nav-link active text-light" aria-current="page" href="#home">Home</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="/#pricing">Pricing</a>
+              <a class="nav-link active text-light" aria-current="page" href="/#pricing">Pricing</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="/#howitworks">How it works</a>
+              <a class="nav-link active text-light" aria-current="page" href="/#howitworks">How it works</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="#faq">FAQ</a>
+              <a class="nav-link active text-light" aria-current="page" href="#faq">FAQ</a>
             </li>
           </Nav>
           <Nav>
