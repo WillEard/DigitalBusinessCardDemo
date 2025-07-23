@@ -12,20 +12,27 @@ const PORT = process.env.PORT || 4000;
 
 connectDB();
 
-const allowedOrigins = ['http://localhost:5173', 'https://www.pelagopass.com'];
+const allowedOrigins = [
+    'http://localhost:5173',
+    'https://your-site.netlify.app',
+    'https://www.pelagopass.com'
+  ];
 
 
 
 app.use(express.json());
 app.use(cookieParser());
+
 app.use(cors({
     origin: function (origin, callback) {
-      if (!origin) return callback(null, true); // allow non-browser requests
-      const allowed = allowedOrigins.some(allowedOrigin => origin.startsWith(allowedOrigin));
-      if (allowed) {
-        callback(null, true);
+      // Allow server-to-server, Postman, etc.
+      if (!origin) return callback(null, true);
+  
+      // Exact match only — do not use startsWith for security
+      if (allowedOrigins.includes(origin)) {
+        return callback(null, true);
       } else {
-        callback(new Error('Not allowed by CORS'));
+        return callback(new Error('Not allowed by CORS'));
       }
     },
     credentials: true
