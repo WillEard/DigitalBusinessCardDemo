@@ -1,0 +1,52 @@
+#ThreePoints {
+    position: relative;
+    background-color: white;
+    width: 100%;
+    z-index: 1;
+  }
+
+  #ThreePoints::before {
+    content: "";
+    position: absolute;
+    top: -100px;
+    left: 0;
+    width: 100%;
+    height: 100px;
+    background: linear-gradient(to bottom, rgba(255, 255, 255, 0) 0%, white 100%);
+    z-index: -1;
+    pointer-events: none;
+  }
+  
+  #ThreePoints::after {
+    content: "";
+    position: absolute;
+    bottom: -100px;
+    left: 0;
+    width: 100%;
+    height: 100px;
+    background: linear-gradient(to bottom, white 0%, rgba(255, 255, 255, 0) 100%);
+    z-index: -1;
+    pointer-events: none;
+  }
+
+  .feature-icon {
+    width: 100px;
+    height: 100px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    position: absolute; /* or relative with z-index */
+    top: 10px; /* adjust as needed */
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 0;
+  }
+  
+  .feature-block h1, .feature-block p {
+    position: relative;
+    z-index: 1;
+  }
+
+  
+  
+  

@@ -1,0 +1,32 @@
+.top-fade {
+    position: relative;
+  }
+  
+  .top-fade::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 150px;
+    width: 100%;
+    background: linear-gradient(to bottom, white, rgba(255, 255, 255, 0));
+    pointer-events: none;
+    z-index: 2;
+  }
+
+  .home-content-container {
+    position: relative;
+    background-color: white; /* or your page background */
+  }
+  
+  .home-content-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 150px;
+    width: 100%;
+    background: linear-gradient(to bottom, white, rgba(255, 255, 255, 0));
+    pointer-events: none;
+    z-index: 2;
+  }

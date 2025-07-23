@@ -8,17 +8,20 @@ import Pricing from '../components/Pricing';
 import HomeContent from '../components/HomeContent';
 import { useNavigate } from 'react-router-dom';
 import FAQ from '../components/FAQ';
+import ThreePointJumbo from '../components/3Points-Jumbo';
 
 
 const Home = () => {
   return (
     <div className='ocean-background'>
-      <Container>
+      <div className='fluid'>
         {/* Navbar top of webpage */}
         <Navbar />
 
         {/* Hero top of Homepage, Title & CTA */}
         <Hero />
+
+        <ThreePointJumbo />
 
         {/* Selling point section, 4 tiles */}
         <HomeContent />
@@ -31,7 +34,7 @@ const Home = () => {
 
         {/* Footer at bottom */}
         <Footer />
-      </Container>
+      </div>
     </div>
   );
 };

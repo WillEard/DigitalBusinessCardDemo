@@ -3,10 +3,10 @@ import { Container, Row, Col, Card, Image } from 'react-bootstrap';
 
 const HomeContent = () => {
     return (
-        <Container className="py-1 px-4 text-dark"> 
+        <Container className="py-1 px-4 text-dark home-content-container"> 
 
         {/* Panel 1: Text Left, Image Right */}
-        <Row className="align-items-center py-5 px-5 rounded-top-3 mb-5"> 
+        <Row className="align-items-center py-5 px-5 rounded-top-3 mb-5 top-fade"> 
           <Col md={6} className="text-center text-md-start">
             <h2 className="fw-bold">Instantly Professional</h2>
             <p className="lead">

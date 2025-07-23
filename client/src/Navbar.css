@@ -1,0 +1,23 @@
+.navbar-top {
+  background-color: transparent !important;
+}
+
+.navbar-scrolled {
+  background-color: rgba(0, 0, 0, 0.7) !important; /* or whatever color you prefer */
+}
+
+.signup:hover {
+  background-color: rgba(0, 0, 0, 0.1) !important; /* Change to your desired hover color */
+}
+
+.login:hover {
+  background-color: rgba(0, 0, 0, 0.1) !important; /* Change to your desired hover color */
+}
+
+.navelement:hover {
+  color: rgba(0, 0, 0, 0.6) !important; /* Change to your desired hover color */
+}
+
+.logohover:hover {
+  color: black !important; /* Change to your desired hover color */
+}

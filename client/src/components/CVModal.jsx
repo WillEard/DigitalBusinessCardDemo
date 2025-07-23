@@ -18,11 +18,11 @@ const CVModal = ({ profileUrl }) => {
     <>
       <Button
         className="border-0 shadow-none"
-        style={{ backgroundColor: "#4CAF50" }}
+        variant="primary"
         size="lg"
         onClick={handleShow}
       >
-        View Digicard
+        View Pass
       </Button>
 
       <Modal
