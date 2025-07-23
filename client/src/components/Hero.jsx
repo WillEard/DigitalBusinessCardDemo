@@ -23,7 +23,8 @@ import '../Fonts.css'; // Import custom font styles
 const Hero = () => {
   const { userData, getUserData } = useContext(AppContext);
   const navigate = useNavigate();
-  const profileUrl = `/cv/${userData?.username}`;
+  const siteURL = `www.pelagopass.com`;
+  const profileUrl = `${siteURL}/cv/${userData?.username}`;
   const homeUrl = '/';
   const qrRef = useRef(null);
 
