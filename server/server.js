@@ -12,19 +12,20 @@ const PORT = process.env.PORT || 4000;
 
 connectDB();
 
-const allowedOrigins = ['http://localhost:5173', 'https://www.pelagopass.com', 'pelagopass.com']
+const allowedOrigins = ['http://localhost:5173', 'https://www.pelagopass.com'];
+
 
 
 app.use(express.json());
 app.use(cookieParser());
 app.use(cors({
     origin: function (origin, callback) {
-      // Allow requests with no origin (like mobile apps, curl, etc.)
-      if (!origin) return callback(null, true);
-      if (allowedOrigins.includes(origin)) {
-        return callback(null, true);
+      if (!origin) return callback(null, true); // allow non-browser requests
+      const allowed = allowedOrigins.some(allowedOrigin => origin.startsWith(allowedOrigin));
+      if (allowed) {
+        callback(null, true);
       } else {
-        return callback(new Error('Not allowed by CORS'));
+        callback(new Error('Not allowed by CORS'));
       }
     },
     credentials: true
@@ -37,10 +38,12 @@ app.use('/api/auth', authRouter);
 app.use('/api/user', userRouter); 
 app.use('/api/cv', cvRouter);
 
-app.listen(PORT, (err) =>
-    err
-        ? console.error(`Error starting server: ${err}`)
-        : console.log(`Server running at http://localhost:${PORT}`)
-);
+app.listen(PORT, (err) => {
+    if (err) {
+      console.error(`Error starting server: ${err}`);
+    } else {
+      console.log(`Server running on port ${PORT}`);
+    }
+  });
 
 
