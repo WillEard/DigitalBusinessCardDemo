@@ -1,13 +1,17 @@
 import Button from 'react-bootstrap/esm/Button';
 import { Container, Row, Col, Card, Image } from 'react-bootstrap';
 
+import '../HomeContent.css'; // New CSS for HomeContent styling
+
 const HomeContent = () => {
     return (
-        <Container className="py-1 px-4 text-dark home-content-container"> 
+      <div className="home-section-bg">
+        <div className="bg-image-overlay">
+        <Container className="py-1 px-4 text-dark"> 
 
         {/* Panel 1: Text Left, Image Right */}
-        <Row className="align-items-center py-5 px-5 rounded-top-3 mb-5 top-fade"> 
-          <Col md={6} className="text-center text-md-start">
+        <Row className="align-items-center py-5 px-5 rounded-top-3 mb-5 top-fade mt-5"> 
+          <Col md={6} className="text-center text-md-start text-light">
             <h2 className="fw-bold">Instantly Professional</h2>
             <p className="lead">
             Access anyone’s professional story in seconds—just scan their QR.
@@ -34,7 +38,7 @@ const HomeContent = () => {
   
         {/* Panel 2: Image Left, Text Right */}
         <Row className="align-items-center py-5 px-5 flex-md-row-reverse mb-5">
-          <Col md={6} className="text-center text-md-start">
+          <Col md={6} className="text-center text-md-start text-light">
             <h2 className="fw-bold">Smart Networking</h2>
             <p className="lead">
             Turn every connection into an opportunity.
@@ -61,7 +65,7 @@ const HomeContent = () => {
 
         {/* Panel 3: Text Left, Image Right */}
         <Row className="align-items-center py-5 px-5 mb-5">
-          <Col md={6} className="text-center text-md-start">
+          <Col md={6} className="text-center text-md-start text-light">
             <h2 className="fw-bold">Secure & Privacy-Focused</h2>
             <p className="lead">
             You control who sees what. Set visibility preferences and share only what matters with the click of a button.
@@ -87,7 +91,7 @@ const HomeContent = () => {
 
         {/* Panel 4: Image Left, Text Right */}
         <Row className="align-items-center py-5 px-5 flex-md-row-reverse rounded-bottom-3 mb-5" >
-          <Col md={6} className="text-center text-md-start">
+          <Col md={6} className="text-center text-md-start text-light">
             <h2 className="fw-bold">Effortless Setup & Customization</h2>
             <p className="lead">
             Your résumé, reimagined for the digital age.
@@ -113,6 +117,8 @@ Sign up, fill out your info, and get a unique QR instantly; ready to network, hi
           </Col>
         </Row>
       </Container>
+      </div>
+    </div>
     );
   }
 

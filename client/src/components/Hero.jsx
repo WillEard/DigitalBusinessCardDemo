@@ -17,6 +17,7 @@ import CVModal from './CVModal';
 import '../Hero.css';// CSS file for background and styling
 import '../Fonts.css'; // Import custom font styles
 import PelagoPassDemo from '../assets/PelagoPassDemo.svg';
+import { RiPassValidFill } from "react-icons/ri";
 
 
 const Hero = () => {
@@ -129,7 +130,9 @@ const Hero = () => {
                 </Container>
                 <div className="overflow-hidden" style={{ maxHeight: '50vh' }}>
                   <Container className="px-5 py-5">
-                    <Image className="rounded w-75" style={{height: '100%', width: '100%'}} src={PelagoPassDemo} alt="Pelago Pass Demo" />
+                    <RiPassValidFill size={'225px'} />
+
+
                   </Container>
                 </div>
               </div>

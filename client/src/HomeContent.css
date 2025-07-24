@@ -1,32 +1,16 @@
-.top-fade {
-    position: relative;
-  }
-  
-  .top-fade::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 150px;
-    width: 100%;
-    background: linear-gradient(to bottom, white, rgba(255, 255, 255, 0));
-    pointer-events: none;
-    z-index: 2;
-  }
+.home-section-bg {
+  width: 100%;
+  background-image: url('/home-bg.png'); /* make sure this path is correct */
+  background-size: auto;
+  background-position: center center; /* ← centers both horizontally & vertically */
+  background-repeat: no-repeat;
+  background-attachment: scroll; /* optional */
+  position: relative;
+}
 
-  .home-content-container {
-    position: relative;
-    background-color: white; /* or your page background */
-  }
-  
-  .home-content-container::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 150px;
-    width: 100%;
-    background: linear-gradient(to bottom, white, rgba(255, 255, 255, 0));
-    pointer-events: none;
-    z-index: 2;
-  }
+.bg-image-overlay {
+  background-color: rgba(255, 255, 255, 0); /* Optional overlay for contrast */
+  width: 100%;
+  position: relative;
+  z-index: 1;
+}
