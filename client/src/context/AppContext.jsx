@@ -22,14 +22,46 @@ export const AppContextProvider = (props) => {
   const getAuthStatus = async () => {
     try {
       const { data } = await axios.get(backendUrl + '/api/auth/is-Auth');
+      
       if (data.success) {
         setIsLoggedIn(true);
         await getUserData();
       } else {
-        toast.error('Server Error 1: ' + data.message, {
+        // Unlikely to reach here if backend returns 401 instead of 200
+        setIsLoggedIn(false);
+      }
+  
+    } catch (error) {
+      if (error.response?.status === 401) {
+        // ✅ Expected case: user not signed in
+        console.log('User is not signed in (401)');
+        setIsLoggedIn(false);
+      } else {
+        // ❌ Real error — show toast
+        toast.error('Unexpected Error: ' + error.message, {
           position: 'bottom-right',
           autoClose: 3000,
           hideProgressBar: true,
+          closeOnClick: false,
+          pauseOnHover: true,
+          draggable: true,
+          theme: 'dark',
+        });
+      }
+    }
+  };
+
+  const getUserData = async () => {
+    try {
+      const { data } = await axios.get(backendUrl + '/api/user/data');
+      
+      if (data.success) {
+        setUserData(data.userData);
+      } else {
+        toast.error('Server Error: ' + data.message, {
+          position: 'bottom-right',
+          autoClose: 3000,
+          hideProgressBar: false,
           closeOnClick: false,
           pauseOnHover: true,
           draggable: true,
@@ -37,37 +69,23 @@ export const AppContextProvider = (props) => {
           theme: 'dark',
         });
       }
+  
     } catch (error) {
-      toast.error('Exception Error: ' + error.message, {
-        position: 'bottom-right',
-        autoClose: 3000,
-        hideProgressBar: true,
-        closeOnClick: false,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: 'dark',
-      });
-    }
-  };
-
-  const getUserData = async () => {
-    try {
-      const { data } = await axios.get(backendUrl + '/api/user/data');
-      data.success
-        ? setUserData(data.userData)
-        : toast.error('Server Error: ' + data.message, {
-            position: 'bottom-right',
-            autoClose: 3000,
-            hideProgressBar: false,
-            closeOnClick: false,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: 'dark',
-          });
-    } catch (error) {
-      toast.error(error.message);
+      if (error.response?.status === 401) {
+        // ✅ Silent fail or handle auth state
+        console.warn('User is not signed in — getUserData skipped');
+      } else {
+        toast.error(`Unexpected Error: ${error.message}`, {
+          position: 'bottom-right',
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: false,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: 'dark',
+        });
+      }
     }
   };
 
