@@ -16,8 +16,7 @@ import { FaArrowTurnDown } from "react-icons/fa6";
 import CVModal from './CVModal';
 import '../Hero.css';// CSS file for background and styling
 import '../Fonts.css'; // Import custom font styles
-
-
+import PelagoPassDemo from '../assets/PelagoPassDemo.svg';
 
 
 const Hero = () => {
@@ -111,7 +110,7 @@ const Hero = () => {
             </Row>
           </Container>
         ) : (
-          <Container className="py-5 px-5 text-center">
+          <Container id="hero" className="py-5 px-5 text-center">
             <Row className="align-items-center d-none d-md-flex">
               <div className="px-4 pt-5 my-5 text-center">
                 <h1 className="display-4 fw-bold text-uppercase" style={{ fontFamily: 'Sailor Condensed' }}>Your digital business card, <br />reimagined</h1>
@@ -128,9 +127,9 @@ const Hero = () => {
                     </Button>
                   </div>
                 </Container>
-                <div className="overflow-hidden" style={{ maxHeight: '30vh' }}>
+                <div className="overflow-hidden" style={{ maxHeight: '50vh' }}>
                   <Container className="px-5 py-5">
-                    <QRCode size={184} className="rounded" value={homeUrl} style={{ maxWidth: '50%' }} />
+                    <Image className="rounded w-75" style={{height: '100%', width: '100%'}} src={PelagoPassDemo} alt="Pelago Pass Demo" />
                   </Container>
                 </div>
               </div>

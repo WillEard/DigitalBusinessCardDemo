@@ -74,9 +74,9 @@ const LoginForm = () => {
   };
 
   return (
-    <Container className="text-dark mx-auto row align-items-center col-lg-5 mt-5 pt-2 pb-3">
-      <h1 className="text-center">Login</h1>
-      <Form onSubmit={onSubmitHandler}>
+    <Container className="text-dark mx-auto row align-items-center justify-content-center col-lg-5 mt-5 pt-2 pb-3 ">
+      <h1 className="text-center text-light">Login</h1>
+      <Form onSubmit={onSubmitHandler} className='col-xxl-4 col-xl-6 col-lg-10 col-md-8 col-sm-8 col-xs-12'>
         <Form.Group className="mb-3" controlId="formEmail">
           <FloatingLabel
             controlId="formEmail"
@@ -108,17 +108,17 @@ const LoginForm = () => {
               required
             />
           </FloatingLabel>
-          <Form.Text className="text-dark lead">
+          <Form.Text className="text-light fw-bold">
             We&apos;ll never share your password with anyone else.
           </Form.Text>
           <br />
 
-          <Button className="btn btn-md mt-2 mb-2" variant="dark" type="submit">
+          <Button className="btn btn-md mt-2 mb-2" variant="primary" type="submit">
             Login
           </Button>
           <br />
-          <Form.Text className="text-secondary">
-            <a className="" onClick={handleStateChange}>
+          <Form.Text>
+            <a className="text-light fw-bold" onClick={handleStateChange}>
               New? Create an account here
             </a>
           </Form.Text>

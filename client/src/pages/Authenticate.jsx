@@ -2,18 +2,15 @@ import Container from 'react-bootstrap/esm/Container';
 import Navbar from '../components/Navbar';
 import LoginForm from '../components/Login';
 import Footer from '../components/Footer';
-import { useState } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import SignupForm from '../components/Signup';
-import { Navigate } from 'react-router-dom';
-import { useContext, useEffect } from 'react';
+import { Navigate, useLocation } from 'react-router-dom';
 import { AppContext } from '../context/AppContext';
-import { useLocation } from 'react-router-dom';
+import '../Authenticate.css'; // CSS file for background and styling
 
 const Login = () => {
-  // Login / Sign Up / logged in
-
   const location = useLocation();
-  const {isLoggedIn } = useContext(AppContext);
+  const { isLoggedIn } = useContext(AppContext);
   const navAuthState = location.state?.authState;
   const [authState, setAuthState] = useState(navAuthState || 'Login');
 
@@ -28,18 +25,17 @@ const Login = () => {
   }
 
   return (
-    <Container>
-      <Navbar />
-      <>
-        {isLoggedIn ? (
-          <Navigate to="/" />
-        ) : (
-          <div>{authState === 'SignUp' ? <SignupForm /> : <LoginForm />}</div>
-        )}
-      </>
+    <div className="d-flex flex-column min-vh-100 login-wrapper text-white">
+      <div className="login-overlay flex-grow-1">
+        <Container fluid>
+          <Navbar />
 
-      <Footer />
-    </Container>
+          {authState === 'SignUp' ? <SignupForm /> : <LoginForm />}
+        </Container>
+      </div>
+
+      
+    </div>
   );
 };
 

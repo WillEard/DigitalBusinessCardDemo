@@ -6,13 +6,13 @@ import { Row } from 'react-bootstrap';
 
 const Footer = () => {
   return (
-    <div className="bg-dark text-light py-4 mt-5 d-flex justify-content-center rounded-top">
+    <div className="footer bg-dark text-light py-4 mt-5 d-flex justify-content-center">
       {/* Wrapper for responsive width */}
       <div className="w-100 w-sm-50">
         <Container fluid>
           <Row className="align-items-center">
             <Col md={6} className="text-center text-md-start mb-3 mb-md-0">
-              <h5 className='text-center'>DigiCard</h5>
+              <h5 className='text-center'>PelagoPass</h5>
               <small className="text-muted">Your Digital Identity, Simplified.</small>
             </Col>
 
@@ -29,8 +29,8 @@ const Footer = () => {
 
           <Row>
             <Col className="text-center text-light">
-              <small>* User must be verified in order to qualify for DigiCard+</small><br />
-              <small>&copy; 2025 DigiCard. All rights reserved.</small>
+              <small>* User must be verified in order to qualify for PelagoPlus</small><br />
+              <small>&copy; 2025 Pelago. All rights reserved.</small>
             </Col>
           </Row>
         </Container>

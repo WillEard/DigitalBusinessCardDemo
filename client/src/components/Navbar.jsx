@@ -90,7 +90,7 @@ const Navigation = () => {
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="justify-content-center mx-auto">
             <li className="nav-item">
-              <a className="nav-link active text-light navelement" aria-current="page" href="#home" style={{ fontFamily: 'Sailor Condensed' }}>
+              <a className="nav-link active text-light navelement" aria-current="page" href="#hero" style={{ fontFamily: 'Sailor Condensed' }}>
                 Home
               </a>
             </li>

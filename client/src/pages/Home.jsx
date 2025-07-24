@@ -13,7 +13,7 @@ import ThreePointJumbo from '../components/3Points-Jumbo';
 
 const Home = () => {
   return (
-    <div className='ocean-background'>
+    <div className='ocean-background '>
       <div className='fluid'>
         {/* Navbar top of webpage */}
         <Navbar />
