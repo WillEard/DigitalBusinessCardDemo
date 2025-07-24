@@ -10,6 +10,8 @@ import { useNavigate } from 'react-router-dom';
 import FAQ from '../components/FAQ';
 import ThreePointJumbo from '../components/3Points-Jumbo';
 import HowItWorks from '../components/HowItWorks';
+import Features from '../components/Features';
+import Testimonials from '../components/Testimonials';
 
 
 const Home = () => {
@@ -25,6 +27,10 @@ const Home = () => {
         <ThreePointJumbo />
 
         <HowItWorks />
+
+        <Features />
+
+        <Testimonials />
 
         {/* Selling point section, 4 tiles 
         <HomeContent />

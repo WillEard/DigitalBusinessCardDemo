@@ -1,0 +1,52 @@
+/* Features.css */
+
+.features-section {
+    background: url('/hero-bg.png') center center no-repeat;
+    background-size: cover;
+    padding-top: 5rem;
+    padding-bottom: 5rem;
+    margin-top: 5rem;
+    text-align: center;
+    color: #fff;
+    position: relative;
+  }
+  
+  .features-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6); /* dark overlay */
+    z-index: 0;
+  }
+  
+  .features-section * {
+    position: relative;
+    z-index: 1;
+  }
+  
+  .features-heading {
+    font-family: 'Sailor', serif;
+    font-weight: bold;
+    font-size: 3rem;
+    margin-bottom: 3rem;
+  }
+  
+  .step-heading {
+    font-family: 'Sailor Condensed', sans-serif;
+    font-size: 1.75rem;
+    font-weight: 700;
+    margin-top: 1rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .step-icon {
+    opacity: 0.1;
+    margin-bottom: 1rem;
+  }
+  
+  .step-number {
+    color: #fff;
+  }

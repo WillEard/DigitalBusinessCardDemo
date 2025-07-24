@@ -1,4 +1,4 @@
-import { Container, Row, Col } from 'react-bootstrap';
+import { Container, Row, Col, Button } from 'react-bootstrap';
 import '../Fonts.css';
 import '../HowItWorks.css'; // Import the CSS file you just created
 import { RiNumber1, RiNumber2, RiNumber3 } from "react-icons/ri";
@@ -52,9 +52,10 @@ function HowItWorks() {
       <Row className="justify-content-center mt-5">
         <Col md={12} className="step-col">
           <h2 className="step-heading" style={{ fontFamily: 'Sailor Condensed' }}>See what your card could look like in seconds!</h2>
-          <RiPassValidFill size={'192px'}/>
+          <RiPassValidFill size={'225px'}/> <br />
+
+            <Button className='btn-lg rounded-5'>Start creating</Button>
         </Col>
-       
       </Row>
     </Container>
   );
