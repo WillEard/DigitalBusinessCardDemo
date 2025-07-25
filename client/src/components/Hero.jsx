@@ -65,6 +65,7 @@ const Hero = () => {
 
                   </div>
                 </Container>
+                {/*}
                 <div className="overflow-hidden" style={{ maxHeight: '30vh' }}>
                   <div
                       ref={qrRef}
@@ -80,6 +81,7 @@ const Hero = () => {
                       />
                     </div>
                 </div>
+                */}
               </div>
             </Row>
 
