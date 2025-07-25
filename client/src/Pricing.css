@@ -1,0 +1,71 @@
+/* ========== FREE PLAN STYLES ========== */
+.free-plan {
+    background-color: #b4d4ed;
+  }
+  
+  .free-heading {
+    font-family: 'Sailor', serif;
+    font-weight: bold;
+    font-size: 3rem;
+    margin-bottom: 3rem;
+    color: #1a1d3d;
+  }
+  
+  .free-button {
+    font-family: 'Sailor', serif;
+    background-color: #1a1d3d;
+    color: white;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 1.2rem;
+  }
+  
+  .free-plan .plan-content li {
+    font-family: 'Sailor Italic', serif;
+    font-size: 1.3rem;
+    color: #1a1d3d;
+    line-height: 1.6;
+    margin-bottom: 1rem;
+  }
+
+  /* ========== PAID PLAN STYLES ========== */
+.paid-plan {
+    background-color: #1a1d3d;
+    color: white;
+  }
+  
+  .paid-heading {
+    font-family: 'Sailor', serif;
+    font-weight: bold;
+    font-size: 3rem;
+    margin-bottom: 3rem;
+    color: white;
+  }
+  
+  .paid-plan .plan-content li {
+    font-family: 'Sailor Italic', serif;
+    font-size: 1.2rem;
+    color: white;
+    line-height: 1.6;
+    margin-bottom: 1rem;
+  }
+  
+
+  /* ========== SHARED STYLES ========== */
+.pricing {
+    background-color: aliceblue;
+  }
+  
+  .pricing-heading {
+    font-family: 'Sailor', serif;
+    font-weight: bold;
+    margin-bottom: 3rem;
+  }
+  
+  .icon-inline {
+    vertical-align: middle;
+    font-size: 1.1em;
+    margin-right: 0.25em;
+    position: relative;
+    top: -2px; /* aligns icon nicely */
+  }

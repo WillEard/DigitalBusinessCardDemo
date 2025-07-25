@@ -1,4 +1,7 @@
 /* HowItWorks.css */
+.howitworks-section {
+  margin-top: 8rem;
+}
 
 .step-col {
     position: relative;

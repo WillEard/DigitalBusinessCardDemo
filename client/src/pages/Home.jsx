@@ -7,7 +7,6 @@ import Hero from '../components/Hero';
 import Pricing from '../components/Pricing';
 import HomeContent from '../components/HomeContent';
 import { useNavigate } from 'react-router-dom';
-import FAQ from '../components/FAQ';
 import ThreePointJumbo from '../components/3Points-Jumbo';
 import HowItWorks from '../components/HowItWorks';
 import Features from '../components/Features';
@@ -40,7 +39,6 @@ const Home = () => {
         <Pricing />
 
         {/* FAQ section */}
-        <FAQ />
 
         {/* Footer at bottom */}
         <Footer />

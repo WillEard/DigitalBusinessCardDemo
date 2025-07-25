@@ -3,58 +3,67 @@ import { AppContext } from '../context/AppContext';
 import Button from 'react-bootstrap/esm/Button';
 import { Container, Row, Col, Card } from 'react-bootstrap';
 
+import '../Fonts.css';
+import '../Pricing.css'; // Import your pricing styles
+
+import { FaCheck } from "react-icons/fa6";
+import { RxCross2 } from "react-icons/rx";
 
 function PricingContainer() {
     return (
-      <Container id="pricing" className="py-5 text-center">
-        <h1 className="mb-4 display-3 fw-bold">Pricing</h1>
-        <p className="lead mb-5">
-          Choose the plan that fits your needs. Start for free or upgrade anytime.*
-        </p>
-  
-        <Row className="justify-content-center">
+      <Container fluid id="pricing" className="pricing py-5 ">
+        <h1 className="mb-4 pricing-heading text-center display-3">Pricing</h1>
+       
+        <Row className="justify-content-center ">
           {/* Free Plan */}
-          <Col md={5} className="mb-4">
-            <Card className="h-100 shadow-sm">
+          <Col md={4} className="mb-4 ">
+            <Card className="h-100 shadow-sm free-plan text-center rounded-5">
               <Card.Header className="py-3">
-                <h4 className="my-0 fw-normal">Free</h4>
+                <h4 className="my-0 fw-normal free-heading">Free</h4>
               </Card.Header>
-              <Card.Body>
-                <h2 className="card-title pricing-card-title">
-                  £0 <small className="text-muted">/mo</small>
-                </h2>
-                <ul className="list-unstyled mt-3 mb-4">
-                  <li>All standard features</li>
-                  <li>Update CV anytime</li>
-                  <li>24/7 Support</li>
-                  <li>Show number of CV viewers</li>
+              <Card.Body className='plan-content mb-3'>
+                <ul className="list-unstyled mt-3" >
+                  <li><FaCheck className="icon-inline"/>Create Cards</li>
+                  <li><FaCheck className="icon-inline"/>QR Sharing</li>
+                  <li><RxCross2 className="icon-inline"/>24/7 Support</li>
+                  <li><RxCross2 className="icon-inline"/>Show number of CV viewers</li>
                 </ul>
-                <Button variant="outline-primary" className="w-100" disabled>
-                  Free by default
+                <Button className="rounded-5 btn-lg free-button" >
+                  Stay Free
                 </Button>
               </Card.Body>
             </Card>
           </Col>
   
           {/* Paid Plan */}
-          <Col md={5} className="mb-4">
-            <Card className="h-100 border-primary shadow-sm">
-              <Card.Header className="py-3 bg-primary text-white">
-                <h4 className="my-0 fw-normal">DigiCard+</h4>
+          <Col md={6} className="mb-4 ">
+            <Card className="h-100 shadow-sm paid-plan rounded-5 text-center">
+              <Card.Header className="py-3">
+                <h4 className="my-0 fw-normal paid-heading text-center">Paid</h4>
               </Card.Header>
-              <Card.Body>
-                <h2 className="card-title pricing-card-title">
-                  £4.99 <small className="text-muted">/mo</small>
-                </h2>
-                <ul className="list-unstyled mt-3 mb-4">
-                  <li>CV Card customization</li>
-                  <li>Custom QR design</li>
-                  <li>24/7 Support</li>
-                  <li>Show names of CV viewers</li>
-                </ul>
-                <Button variant="primary" className="w-100">
-                  Get Started
-                </Button>
+              <Card.Body className="plan-content mb-3 ">
+                <Row className='px-1'>
+                  <Col xs={6}>
+                    <ul className="list-unstyled mt-3">
+                      <li><FaCheck className="icon-inline" />All Free Features</li>
+                      <li><FaCheck className="icon-inline" />Premium Templates</li>
+                      <li><FaCheck className="icon-inline" />Wallet Intergration</li>
+                      <li><FaCheck className="icon-inline" />Advanced Branding</li>
+                      <li><FaCheck className="icon-inline" />Support Ocean Conservation</li>
+                    </ul>
+                  </Col>
+                  <Col xs={6}>
+                    <ul className="list-unstyled mt-3">
+                      <li><FaCheck className="icon-inline" />Export Share Reports</li>
+                      <li><FaCheck className="icon-inline" />Multiple Cards</li>
+                      <li><FaCheck className="icon-inline" />Contact Download</li>
+                      <li><FaCheck className="icon-inline" />Team Collaboration</li>
+                    </ul>
+                  </Col>
+                </Row>
+                <div className="text-center">
+                  <Button className="rounded-5 btn-lg free-button mt-3">GO Premium</Button>
+                </div>
               </Card.Body>
             </Card>
           </Col>

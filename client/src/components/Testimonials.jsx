@@ -6,7 +6,7 @@ function Testimonials() {
   return (
     <div className="testimonials-section">
     <Container fluid  id="pricing" >
-      <h1 className="testimonial-heading">Testimonials</h1>
+      <h1 className="display-3 testimonial-heading">Testimonials</h1>
 
       <Row className="justify-content-center mb-3">
         <Col md={3}>

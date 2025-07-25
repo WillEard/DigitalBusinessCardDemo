@@ -19,8 +19,8 @@ import '../Features.css'; // NEW: Import your features styles
 
 function Features() {
   return (
-    <Container fluid id="pricing" className="features-section">
-      <h1 className="features-heading">Features</h1>
+    <Container fluid id="features" className="features-section">
+      <h1 className="display-3 features-heading">Features</h1>
 
       <Row className="justify-content-center mb-3">
         <Col md={3} className="step-col">

@@ -8,7 +8,7 @@ import { RiPassValidFill } from "react-icons/ri";
 
 function HowItWorks() {
   return (
-    <Container id="pricing" className="mt-5 py-5 text-center">
+    <Container id="pricing" className="text-center howitworks-section">
       <h1
         className="mb-5 display-3 fw-bold"
         style={{ fontFamily: 'Sailor' }}

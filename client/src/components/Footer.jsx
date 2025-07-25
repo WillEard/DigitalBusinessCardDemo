@@ -2,37 +2,31 @@ import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Col from 'react-bootstrap/Col';
 import { Row } from 'react-bootstrap';
-
+import Image from 'react-bootstrap/Image';
+import '../Fonts.css';
+import '../Footer.css'; // NEW: Import your features styles 
+import PelagoPassLogo from '../assets/PelagoPassLogo.svg';
 
 const Footer = () => {
   return (
-    <div className="footer bg-dark text-light py-4 mt-5 d-flex justify-content-center">
+    <div className="footer py-5 mt-5 d-flex justify-content-center">
       {/* Wrapper for responsive width */}
       <div className="w-100 w-sm-50">
-        <Container fluid>
-          <Row className="align-items-center">
-            <Col md={6} className="text-center text-md-start mb-3 mb-md-0">
-              <h5 className='text-center'>PelagoPass</h5>
-              <small className="text-muted">Your Digital Identity, Simplified.</small>
-            </Col>
+        <Container >
+          <div className="container">
 
-            <Col md={6} className="text-center text-md-end">
-              <Nav className="justify-content-center justify-content-md-end">
-                <Nav.Link href="#" className="text-light px-2">Privacy Policy</Nav.Link>
-                <Nav.Link href="#" className="text-light px-2">Terms</Nav.Link>
-                <Nav.Link href="#" className="text-light px-2">Contact</Nav.Link>
-              </Nav>
-            </Col>
-          </Row>
-
-          <hr className="border-secondary mt-3" />
-
-          <Row>
-            <Col className="text-center text-light">
-              <small>* User must be verified in order to qualify for PelagoPlus</small><br />
-              <small>&copy; 2025 Pelago. All rights reserved.</small>
-            </Col>
-          </Row>
+            <footer className="py-3 my-4 text-center">
+              <Image className="footer-logo" src={PelagoPassLogo}></Image>
+              <ul className="nav justify-content-center border-bottom pb-3 mb-3">
+                <li className="nav-item"><a href="#" className="nav-link px-2 text-light">Home</a></li>
+                <li className="nav-item"><a href="#" className="nav-link px-2 text-light">Features</a></li>
+                <li className="nav-item"><a href="#" className="nav-link px-2 text-light">Pricing</a></li>
+                <li className="nav-item"><a href="#" className="nav-link px-2 text-light">FAQs</a></li>
+                <li className="nav-item"><a href="#" className="nav-link px-2 text-light">About</a></li>
+              </ul>
+              <p className="text-center text-light">© 2021 Company, Inc</p>
+            </footer>
+          </div>
         </Container>
       </div>
     </div>

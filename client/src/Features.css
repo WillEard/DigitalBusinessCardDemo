@@ -1,7 +1,7 @@
 /* Features.css */
 
 .features-section {
-    background: url('/hero-bg.png') center center no-repeat;
+    background: url('/testimonial-bg.png') center center no-repeat;
     background-size: cover;
     padding-top: 5rem;
     padding-bottom: 5rem;
@@ -18,7 +18,7 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.6); /* dark overlay */
+    background: rgba(0, 0, 0, 0.3); /* dark overlay */
     z-index: 0;
   }
   
@@ -30,7 +30,6 @@
   .features-heading {
     font-family: 'Sailor', serif;
     font-weight: bold;
-    font-size: 3rem;
     margin-bottom: 3rem;
   }
   
@@ -43,7 +42,7 @@
   }
   
   .step-icon {
-    opacity: 0.1;
+    opacity: 0.3;
     margin-bottom: 1rem;
   }
   

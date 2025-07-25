@@ -16,7 +16,6 @@ import { FaArrowTurnDown } from "react-icons/fa6";
 import CVModal from './CVModal';
 import '../Hero.css';// CSS file for background and styling
 import '../Fonts.css'; // Import custom font styles
-import PelagoPassDemo from '../assets/PelagoPassDemo.svg';
 import { RiPassValidFill } from "react-icons/ri";
 
 
@@ -114,7 +113,7 @@ const Hero = () => {
           <Container id="hero" className="py-5 px-5 text-center">
             <Row className="align-items-center d-none d-md-flex">
               <div className="px-4 pt-5 my-5 text-center">
-                <h1 className="display-4 fw-bold text-uppercase" style={{ fontFamily: 'Sailor Condensed' }}>Your digital business card, <br />reimagined</h1>
+                <h1 className="display-3 fw-bold text-uppercase" style={{ fontFamily: 'Sailor Condensed' }}>Your digital business card, <br />reimagined</h1>
                 <Container className="col-lg-6 mx-auto">
                   <p className="lead mb-4 text-uppercase " style={{ fontFamily: 'Sailor Condensed' }}>
                     Eco-friendly, custom, qr-enabled
