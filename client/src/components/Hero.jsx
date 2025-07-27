@@ -16,9 +16,7 @@ import { FaArrowTurnDown } from "react-icons/fa6";
 import CVModal from './CVModal';
 import '../Hero.css';// CSS file for background and styling
 import '../Fonts.css'; // Import custom font styles
-import { RiPassValidFill } from "react-icons/ri";
 
-import PhoneCarousel from './PassCarousel';
 
 
 const Hero = () => {
@@ -50,7 +48,7 @@ const Hero = () => {
   };
 
   return (
-    <div className="hero-wrapper text-white">
+    <div id='home' className="hero-wrapper text-white">
   <div className="hero-overlay">
     {userData ? (
       <Container className="py-5 px-5">
