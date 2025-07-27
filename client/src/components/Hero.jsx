@@ -113,7 +113,7 @@ const Hero = () => {
         </Row>
       </Container>
     ) : (
-      <Container id="hero" className="py-5 px-5 text-center">
+      <Container id="home" className="py-5 px-5 text-center">
         <Row className="d-none d-md-flex justify-content-center align-items-center" style={{ minHeight: '80vh' }}>
           <div className="text-center">
             <h1 className="display-3 fw-bold text-uppercase" style={{ fontFamily: 'Sailor Condensed' }}>
@@ -146,6 +146,10 @@ const Hero = () => {
                     size="lg"
                     className="px-4 rounded-5"
                     style={{ fontFamily: 'Sailor' }}
+                    onClick={() => {
+                      const el = document.getElementById('howitworks');
+                      if (el) el.scrollIntoView({ behavior: 'smooth' });
+                    }}
                   >
                     See how it works
                   </Button>
