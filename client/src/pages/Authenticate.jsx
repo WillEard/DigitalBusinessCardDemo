@@ -31,7 +31,10 @@ const Login = () => {
           <Navbar />
 
           {authState === 'SignUp' ? <SignupForm /> : <LoginForm />}
+
+          
         </Container>
+        <Footer />
       </div>
 
       

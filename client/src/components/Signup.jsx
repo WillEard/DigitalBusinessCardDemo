@@ -65,12 +65,14 @@ const SignupForm = () => {
 
   return (
     //Sign Up Form
-    <Container className="rounded text-dark mx-auto row align-items-center col-lg-5 mt-5 pt-2 pb-3">
-      <h1 className="text-center">Sign Up</h1>
-      <Form onSubmit={onSubmitHandler}>
+    <Container className="mx-auto col-lg-5 mt-5 pt-5 pb-3">
+  <div className="mt-5 pt-4 text-center">
+    <h1 className="mb-4" style={{ fontFamily: 'Sailor' }}>Sign Up</h1>
+
+    <div className="d-flex justify-content-center">
+      <Form onSubmit={onSubmitHandler} className="w-100" style={{ maxWidth: '400px' }}>
         <Form.Group className="mb-3" controlId="formName">
-          <FloatingLabel controlId="formName" label="Name" className="mb-3">
-            {' '}
+          <FloatingLabel controlId="formName" label="Name" className="text-dark">
             <Form.Control
               onChange={(e) => setName(e.target.value)}
               value={name}
@@ -80,9 +82,9 @@ const SignupForm = () => {
             />
           </FloatingLabel>
         </Form.Group>
+
         <Form.Group className="mb-3" controlId="formUsername">
-          <FloatingLabel controlId="formUsername" label="Username" className="mb-3">
-            {' '}
+          <FloatingLabel controlId="formUsername" label="Username" className="text-dark">
             <Form.Control
               onChange={(e) => setUsername(e.target.value)}
               value={username}
@@ -92,13 +94,9 @@ const SignupForm = () => {
             />
           </FloatingLabel>
         </Form.Group>
+
         <Form.Group className="mb-3" controlId="formEmail">
-          <FloatingLabel
-            controlId="formEmail"
-            label="Email address"
-            className="mb-3"
-          >
-            {' '}
+          <FloatingLabel controlId="formEmail" label="Email address" className="text-dark">
             <Form.Control
               onChange={(e) => setEmail(e.target.value)}
               value={email}
@@ -108,29 +106,21 @@ const SignupForm = () => {
             />
           </FloatingLabel>
         </Form.Group>
+
         <Form.Group className="mb-3" controlId="formPhoneNumber">
-          <FloatingLabel
-            controlId="formPhoneNumber"
-            label="Phone Number"
-            className="mb-3"
-          >
-            {' '}
+          <FloatingLabel controlId="formPhoneNumber" label="Phone Number" className="text-dark">
             <Form.Control
               onChange={(e) => setPhoneNumber(e.target.value)}
               value={phoneNumber}
-              type="number"
+              type="tel"
               placeholder="Enter phone number"
               required
             />
           </FloatingLabel>
         </Form.Group>
+
         <Form.Group className="mb-3" controlId="formPassword">
-          <FloatingLabel
-            controlId="formPassword"
-            label="Password"
-            className="mb-1"
-          >
-            {' '}
+          <FloatingLabel controlId="formPassword" label="Password" className="text-dark">
             <Form.Control
               onChange={(e) => setPassword(e.target.value)}
               value={password}
@@ -139,20 +129,13 @@ const SignupForm = () => {
               required
             />
           </FloatingLabel>
-          <Form.Text className="text-dark">
-            <p>We&apos;ll never share your password with anyone else.</p>
+          <Form.Text className="text-light d-block text-start mt-1" style={{ fontFamily: 'Sailor Condensed' }}>
+            We'll never share your password with anyone else.
           </Form.Text>
         </Form.Group>
-        <Form.Group
-          className="mb-3 text-center"
-          controlId="formConfirmPassword"
-        >
-          <FloatingLabel
-            controlId="formConfirmPassword"
-            label="Confirm Password"
-            className="mb-1"
-          >
-            {' '}
+
+        <Form.Group className="mb-3" controlId="formConfirmPassword">
+          <FloatingLabel controlId="formConfirmPassword" label="Confirm Password" className="text-dark">
             <Form.Control
               onChange={(e) => setConfirmPassword(e.target.value)}
               value={confirmPassword}
@@ -162,17 +145,20 @@ const SignupForm = () => {
             />
           </FloatingLabel>
         </Form.Group>
-        <Button className="btn mt-1" variant="dark" type="submit">
+
+        <Button type="submit" variant="primary" className="rounded-3 btn-lg mt-3" style={{ fontFamily: 'Sailor' }}>
           Sign Up
-        </Button>{' '}
-        <br />
-        <Form.Text className="text-secondary">
-          <a className="" onClick={handleStateChange}>
+        </Button>
+
+        <Form.Text className="text-secondary d-block text-center mt-3">
+        <a className="text-light text-decoration-none" onClick={handleStateChange} role="button" style={{ fontFamily: 'Sailor Condensed' }}>
             Have an account? Login here
           </a>
         </Form.Text>
       </Form>
-    </Container>
+    </div>
+  </div>
+</Container>
   );
 };
 

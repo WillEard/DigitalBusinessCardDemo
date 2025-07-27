@@ -24,7 +24,7 @@ const Footer = () => {
                 <li className="nav-item"><a href="#" className="nav-link px-2 text-light">FAQs</a></li>
                 <li className="nav-item"><a href="#" className="nav-link px-2 text-light">About</a></li>
               </ul>
-              <p className="text-center text-light">© 2021 Company, Inc</p>
+              <p className="text-center text-light">©2025 Pelago</p>
             </footer>
           </div>
         </Container>

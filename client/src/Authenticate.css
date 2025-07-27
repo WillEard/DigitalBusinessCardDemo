@@ -1,41 +1,31 @@
 .login-wrapper {
-    position: relative;
-    margin-top: -80px; /* adjust if navbar height changes */
-    /* height: 100vh; ❌ Remove this */
-    width: 100%;
-    background: url('/hero-bg.png') no-repeat center center;
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-attachment: scroll;
-    color: white;
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh; /* ✅ Add this instead */
-  }
+  position: relative;
+  background: url('/hero-bg.png') center center / cover no-repeat;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  overflow: hidden;
+}
 
-  .login-wrapper::after {
-    content: '';
-    position: absolute;
-    bottom: -1px;
-    left: 0;
-    width: 120%;
-    height: 150px;
-    background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, white 100%);
-    z-index: 3;
-    pointer-events: none;
-  }
+.login-overlay {
+  background-color: rgba(0, 0, 0, 0.5);
+  flex-grow: 1;
+  width: 100%;
+  padding-top: 80px;
+  position: relative;
+  z-index: 1;
+}
 
-  
-  
-  .login-overlay {
-    background-color: rgba(0, 0, 0, 0.5);
-    /* height: 100%; ❌ optional — remove if using flex-grow-1 */
-    width: 100%;
-    padding-top: 80px;
-    position: relative;
-    z-index: 3;
-  }
-
-  
+/* gradient only for styling effect – must stay within 100% width */
+.login-wrapper::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 150px;
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, white 100%);
+  z-index: 2;
+  pointer-events: none;
+}
