@@ -8,7 +8,7 @@ import PhoneCarousel from './PassCarousel';
 
 function HowItWorks() {
   return (
-    <Container id="pricing" className="text-center howitworks-section">
+    <Container id="howitworks" className="text-center howitworks-section">
       <h1
         className="mb-5 display-3 fw-bold"
         style={{ fontFamily: 'Sailor' }}

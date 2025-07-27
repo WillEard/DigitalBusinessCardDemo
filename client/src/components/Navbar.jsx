@@ -95,18 +95,23 @@ const Navigation = () => {
               </a>
             </li>
             <li className="nav-item">
-              <a className="nav-link active text-light navelement" aria-current="page" href="/#pricing" style={{ fontFamily: 'Sailor Condensed' }}>
-                Pricing
-              </a>
-            </li>
-            <li className="nav-item">
               <a className="nav-link active text-light navelement" aria-current="page" href="/#howitworks" style={{ fontFamily: 'Sailor Condensed' }}>
                 How it works
               </a>
             </li>
             <li className="nav-item">
-              <a className="nav-link active text-light navelement" aria-current="page" href="#faq" style={{ fontFamily: 'Sailor Condensed' }}>
-                FAQ
+              <a className="nav-link active text-light navelement" aria-current="page" href="/#features" style={{ fontFamily: 'Sailor Condensed' }}>
+                Features
+              </a>
+            </li>
+            <li className="nav-item">
+              <a className="nav-link active text-light navelement" aria-current="page" href="/#testimonials" style={{ fontFamily: 'Sailor Condensed' }}>
+                Testimonials
+              </a>
+            </li>
+            <li className="nav-item">
+              <a className="nav-link active text-light navelement" aria-current="page" href="/#pricing" style={{ fontFamily: 'Sailor Condensed' }}>
+                Pricing
               </a>
             </li>
           </Nav>

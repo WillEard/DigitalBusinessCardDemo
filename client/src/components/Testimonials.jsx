@@ -4,7 +4,7 @@ import '../Testimonials.css';
 
 function Testimonials() {
   return (
-    <div className="testimonials-section">
+    <div id='testimonials' className="testimonials-section">
     <Container fluid  id="pricing" >
       <h1 className="display-3 testimonial-heading">Testimonials</h1>
 
