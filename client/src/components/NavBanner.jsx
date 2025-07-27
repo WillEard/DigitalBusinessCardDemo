@@ -1,6 +1,6 @@
 import '../Banner.css';
 
-const Banner = ({ message = "🍏 Alert! iOS devices are currently unable to login due technical difficultiesQ", onClose }) => {
+const Banner = ({ message = "🍏 Alert! iOS devices are currently unable to login due technical difficulties", onClose }) => {
   return (
     <div className="alert-banner text-center text-white px-3 py-2 d-flex justify-content-center align-items-center">
       <span>{message}</span>
