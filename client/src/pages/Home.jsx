@@ -11,14 +11,23 @@ import ThreePointJumbo from '../components/3Points-Jumbo';
 import HowItWorks from '../components/HowItWorks';
 import Features from '../components/Features';
 import Testimonials from '../components/Testimonials';
+import NavBanner from '../components/NavBanner';
+import { Nav } from 'react-bootstrap';
+import { useState } from 'react';
+
 
 
 const Home = () => {
+  const [showBanner, setShowBanner] = useState(true);
+
   return (
     <div className='ocean-background '>
       <div className='fluid'>
         {/* Navbar top of webpage */}
         <Navbar />
+        {showBanner && (
+        <NavBanner onClose={() => setShowBanner(false)} />
+      )}
 
         {/* Hero top of Homepage, Title & CTA */}
         <Hero />

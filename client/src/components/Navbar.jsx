@@ -64,7 +64,7 @@ const Navigation = () => {
 
   return (
     <Navbar
-      sticky="top"
+      fixed="top"
       collapseOnSelect
       expand="lg"
       className={`floating-navbar rounded-bottom m-auto shadow-lg ${
@@ -136,7 +136,7 @@ const Navigation = () => {
                   onClick={() =>
                     navigate('/Authenticate', { state: { authState: 'SignUp' } })
                   }
-                  className="fw-bold bg-primary text-white rounded signup mx-1" style={{ fontFamily: 'Sailor Condensed Italic' }}
+                  className="fw-bold bg-primary text-white rounded signup mx-1" style={{ fontFamily: 'Sailor Condensed' }}
                 >
                   Sign Up
                 </Nav.Link>
@@ -144,7 +144,7 @@ const Navigation = () => {
                   onClick={() =>
                     navigate('/Authenticate', { state: { authState: 'Login' } })
                   }
-                  className="fw-bold text-light login rounded" style={{ fontFamily: 'Sailor Condensed Italic' }}
+                  className="fw-bold text-light login rounded" style={{ fontFamily: 'Sailor Condensed' }}
                 >
                   Login
                 </Nav.Link>

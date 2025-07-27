@@ -3,7 +3,7 @@ import '../Fonts.css';
 import '../HowItWorks.css'; // Import the CSS file you just created
 import { RiNumber1, RiNumber2, RiNumber3 } from "react-icons/ri";
 import { RiPassValidFill } from "react-icons/ri";
-
+import PhoneCarousel from './PassCarousel';
 
 
 function HowItWorks() {
@@ -52,9 +52,12 @@ function HowItWorks() {
       <Row className="justify-content-center mt-5">
         <Col md={12} className="step-col">
           <h2 className="step-heading" style={{ fontFamily: 'Sailor Condensed' }}>See what your card could look like in seconds!</h2>
-          <RiPassValidFill size={'225px'}/> <br />
+          {/* Phone Carousel Centered */}
+          <div className="d-flex justify-content-center py-4">
+            <PhoneCarousel />
+          </div> <br />
 
-            <Button className='btn-lg rounded-5'>Start creating</Button>
+            <Button className='btn-lg rounded-5' style={{ fontFamily: 'Sailor' }}>Start creating</Button>
         </Col>
       </Row>
     </Container>
