@@ -1,6 +1,6 @@
 <strong>PelagoPass</strong>
 
-<strong>Core Libraries</strong>
+<strong><u>Core Libraries</u></strong>
 React – Frontend framework for building UI
 
 React Router DOM – Client-side routing
@@ -9,7 +9,7 @@ Axios – Promise-based HTTP client for API requests
 
 Vite – Fast frontend build tool and dev server
 
-<strong>UI & Styling</strong>
+<strong><u>UI & Styling</u></strong>
 Bootstrap – Responsive UI components
 
 React Bootstrap – Bootstrap components as React components
@@ -20,7 +20,7 @@ MDB React UI Kit – Material Design UI components
 
 React Icons – Icon set integration for various libraries
 
-<strong>Features & Utilities</strong>
+<strong><u>Features & Utilities</u></strong>
 React Toastify – Toast notifications
 
 React QR Code – Generate QR codes
@@ -29,7 +29,7 @@ React Circular Progressbar – Display progress in a circular bar
 
 html-to-image – Convert DOM nodes to images
 
-<strong>Developer & Build Tools </strong>
+<strong><u>Developer & Build Tools</u></strong>
 ESLint – Linter for code quality
 
 @vitejs/plugin-react – Vite plugin for React
