@@ -107,7 +107,7 @@ const Settings = () => {
               <Form.Group className="mb-3">
                 
                 <Form.Label className='text-light'>Name</Form.Label>
-                <Form.Control value={userData.name} disabled />
+                <Form.Control value={userData?.name || ''} disabled />
               </Form.Group>
               
               {/*}
@@ -128,13 +128,13 @@ const Settings = () => {
             <Col className='col-lg-3 col-sm-5'>
               <Form.Group className="mb-3">
                 <Form.Label className='text-light'>Username</Form.Label>
-                <Form.Control placeholder={userData.username} disabled />
+                <Form.Control value={userData?.username || ''} disabled />
               </Form.Group>
             </Col>
             <Col className="col-lg-3 col-sm-5">
               <Form.Group className="mb-3">
                 <Form.Label className='text-light'>Email Address</Form.Label>
-                <Form.Control placeholder={userData.email} disabled />
+                <Form.Control value={userData?.email || ''} disabled />
               </Form.Group>
             </Col>
           </Row>
@@ -149,11 +149,11 @@ const Settings = () => {
               <Form>
               <Form.Group className="mb-3" controlId="FullNameControlInput">
                   <Form.Label className='text-light'>Full Name</Form.Label>
-                  <Form.Control type="email" placeholder={cvData?.user?.name} disabled/>
+                  <Form.Control type="email" value={cvData?.user?.name || ''} disabled/>
               </Form.Group>
               <Form.Group className="mb-3" controlId="EmailControlInput">
                   <Form.Label className='text-light'>Email address</Form.Label>
-                  <Form.Control type="email" placeholder={cvData?.user?.email} disabled/>
+                  <Form.Control type="email" value={cvData?.user?.email || ''} disabled/>
               </Form.Group>
               <Form.Group className="mb-3" controlId="PhoneNumberControlInput">
                   <Form.Label className='text-light'>Phone Number</Form.Label>

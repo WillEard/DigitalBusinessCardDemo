@@ -31,7 +31,6 @@ const Login = () => {
     return <Navigate to="/" />;
   }
 
-
   // Handle Google OAuth login success
   const handleGoogleLoginSuccess = async (credentialResponse) => {
     const { credential } = credentialResponse;  // This is the Google ID Token
@@ -49,9 +48,8 @@ const Login = () => {
         // Handle the successful login, e.g., save user data, redirect, etc.
         console.log('User logged in:', data.user);
 
-        localStorage.setItem('token', data.token);
         
-         // You can save user data in context or state here if necessary
+        // You can save user data in context or state here if necessary
         setUserData(data.user);  // Assuming `setUserData` is from a context or state
         setIsLoggedIn(true);      // Assuming `setIsLoggedIn` is to mark the user as logged in
 

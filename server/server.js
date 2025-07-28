@@ -14,7 +14,7 @@ connectDB();
 
 const allowedOrigins = [
   'http://localhost:5173',
-  'https://your-site.netlify.app',
+  'http://localhost:4000',
   'https://www.pelagopass.com'
 ];
 

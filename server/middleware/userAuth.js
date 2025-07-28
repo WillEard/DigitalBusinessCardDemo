@@ -1,10 +1,11 @@
 import jwt from 'jsonwebtoken';
 
 const userAuth = async (req, res, next) => {
+  console.log('Cookies in auth middleware:', req.cookies);  // << Add this
+
   const { token } = req.cookies;
 
   if (!token) {
-    // User is not signed in – expected case
     return res.status(401).json({ success: false, message: 'User not signed in' });
   }
 
@@ -18,9 +19,8 @@ const userAuth = async (req, res, next) => {
       return res.status(401).json({ success: false, message: 'Invalid token payload' });
     }
   } catch (error) {
-    // This is a real error (e.g. expired or malformed token)
     console.error('Auth Middleware Error:', error);
-    return res.status(500).json({ success: false, message: 'Authentication failed' });
+    return res.status(401).json({ success: false, message: 'Authentication failed' });
   }
 };
 

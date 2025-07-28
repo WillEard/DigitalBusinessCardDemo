@@ -22,76 +22,50 @@ export const AppContextProvider = (props) => {
   
   const getAuthStatus = async () => {
     try {
-      const { data } = await axios.get(backendUrl + '/api/auth/is-Auth');
-      
-      if (data.success) {
-        setIsLoggedIn(true);
-        await getUserData();
-      } else {
-        // Unlikely to reach here if backend returns 401 instead of 200
-        setIsLoggedIn(false);
-      }
+      axios.defaults.withCredentials = true;
   
+      const { data } = await axios.get(`${backendUrl}/api/auth/is-Auth`);
+  
+      if (data?.success && data?.user) {
+        setIsLoggedIn(true);
+        setUserData(data.user); // If backend sends user here
+      } else {
+        setIsLoggedIn(false);
+        setUserData(null);
+      }
     } catch (error) {
       if (error.response?.status === 401) {
-        // ✅ Expected case: user not signed in
-        console.log('User is not signed in (401)');
         setIsLoggedIn(false);
+        setUserData(null);
       } else {
-        // ❌ Real error — show toast
-        toast.error('Unexpected Error: ' + error.message, {
-          position: 'bottom-right',
-          autoClose: 3000,
-          hideProgressBar: true,
-          closeOnClick: false,
-          pauseOnHover: true,
-          draggable: true,
-          theme: 'dark',
-        });
+        console.error("Auth status check failed:", error);
+        toast.error('Unexpected Error: ' + error.message);
       }
     }
   };
 
   const getUserData = async () => {
-    try {
-      const { data } = await axios.get(backendUrl + '/api/user/data');
-      
-      if (data.success) {
-        setUserData(data.userData);
-      } else {
-        toast.error('Server Error: ' + data.message, {
-          position: 'bottom-right',
-          autoClose: 3000,
-          hideProgressBar: false,
-          closeOnClick: false,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: 'dark',
-        });
-      }
-  
-    } catch (error) {
-      if (error.response?.status === 401) {
-        // ✅ Silent fail or handle auth state
-        console.warn('User is not signed in — getUserData skipped');
-      } else {
-        toast.error(`Unexpected Error: ${error.message}`, {
-          position: 'bottom-right',
-          autoClose: 3000,
-          hideProgressBar: false,
-          closeOnClick: false,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: 'dark',
-        });
-      }
+    axios.defaults.withCredentials = true;
+  try {
+    const { data } = await axios.get(backendUrl + '/api/user/data');
+    if (data.success) {
+      setUserData(data.userData);
+    } else {
+      setUserData(null);
+      toast.error('Server Error: ' + data.message);
     }
-  };
+  } catch (error) {
+    if (error.response?.status === 401) {
+      setUserData(null);
+      toast.error('Unauthorized: Please log in again.');
+    } else {
+      toast.error(`Unexpected Error: ${error.message}`);
+    }
+  }
+};
 
   const getCVData = async (username) => {
-  
+    axios.defaults.withCredentials = true;
     if (!username) {
       console.warn('Username undefined in getCVData, skipping fetch');
       return;
@@ -110,24 +84,28 @@ export const AppContextProvider = (props) => {
   };
 
   
-
   useEffect(() => {
-    const token = localStorage.getItem('token');
+    setIsLoadingUser(true);
   
-    if (token) {
-      axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-      const storedUser = localStorage.getItem('user');
-      if (storedUser) {
-        setUserData(JSON.parse(storedUser));
-      }
-      setIsLoggedIn(true);
-    } else {
-      setIsLoggedIn(false);
-      setUserData(null);
-    }
-  
-    setIsLoadingUser(false);
-    getAuthStatus();
+    // Always check backend auth status on mount, refresh userData from backend
+    getAuthStatus()
+      .then((response) => {
+        if (response?.data?.user) {
+          setUserData(response.data.user);
+          setIsLoggedIn(true);
+        } else {
+          setUserData(null);
+          setIsLoggedIn(false);
+        }
+      })
+      .catch((err) => {
+        console.error("Error checking auth status:", err);
+        setUserData(null);
+        setIsLoggedIn(false);
+      })
+      .finally(() => {
+        setIsLoadingUser(false);
+      });
   }, []);
 
   const value = {
