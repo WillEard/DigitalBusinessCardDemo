@@ -18,10 +18,8 @@ import CircumIcon from "@klarr-agency/circum-icons-react"; // React
 
 const Settings = () => {
   const navigate = useNavigate();
-
-  const { backendUrl, userData, cvData, getCVData} = useContext(AppContext);
-
-  const username = userData.username;
+  const { backendUrl, userData, cvData, getCVData, isLoadingUser} = useContext(AppContext);
+  const username = userData?.username;
 
   const [phoneNumber, setPhoneNumber] = useState('');
   const [education, setEducation] = useState('');
@@ -109,7 +107,7 @@ const Settings = () => {
               <Form.Group className="mb-3">
                 
                 <Form.Label className='text-light'>Name</Form.Label>
-                <Form.Control placeholder={userData.name} disabled />
+                <Form.Control value={userData.name} disabled />
               </Form.Group>
               
               {/*}

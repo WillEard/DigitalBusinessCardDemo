@@ -16,6 +16,7 @@ export const AppContextProvider = (props) => {
   const backendUrl = import.meta.env.VITE_BACKEND_URL;
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userData, setUserData] = useState(false);
+  const [isLoadingUser, setIsLoadingUser] = useState(true);
   const [cvData, setCVData] = useState(false);
 
   
@@ -115,16 +116,18 @@ export const AppContextProvider = (props) => {
   
     if (token) {
       axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+      const storedUser = localStorage.getItem('user');
+      if (storedUser) {
+        setUserData(JSON.parse(storedUser));
+      }
       setIsLoggedIn(true);
-  
-      // Remove this, rely on fresh user data from backend instead:
-      // setUserData(JSON.parse(localStorage.getItem('user')));
-  
-      getAuthStatus();
     } else {
       setIsLoggedIn(false);
       setUserData(null);
     }
+  
+    setIsLoadingUser(false);
+    getAuthStatus();
   }, []);
 
   const value = {
