@@ -70,8 +70,8 @@ const Hero = () => {
               </div>
             </Container>
 
-            {/* Optional QR Preview (hidden currently)
-            <div className="overflow-hidden" style={{ maxHeight: '30vh' }}>
+            
+            <div className="overflow-hidden" style={{ maxHeight: '30vh', position: 'absolute', left: '-9999px', top: '-9999px' }}>
               <div ref={qrRef} className="d-flex justify-content-center" style={{ overflow: 'hidden', maxHeight: '30vh' }}>
                 <QRCode
                   className="rounded"
@@ -82,7 +82,7 @@ const Hero = () => {
                 />
               </div>
             </div>
-            */}
+            
           </div>
         </Row>
 

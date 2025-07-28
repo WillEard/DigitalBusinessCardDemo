@@ -1,5 +1,6 @@
 import express from 'express';
 import { isAuthenticated, login, logout, register, resetPassword, sendResetOTP, sendVerifyOtp, verifyEmail } from '../controllers/authController.js';
+import { googleLogin } from '../controllers/googleAuthController.js';  // Import your new Google login controller
 import userAuth from '../middleware/userAuth.js';
 
 const authRouter = express.Router();
@@ -13,5 +14,8 @@ authRouter.post('/verify-account', userAuth, verifyEmail);
 authRouter.get('/is-Auth', userAuth, isAuthenticated);
 authRouter.post('/send-reset-otp', sendResetOTP);
 authRouter.post('/reset-password', resetPassword);
+
+// New route for Google login
+authRouter.post('/google-login', googleLogin);
 
 export default authRouter;

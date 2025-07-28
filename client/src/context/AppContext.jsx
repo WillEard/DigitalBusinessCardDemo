@@ -111,6 +111,17 @@ export const AppContextProvider = (props) => {
   
 
   useEffect(() => {
+    const token = localStorage.getItem('token');
+
+  if (token) {
+    axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+    setIsLoggedIn(true);
+    setUserData(JSON.parse(localStorage.getItem('user')));
+  } else {
+    setIsLoggedIn(false);
+    setUserData(null);
+  }
+  
     getAuthStatus();
   }, []);
 
