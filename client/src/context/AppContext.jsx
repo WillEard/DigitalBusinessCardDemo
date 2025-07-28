@@ -112,17 +112,19 @@ export const AppContextProvider = (props) => {
 
   useEffect(() => {
     const token = localStorage.getItem('token');
-
-  if (token) {
-    axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-    setIsLoggedIn(true);
-    setUserData(JSON.parse(localStorage.getItem('user')));
-  } else {
-    setIsLoggedIn(false);
-    setUserData(null);
-  }
   
-    getAuthStatus();
+    if (token) {
+      axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+      setIsLoggedIn(true);
+  
+      // Remove this, rely on fresh user data from backend instead:
+      // setUserData(JSON.parse(localStorage.getItem('user')));
+  
+      getAuthStatus();
+    } else {
+      setIsLoggedIn(false);
+      setUserData(null);
+    }
   }, []);
 
   const value = {
