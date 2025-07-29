@@ -15,9 +15,13 @@ export const AppContextProvider = (props) => {
   const [authState, setAuthState] = useState('login');
   const backendUrl = import.meta.env.VITE_BACKEND_URL;
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [userData, setUserData] = useState(false);
+  const [userData, setUserData] = useState(null);
   const [isLoadingUser, setIsLoadingUser] = useState(true);
   const [cvData, setCVData] = useState(false);
+
+  console.log('CONTEXT > userData:', userData);
+  console.log('CONTEXT > cvData:', cvData);
+  console.log('CONTEXT > isLoadingUser:', isLoadingUser);
 
   
   const getAuthStatus = async () => {
@@ -57,7 +61,6 @@ export const AppContextProvider = (props) => {
   } catch (error) {
     if (error.response?.status === 401) {
       setUserData(null);
-      toast.error('Unauthorized: Please log in again.');
     } else {
       toast.error(`Unexpected Error: ${error.message}`);
     }
@@ -85,27 +88,12 @@ export const AppContextProvider = (props) => {
 
   
   useEffect(() => {
-    setIsLoadingUser(true);
-  
-    // Always check backend auth status on mount, refresh userData from backend
-    getAuthStatus()
-      .then((response) => {
-        if (response?.data?.user) {
-          setUserData(response.data.user);
-          setIsLoggedIn(true);
-        } else {
-          setUserData(null);
-          setIsLoggedIn(false);
-        }
-      })
-      .catch((err) => {
-        console.error("Error checking auth status:", err);
-        setUserData(null);
-        setIsLoggedIn(false);
-      })
-      .finally(() => {
-        setIsLoadingUser(false);
-      });
+    const checkAuth = async () => {
+      setIsLoadingUser(true);
+      await getAuthStatus();
+      setIsLoadingUser(false);
+    };
+    checkAuth();
   }, []);
 
   const value = {
@@ -120,6 +108,8 @@ export const AppContextProvider = (props) => {
     setCVData,
     authState,
     setAuthState,
+    isLoadingUser,
+    setIsLoadingUser
   };
   return (
     <AppContext.Provider value={value}>{props.children}</AppContext.Provider>

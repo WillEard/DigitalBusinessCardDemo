@@ -31,13 +31,18 @@ const Settings = () => {
   const [hobbies, setHobbies] = useState('');
   const [achievements, setAchievements] = useState('');
 
+  console.log('SETTINGS > userData:', userData);
+  console.log('SETTINGS > cvData:', cvData);
+  console.log('SETTINGS > isLoadingUser:', isLoadingUser);
+
+
    // Fetch CV data when username is available
    useEffect(() => {
-    if (username) {
-      getCVData(username); // Just trigger the fetch
-      setPhoneNumber(userData?.phoneNumber || '');
+    if (userData?.username) {
+      getCVData(userData.username);
+      setPhoneNumber(userData.phoneNumber || '');
     }
-  }, [username]);
+  }, [userData]);
 
 
   useEffect(() => {
@@ -227,14 +232,14 @@ const Settings = () => {
 
               <Form.Group className="mb-3">
                 <Form.Label className='text-light'>Mobile Number</Form.Label>
-                <Form.Control placeholder={userData.phoneNumber} disabled />
+                <Form.Control value={userData?.phoneNumber} disabled />
               </Form.Group>{' '}
             </Col>
 
             <Col className="col-5">
               <Form.Group className="mb-3">
                 <Form.Label className='text-light'>Verification</Form.Label>
-                <Form.Control placeholder={userData.isVerified ? 'Verified' : 'Not Verified'} disabled />
+                <Form.Control value={userData?.isVerified ? 'Verified' : 'Not Verified'} disabled />
               </Form.Group>{' '}
 
               <Form.Group className="mb-3">
