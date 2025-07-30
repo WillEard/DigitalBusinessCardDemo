@@ -19,20 +19,21 @@ export const AppContextProvider = (props) => {
   const [isLoadingUser, setIsLoadingUser] = useState(true);
   const [cvData, setCVData] = useState(false);
 
-  console.log('CONTEXT > userData:', userData);
-  console.log('CONTEXT > cvData:', cvData);
-  console.log('CONTEXT > isLoadingUser:', isLoadingUser);
+  
 
   
   const getAuthStatus = async () => {
     try {
-      axios.defaults.withCredentials = true;
+      const { data } = await axios.get(`${backendUrl}/api/auth/is-Auth`, { withCredentials: true });
+      console.log('Auth status response:', data);
   
-      const { data } = await axios.get(`${backendUrl}/api/auth/is-Auth`);
-  
-      if (data?.success && data?.user) {
+      if (data?.success) {
         setIsLoggedIn(true);
-        setUserData(data.user); // If backend sends user here
+        if (data.user) {
+          setUserData(data.user);
+        } else {
+          await getUserData();
+        }
       } else {
         setIsLoggedIn(false);
         setUserData(null);
@@ -49,7 +50,6 @@ export const AppContextProvider = (props) => {
   };
 
   const getUserData = async () => {
-    axios.defaults.withCredentials = true;
   try {
     const { data } = await axios.get(backendUrl + '/api/user/data');
     if (data.success) {
@@ -68,7 +68,6 @@ export const AppContextProvider = (props) => {
 };
 
   const getCVData = async (username) => {
-    axios.defaults.withCredentials = true;
     if (!username) {
       console.warn('Username undefined in getCVData, skipping fetch');
       return;
@@ -85,6 +84,7 @@ export const AppContextProvider = (props) => {
       toast.error(error.response?.data?.message || error.message);
     }
   };
+
 
   
   useEffect(() => {

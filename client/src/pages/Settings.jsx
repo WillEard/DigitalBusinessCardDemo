@@ -6,20 +6,27 @@ import Col from 'react-bootstrap/esm/Col';
 import Button from 'react-bootstrap/Button';
 import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
-import InputGroup from 'react-bootstrap/InputGroup';
+
 import { useNavigate } from 'react-router-dom';
 import { useState,useContext, useEffect } from 'react';
+
 import { AppContext } from '../context/AppContext';
+
 import { Toast } from 'bootstrap';
 import { toast } from 'react-toastify';
+
 import axios from 'axios';
+
 import CircumIcon from "@klarr-agency/circum-icons-react"; // React
 
 
 const Settings = () => {
-  const navigate = useNavigate();
+  
   const { backendUrl, userData, cvData, getCVData, isLoadingUser} = useContext(AppContext);
+  
   const username = userData?.username;
+
+  
 
   const [phoneNumber, setPhoneNumber] = useState('');
   const [education, setEducation] = useState('');
@@ -31,18 +38,24 @@ const Settings = () => {
   const [hobbies, setHobbies] = useState('');
   const [achievements, setAchievements] = useState('');
 
-  console.log('SETTINGS > userData:', userData);
-  console.log('SETTINGS > cvData:', cvData);
-  console.log('SETTINGS > isLoadingUser:', isLoadingUser);
-
 
    // Fetch CV data when username is available
-   useEffect(() => {
-    if (userData?.username) {
-      getCVData(userData.username);
-      setPhoneNumber(userData.phoneNumber || '');
+   // If userData is missing after loading finishes, redirect
+  useEffect(() => {
+    if (!isLoadingUser && !userData) {
+      console.warn("Not logged in.");
+      
     }
-  }, [userData]);
+  }, [isLoadingUser, userData]);
+
+  // Once user is available, fetch CV and phone
+  useEffect(() => {
+    if (username) {
+      console.log('Fetching CV data for', username);
+      getCVData(username);
+      setPhoneNumber(userData?.phoneNumber || '');
+    }
+  }, [username]);
 
 
   useEffect(() => {
@@ -89,6 +102,7 @@ const Settings = () => {
     }
   };
 
+  
   return (
     <Container className='bg-dark text-light'>
       <Navbar />
