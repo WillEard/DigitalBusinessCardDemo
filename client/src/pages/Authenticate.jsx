@@ -34,14 +34,16 @@ const Login = () => {
 
   // Handle Google OAuth login success
   const handleGoogleLoginSuccess = async (credentialResponse) => {
-    axios.defaults.withCredentials = true;
     const { credential } = credentialResponse;  // This is the Google ID Token
   
     try {
       // Send the Google token to your backend for verification
       const res = await axios.post(`${backendUrl}/api/auth/google-login`, {
         token: credential,  // Only send the token
-      });
+      }, {
+        withCredentials: true
+
+    });
   
       // The response is already parsed as JSON with axios
       const data = res.data;

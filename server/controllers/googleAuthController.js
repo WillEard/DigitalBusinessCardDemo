@@ -9,6 +9,7 @@ const client = new OAuth2Client(clientId);  // Replace with your actual Google C
 // Controller for handling Google login
 export const googleLogin = async (req, res) => {
   const { token } = req.body;
+
   try {
     const ticket = await client.verifyIdToken({
       idToken: token,
@@ -33,7 +34,6 @@ export const googleLogin = async (req, res) => {
     const jwtToken = createJWTToken(user);
 
     // Set JWT token as an HTTP-only cookie
-    const isProduction = process.env.NODE_ENV === 'production';
 
     res.cookie('token', jwtToken, {
       httpOnly: true,
