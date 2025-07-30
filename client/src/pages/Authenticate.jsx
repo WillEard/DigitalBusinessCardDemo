@@ -34,6 +34,7 @@ const Login = () => {
 
   // Handle Google OAuth login success
   const handleGoogleLoginSuccess = async (credentialResponse) => {
+    axios.defaults.withCredentials = true;
     const { credential } = credentialResponse;  // This is the Google ID Token
   
     try {

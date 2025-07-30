@@ -12,26 +12,23 @@ const PORT = process.env.PORT || 4000;
 
 connectDB();
 
-const allowedOrigins = [
-  'http://localhost:5173',
-  'http://localhost:4000',
-  'https://www.pelagopass.com'
-];
-
 app.use(express.json());
 app.use(cookieParser());
 
-// CORS configuration
+const allowedOrigins = process.env.NODE_ENV === 'production'
+  ? ['https://www.pelagopass.com']
+  : ['http://localhost:5173'];
+
 app.use(cors({
   origin: function (origin, callback) {
-    if (!origin) return callback(null, true);
+    if (!origin) return callback(null, true); // allow requests like Postman or server-to-server
     if (allowedOrigins.includes(origin)) {
       return callback(null, true);
     } else {
       return callback(new Error('Not allowed by CORS'));
     }
   },
-  credentials: true
+  credentials: true,
 }));
 
 // COOP and COEP headers

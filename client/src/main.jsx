@@ -6,6 +6,8 @@ import App from './App.jsx';
 import { BrowserRouter } from 'react-router-dom';
 import { AppContextProvider } from './context/AppContext.jsx';
 import {GoogleOAuthProvider} from '@react-oauth/google';
+import axios from 'axios';
+axios.defaults.withCredentials = true
 
 const clientId = import.meta.env.VITE_GOOGLE_CLIENT_ID;
 
