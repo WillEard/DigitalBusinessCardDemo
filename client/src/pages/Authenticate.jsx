@@ -34,38 +34,29 @@ const Login = () => {
 
   // Handle Google OAuth login success
   const handleGoogleLoginSuccess = async (credentialResponse) => {
-    const { credential } = credentialResponse;  // This is the Google ID Token
+    const { credential } = credentialResponse;
   
     try {
-      // Send the Google token to your backend for verification
       const res = await axios.post(`${backendUrl}/api/auth/google-login`, {
-        token: credential,  // Only send the token
+        token: credential,
       }, {
-        withCredentials: true
-
-    });
+        withCredentials: true, // ✅ Needed to receive the secure cookie
+      });
   
-      // The response is already parsed as JSON with axios
       const data = res.data;
   
       if (data.success) {
-        // Handle the successful login, e.g., save user data, redirect, etc.
         console.log('User logged in:', data.user);
-
-        
-        // You can save user data in context or state here if necessary
-        setUserData(data.user);  // Assuming `setUserData` is from a context or state
-        setIsLoggedIn(true);      // Assuming `setIsLoggedIn` is to mark the user as logged in
-
-         // Redirect to the desired page after login (e.g., Dashboard)
-        navigate('/');  // Or wherever you want to redirect the user
+        setUserData(data.user);
+        setIsLoggedIn(true);
+        navigate('/');
       } else {
         console.error('Google Login failed');
       }
     } catch (err) {
-      console.error('Error during login:', err);
+      console.error('Error during login:', err.response?.data || err.message);
     }
-  }
+  };
     
 
   
@@ -84,15 +75,18 @@ const Login = () => {
       <hr />
     </div>
     <div className="d-flex flex-column align-items-center justify-content-center my-4">
+      {/*
         <div className="google-login-box bg-light rounded p-3 shadow-sm text-dark">
           <p className="mb-2 text-center fw-bold">Or continue with Google</p>
-          <GoogleLogin
+          <GoogleLogin 
             onSuccess={handleGoogleLoginSuccess}
             onError={() => console.log("Login failed")}
             width="100%" // Optional — adjust based on preference
-          />
+          /> 
         </div>
+        */}
       </div>
+      
 
     <Footer />
   </div>
