@@ -18,6 +18,7 @@ const CVModal = () => {
 
   const { username } = useParams();
 
+
   useEffect(() => {
     if (username) {
       getCVData(username);
@@ -29,7 +30,7 @@ const CVModal = () => {
     <>
     <Container data-bs-theme="dark" className="mt-3 mb-5 p-4 shadow-4 rounded-3 bg-body-tertiary text-light d-flex justify-content-between align-items-center">
               <h2 className='text-start'>{cvData?.user?.name || 'Loading...'}</h2>
-              <h3 className='text-end'>{userData.isVerified ? 'Verified' : 'Not Verified'}</h3>
+              <h3 className='text-end'>{userData?.isVerified ? 'Verified' : 'Not Verified'}</h3>
     </Container>
 
     <Row className='justify-content-center p-3'>

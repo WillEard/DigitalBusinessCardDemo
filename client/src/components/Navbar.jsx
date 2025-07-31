@@ -119,6 +119,7 @@ const Navigation = () => {
             {userData ? (
               <>
                 <NavDropdown title={<span style={{ color: 'white' }}>Account</span>} id="collapsible-nav-dropdown">
+                  <NavDropdown.Item href="/dashboard">Dashboard</NavDropdown.Item>
                   <NavDropdown.Item href="/account">Account</NavDropdown.Item>
                   {!userData.isVerified ? (
                     <NavDropdown.Item onClick={sendVerifyOTP}>Verify Account</NavDropdown.Item>

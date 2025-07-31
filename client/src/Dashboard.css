@@ -1,0 +1,44 @@
+.login-wrapper {
+    position: relative;
+    background: url('/testimonial-bg.png') center center / cover no-repeat;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    overflow: hidden;
+  }
+  
+  .login-overlay {
+    background-color: rgba(0, 0, 0, 0.5);
+    flex-grow: 1;
+    width: 100%;
+    padding-top: 80px;
+    position: relative;
+    z-index: 1;
+  }
+  
+  /* gradient only for styling effect – must stay within 100% width */
+  .login-wrapper::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 10%;
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, white 100%);
+    z-index: 2;
+    pointer-events: none;
+  }
+
+  .analytics {
+    margin-top: 37px;
+    background-color: rgba(255, 255, 255, 1); 
+  }
+
+  .fontNormal {
+    font-family: 'Sailor', sans-serif;
+  }
+
+  .fontCondensed {
+    font-family: 'Sailor Condensed', sans-serif;
+  }
