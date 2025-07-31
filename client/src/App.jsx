@@ -9,8 +9,18 @@ import Settings from './pages/Settings';
 import Dashboard from './pages/Dashboard';
 import { ToastContainer } from 'react-toastify';
 import CV from './pages/CV';
+import { useEffect } from 'react';
 
 const App = () => {
+
+  useEffect(() => {
+    if (process.env.NODE_ENV === 'development') {
+      const script = document.createElement('script');
+      script.src = 'https://unpkg.com/react-scan/dist/auto.global.js';
+      script.async = true;
+      document.body.appendChild(script);
+    }
+  }, []);
   return (
     <div>
       <ToastContainer />

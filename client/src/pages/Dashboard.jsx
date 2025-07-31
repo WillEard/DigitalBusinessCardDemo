@@ -5,8 +5,8 @@ import {
 import { AppContext } from '../context/AppContext';
 import { useNavigate } from 'react-router-dom';
 import Navbar from '../components/Navbar';
-import '../Dashboard.css'; // Import custom CSS for Navbar
 
+import '../Dashboard.css'; // Import custom CSS for Navbar
 import '../Fonts.css'; // Import custom font styles
 
 
