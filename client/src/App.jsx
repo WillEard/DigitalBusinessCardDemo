@@ -10,6 +10,8 @@ import Dashboard from './pages/Dashboard';
 import { ToastContainer } from 'react-toastify';
 import CV from './pages/CV';
 import { useEffect } from 'react';
+import CookieBanner from './components/CookieBanner';
+
 
 const App = () => {
 
@@ -35,6 +37,7 @@ const App = () => {
         <Route path="/cv/:username" element={<CV />} /> 
         <Route path="*" element={<NotFound />} />
       </Routes>
+      <CookieBanner />
     </div>
   );
 };
