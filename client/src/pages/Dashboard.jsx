@@ -5,6 +5,7 @@ import {
 import { AppContext } from '../context/AppContext';
 import { useNavigate } from 'react-router-dom';
 import Navbar from '../components/Navbar';
+import CVModal from '../components/CVModal';
 
 import '../Dashboard.css'; // Import custom CSS for Navbar
 import '../Fonts.css'; // Import custom font styles
@@ -15,6 +16,10 @@ const Dashboard = () => {
   const { userData, getUserData } = useContext(AppContext);
   const navigate = useNavigate();
 
+  const siteURL = `www.pelagopass.com`;
+  const profileUrl = `${siteURL}/cv/${userData?.username}`;
+
+
   useEffect(() => {
     getUserData();
   }, []);
@@ -22,9 +27,8 @@ const Dashboard = () => {
   const firstName = userData?.name?.split(' ')[0] || 'User';
 
   const cards = [
-    { id: 'abc123', name: 'John Smith', title: 'Creative Director', qrCode: 'some-url' },
-    { id: 'def456', name: 'Jane Doe', title: 'Product Manager', qrCode: 'another-url' },
-    { id: 'ghi789', name: 'Willy Shakes', title: 'Entertainer', qrCode: 'another-url' }
+    { id: 'abc123', name: userData?.name, title: 'Co-Founder @ (company name)', qrCode: profileUrl },
+    { id: 'def456', name: userData?.name, title: 'CFO @ (company name)', qrCode: profileUrl }
   ];
 
   return (
@@ -34,7 +38,12 @@ const Dashboard = () => {
       <Navbar />
 
       <Container className="my-5">
-        <h1 className="mb-1 fw-semibold fontNormal">Welcome back, {firstName}</h1>
+        <div className='d-flex justify-content-between align-items-center'>
+          <h1 className="mb-1 fw-semibold fontNormal">Welcome back, {firstName}</h1>
+          <h1 className={userData?.isVerified ? '' : 'text-danger'}> 
+          {userData?.isVerified ? 'Verified' : 'Not Verified'} </h1>
+        </div>
+        
         <p className="mb-3 text-light fontCondensed" >70% complete</p>
         <ProgressBar now={70} className="mb-4" variant="info" />
 
@@ -46,11 +55,12 @@ const Dashboard = () => {
             <Button variant="outline-light fontCondensed">Edit Existing Card</Button>
           </Col>
           <Col md="auto" className="mb-2">
-            <Button variant="outline-light fontCondensed">Add to Apple Wallet</Button>
+            <CVModal  profileUrl={profileUrl}/>
           </Col>
+          {!userData?.isVerified && (
           <Col md="auto" className="mb-2">
-            <Button variant="outline-light fontCondensed">View all information</Button>
-          </Col>
+            <Button variant="primary fontCondensed">Verify Account</Button>
+          </Col>)}
         </Row>
 
         <Row className="gy-4 align-items-start justify-content-center">
@@ -67,7 +77,7 @@ const Dashboard = () => {
                   <div className="text-muted small fontCondensed">{card.title}</div>
                 </div>
                 <img
-                  src="https://api.qrserver.com/v1/create-qr-code/?size=60x60&data=sample"
+                  src={`https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=${encodeURIComponent(profileUrl)}`}
                   alt="QR"
                 />
               </div>

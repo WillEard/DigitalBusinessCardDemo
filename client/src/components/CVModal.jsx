@@ -16,14 +16,7 @@ const CVModal = ({ profileUrl }) => {
 
   return (
     <>
-      <Button
-        className="border-0 shadow-none"
-        variant="primary"
-        size="lg"
-        onClick={handleShow}
-      >
-        View Pass
-      </Button>
+      <Button variant="outline-light fontCondensed" onClick={handleShow}>View all information</Button>
 
       <Modal
         show={show}
@@ -36,7 +29,7 @@ const CVModal = ({ profileUrl }) => {
       >
         <Modal.Header closeButton className="text-light border-0" style={{ backgroundColor: '#126782' }}>
           <Modal.Title className="w-100" >
-            My DigiCard
+            My Pass
             <hr className="mt-2" />
           </Modal.Title>
         </Modal.Header>

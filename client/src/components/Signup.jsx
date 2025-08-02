@@ -151,7 +151,9 @@ const SignupForm = () => {
         </Button>
 
         <Form.Text className="text-secondary d-block text-center mt-3">
-        <a className="text-light text-decoration-none" onClick={handleStateChange} role="button" style={{ fontFamily: 'Sailor Condensed' }}>
+        <a className="text-light text-decoration-none" onClick={() =>
+                    navigate('/Authenticate', { state: { authState: 'login' } })
+                  } role="button" style={{ fontFamily: 'Sailor Condensed' }}>
             Have an account? Login here
           </a>
         </Form.Text>

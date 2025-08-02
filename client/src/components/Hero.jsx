@@ -63,8 +63,8 @@ const Hero = () => {
                 No app, no paper, no hassle.
               </p>
               <div className="d-grid gap-2 d-sm-flex justify-content-sm-center mb-5">
-                <CVModal profileUrl={profileUrl} />
-                <Button variant="outline-light" size="lg" onClick={handleDownload}>
+                
+                <Button variant="primary" size="lg" onClick={handleDownload}>
                   Share QR
                 </Button>
               </div>
