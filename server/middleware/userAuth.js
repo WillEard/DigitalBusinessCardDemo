@@ -12,9 +12,10 @@ const userAuth = async (req, res, next) => {
   try {
     const tokenDecode = jwt.verify(token, process.env.JWT_SECRET);
 
-    if (tokenDecode?.id) {
-      req.body.userId = tokenDecode.id;
+    if (tokenDecode?.userId) {
+      req.body.userId = tokenDecode.userId;
       next();
+      console.log('Decoded token:', tokenDecode);
     } else {
       return res.status(401).json({ success: false, message: 'Invalid token payload' });
     }

@@ -75,7 +75,7 @@ const Login = () => {
       <hr />
     </div>
     <div className="d-flex flex-column align-items-center justify-content-center my-4">
-      {/*
+     
         <div className="google-login-box bg-light rounded p-3 shadow-sm text-dark">
           <p className="mb-2 text-center fw-bold">Or continue with Google</p>
           <GoogleLogin 
@@ -84,7 +84,7 @@ const Login = () => {
             width="100%" // Optional — adjust based on preference
           /> 
         </div>
-        */}
+     
       </div>
       
 
