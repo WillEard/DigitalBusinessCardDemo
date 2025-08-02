@@ -96,7 +96,11 @@ export const login = async (req, res) => {
             return res.json({success: false, message: "Incorrect password"});
         }
 
-        const token = jwt.sign({id: user._id}, process.env.JWT_SECRET, {expiresIn: '7d'});
+        const token = jwt.sign({
+            userId: user._id,
+            email: user.email,
+            name: user.name,
+          }, process.env.JWT_SECRET, { expiresIn: '7d' });
         const isProduction = process.env.NODE_ENV === 'production' || process.env.FORCE_SECURE === 'true';
 
         res.cookie('token', token, {

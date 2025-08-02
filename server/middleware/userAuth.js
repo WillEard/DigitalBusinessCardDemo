@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken';
 
 const userAuth = async (req, res, next) => {
-  console.log('Cookies in auth middleware:', req.cookies);  // << Add this
+  console.log('Cookies in auth middleware:', req.cookies);
 
   const { token } = req.cookies;
 
@@ -11,14 +11,15 @@ const userAuth = async (req, res, next) => {
 
   try {
     const tokenDecode = jwt.verify(token, process.env.JWT_SECRET);
+    const userId = tokenDecode?.id || tokenDecode?.userId;
 
-    if (tokenDecode?.userId) {
-      req.body.userId = tokenDecode.userId;
-      next();
-      console.log('Decoded token:', tokenDecode);
-    } else {
+    if (!userId) {
       return res.status(401).json({ success: false, message: 'Invalid token payload' });
     }
+
+    req.body.userId = userId;
+    console.log('Decoded token:', tokenDecode);
+    return next();
   } catch (error) {
     console.error('Auth Middleware Error:', error);
     return res.status(401).json({ success: false, message: 'Authentication failed' });
