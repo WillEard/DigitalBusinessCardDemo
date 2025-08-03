@@ -9,6 +9,8 @@ import axios from 'axios';
 import { toast } from 'react-toastify';
 import logo from '../assets/Pelago-Header-Logo-white.svg';
 import { Image } from 'react-bootstrap';
+import { googleLogout } from '@react-oauth/google';
+
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../Navbar.css'; // Import custom CSS for Navbar
 import '../Fonts.css'; // Import custom font styles
@@ -53,6 +55,7 @@ const Navigation = () => {
       axios.defaults.withCredentials = true;
       const { data } = await axios.post(backendUrl + '/api/auth/logout');
       if (data.success) {
+        googleLogout(); // <-- clears the OAuth token
         setIsLoggedIn(false);
         setUserData(false);
         navigate('/');

@@ -66,7 +66,7 @@ const Dashboard = () => {
           </Col>
           {!userData?.isVerified && (
           <Col xs={12} md="auto">
-            <Button variant="primary" className="w-100 fontCondensed">Verify Account</Button>
+            <Button variant="primary" className="w-100 fontCondensed" onClick={()=> navigate('/verify-email')}>Verify Account</Button>
           </Col>)}
         </Row>
 
