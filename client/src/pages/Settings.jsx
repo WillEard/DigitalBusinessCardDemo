@@ -56,7 +56,7 @@ const Settings = () => {
                   <div className="d-flex">
                     <Button
                       href="/reset-pass"
-                      className="bg-primary text-light px-3"
+                      className="bg-primary text-light px-3 fontCondensed"
                       style={{
                         borderTopRightRadius: 0,
                         borderBottomRightRadius: 0,
@@ -103,14 +103,33 @@ const Settings = () => {
                 </Form.Group>
 
                 {/* Delete Account */}
-                <Form.Group>
-                  <Form.Label className="text-light fontCondensed">Delete Account</Form.Label>
-                  <Form.Control
-                    placeholder="Enter account password to delete"
-                    
-                    className="text-muted "
-                  />
-                  <Button className="btn btn-danger mt-2 w-100">Delete Account</Button>
+                <Form.Group className="mb-4">
+                  <Form.Label className="text-light fontCondensed">Password</Form.Label>
+                  <div className="d-flex">
+                    <Button
+                      href="/reset-pass"
+                      className="bg-danger text-light px-3 fontCondensed shadow-none"
+                      style={{
+                        borderTopRightRadius: 0,
+                        borderBottomRightRadius: 0,
+                        borderTopLeftRadius: '0.375rem',
+                        borderBottomLeftRadius: '0.375rem'
+                      }}
+                    >
+                      Change
+                    </Button>
+                    <Form.Control
+                      placeholder="Enter password to delete account"
+                      
+                      className="text-muted"
+                      style={{
+                        borderTopLeftRadius: 0,
+                        borderBottomLeftRadius: 0,
+                        borderTopRightRadius: '0.375rem',
+                        borderBottomRightRadius: '0.375rem'
+                      }}
+                    />
+                  </div>
                 </Form.Group>
               </div>
             </Col>
