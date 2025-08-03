@@ -13,13 +13,14 @@ import '../Dashboard.css'; // Import custom CSS for Navbar
 import '../Fonts.css'; // Import custom font styles
 
 
-
 const Dashboard = () => {
   const { userData, getUserData } = useContext(AppContext);
   const navigate = useNavigate();
 
   const siteURL = `www.pelagopass.com`;
   const profileUrl = `${siteURL}/cv/${userData?.username}`;
+
+  console.log(userData);
 
 
   useEffect(() => {
@@ -41,9 +42,9 @@ const Dashboard = () => {
 
       <Container className="my-5">
         <div className='d-flex justify-content-between align-items-center'>
-          <h1 className="mb-1 fw-semibold fontNormal">Welcome back, {firstName}</h1>
-          <h1 className={userData?.isVerified ? '' : 'text-danger'}> 
-          {userData?.isVerified ? 'Verified' : 'Not Verified'} </h1>
+          <h1 className="mb-1 fw-semibold fontNormal">Welcome back, {firstName}</h1>|
+          <h2 className={userData?.isVerified ? 'fontNormal' : 'text-danger fontNormal'}>{userData?.isVerified ? 'Verified' : 'Not Verified'} </h2>|
+          <h2 className='fontNormal'>{userData?.subscriptionType} version</h2>
         </div>
         
         <p className="mb-3 text-light fontCondensed" >70% complete</p>

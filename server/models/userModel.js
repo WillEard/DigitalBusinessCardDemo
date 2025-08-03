@@ -11,7 +11,8 @@ const userSchema = new mongoose.Schema({
     verifyOTPExpiry: {type: Number, default: 0},
     isVerified: {type: Boolean, default: false},
     resetOTP: {type: String, default: ''},
-    resetOTPExpireAt: {type: Number, default: 0}
+    resetOTPExpireAt: {type: Number, default: 0},
+    subscriptionType: {type: String, default: 'Free'}
 });
   
 const userModel = mongoose.models.user || mongoose.model('user', userSchema);

@@ -16,7 +16,8 @@ const getUserData = async (req, res) => {
             username: user.username,
             isVerified: user.isVerified,
             email: user.email,
-            phoneNumber: user.phoneNumber
+            phoneNumber: user.phoneNumber,
+            subscriptionType: user.subscriptionType
          }});
 
     } catch (error) {
