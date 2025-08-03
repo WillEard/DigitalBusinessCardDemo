@@ -41,28 +41,32 @@ const Dashboard = () => {
       <Navbar />
 
       <Container className="my-5">
-        <div className='d-flex justify-content-between align-items-center'>
-          <h1 className="mb-1 fw-semibold fontNormal">Welcome back, {firstName}</h1>|
-          <h2 className={userData?.isVerified ? 'fontNormal' : 'text-danger fontNormal'}>{userData?.isVerified ? 'Verified' : 'Not Verified'} </h2>|
-          <h2 className='fontNormal'>{userData?.subscriptionType} version</h2>
-        </div>
+      <div className="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center gap-2">
+        <h1 className="mb-1 fw-semibold fontNormal">Welcome back, {firstName}</h1>
+        <span className="d-none d-md-inline">|</span>
+        <h2 className={userData?.isVerified ? 'fontNormal' : 'text-danger fontCondensed'}>
+          {userData?.isVerified ? 'Verified' : 'Not Verified'}
+        </h2>
+        <span className="d-none d-md-inline">|</span>
+        <h2 className="fontCondensed">Subscription: {userData?.subscriptionType}</h2>
+      </div>
         
         <p className="mb-3 text-light fontCondensed" >70% complete</p>
         <ProgressBar now={70} className="mb-4" variant="info" />
 
-        <Row className="mb-4">
-          <Col md="auto" className="mb-2">
-            <Button variant="outline-light fontCondensed">Create New Card</Button>
+        <Row className="mb-4 g-2">
+          <Col xs={12} md="auto">
+            <Button variant="outline-light" className="w-100 fontCondensed">Create New Card</Button>
           </Col>
-          <Col md="auto" className="mb-2">
-            <Button variant="outline-light fontCondensed">Edit Existing Card</Button>
+          <Col xs={12} md="auto">
+            <Button variant="outline-light" className="w-100 fontCondensed">Edit Existing Card</Button>
           </Col>
-          <Col md="auto" className="mb-2">
-            <CVModal  profileUrl={profileUrl}/>
+          <Col xs={12} md="auto">
+            <CVModal profileUrl={profileUrl} />
           </Col>
           {!userData?.isVerified && (
-          <Col md="auto" className="mb-2">
-            <Button variant="primary fontCondensed">Verify Account</Button>
+          <Col xs={12} md="auto">
+            <Button variant="primary" className="w-100 fontCondensed">Verify Account</Button>
           </Col>)}
         </Row>
 

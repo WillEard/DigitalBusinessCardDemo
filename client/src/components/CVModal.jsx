@@ -93,7 +93,7 @@ const CVModal = ({ profileUrl }) => {
 
   return (
     <>
-      <Button variant="outline-light fontCondensed" onClick={handleShow}>View all information</Button>
+      <Button variant="outline-light fontCondensed w-100" onClick={handleShow}>View all information</Button>
 
       <Modal
         show={show}

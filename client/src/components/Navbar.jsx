@@ -118,16 +118,16 @@ const Navigation = () => {
           <Nav>
             {userData ? (
               <>
-                <NavDropdown title={<span style={{ color: 'white' }}>Account</span>} id="collapsible-nav-dropdown">
-                  <NavDropdown.Item href="/dashboard">Dashboard</NavDropdown.Item>
-                  <NavDropdown.Item href="/account">Account</NavDropdown.Item>
+                <NavDropdown title={<span style={{ color: 'white' }} className='fontCondensed'>Account</span>} id="collapsible-nav-dropdown">
+                  <NavDropdown.Item href="/dashboard" className='fontCondensed'>Dashboard</NavDropdown.Item>
+                  <NavDropdown.Item href="/account" className='fontCondensed'>Account</NavDropdown.Item>
                   {!userData.isVerified ? (
-                    <NavDropdown.Item onClick={sendVerifyOTP}>Verify Account</NavDropdown.Item>
+                    <NavDropdown.Item onClick={sendVerifyOTP} className='fontCondensed'>Verify Account</NavDropdown.Item>
                   ) : (
                     <NavDropdown.Item disabled>Verified</NavDropdown.Item>
                   )}
                   <NavDropdown.Divider />
-                  <NavDropdown.Item onClick={logout} eventKey={2} className="fw-bold">
+                  <NavDropdown.Item onClick={logout} eventKey={2} className="fw-bold fontCondensed">
                     Logout
                   </NavDropdown.Item>
                 </NavDropdown>
