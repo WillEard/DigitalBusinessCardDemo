@@ -2,8 +2,10 @@ import { useContext, useEffect } from 'react';
 import {
   Container, Row, Col, Button, Card, ProgressBar, Nav, Dropdown,
 } from 'react-bootstrap';
+
 import { AppContext } from '../context/AppContext';
 import { useNavigate } from 'react-router-dom';
+
 import Navbar from '../components/Navbar';
 import CVModal from '../components/CVModal';
 

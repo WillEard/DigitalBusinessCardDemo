@@ -11,6 +11,7 @@ import { ToastContainer } from 'react-toastify';
 import CV from './pages/CV';
 import { useEffect } from 'react';
 import CookieBanner from './components/CookieBanner';
+import Payment from './pages/Payment';
 
 
 const App = () => {
@@ -35,6 +36,7 @@ const App = () => {
         <Route path="/account" element={<Settings />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/cv/:username" element={<CV />} /> 
+        <Route path="/payment" element={<Payment />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
       <CookieBanner />
