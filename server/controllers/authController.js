@@ -5,7 +5,7 @@ import cvModel from '../models/cvModel.js';
 import transporter from '../config/nodemailer.js';
 import date from 'date-and-time';
 
-import { EMAIL_VERIFY_TEMPLATE, PASSWIRD_RESET_TEMPLATE } from '../config/emailTemplates.js';
+import { EMAIL_VERIFY_TEMPLATE, PASSWIRD_RESET_TEMPLATE, REGISTER_TEMPLATE } from '../config/emailTemplates.js';
 
 // Registration
 export const register = async (req, res) => {
@@ -45,8 +45,9 @@ export const register = async (req, res) => {
         const mailOptions = {
             from: process.env.SENDER_EMAIL,
             to: email,
-            subject: 'Welcome to Wills totally not suspicious app!',
-            text: `Hello, ${name}! Your account has been created with the email: ${email} at ${now}.`
+            subject: 'PelagoPass',
+            text: `Hello, ${name}! <br> Your account has been created with the email: ${email} at ${now}. <br> Make sure to verify your account to get access to all basic features.`,
+            html: REGISTER_TEMPLATE.replace("{{email}}", email).replace("{{user}}", user.username)
         };
 
         await transporter.sendMail(mailOptions, (err, res) => {
