@@ -144,7 +144,7 @@ const Navigation = () => {
                   onClick={() =>
                     navigate('/Authenticate', { state: { authState: 'SignUp' } })
                   }
-                  className="fw-bold bg-primary text-white rounded signup mx-1" style={{ fontFamily: 'Sailor Condensed' }}
+                  className="fw-bold text-dark rounded signup mx-1 fontCondensed" style={{ backgroundColor: '#b4d4ed' }}
                 >
                   Sign Up
                 </Nav.Link>
