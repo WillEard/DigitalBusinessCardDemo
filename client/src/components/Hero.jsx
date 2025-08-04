@@ -77,14 +77,14 @@ const Hero = () => {
                   </h1>
                   <Container className="col-lg-6 mx-auto">
                     <p className="lead mb-4 text-uppercase fontCondensed">
-                      No app, no paper, no hassle.
+                      <span className='fw-bold fontCondensed'>Tap. Share. Done.</span> All without the hassle.
                     </p>
                     <div className="d-grid gap-2 d-sm-flex justify-content-sm-center mb-5">
                       <Button variant="primary fontCondensed" size="lg" onClick={() => navigate('/dashboard')}>
-                        Dashboard
+                        View Dashboard
                       </Button>
                       <Button variant="primary fontCondensed" size="lg" onClick={handleDownload}>
-                        Share QR
+                        Share my QR
                       </Button>
                     </div>
                   </Container>
