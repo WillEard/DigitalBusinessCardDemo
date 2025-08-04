@@ -89,42 +89,81 @@ const Hero = () => {
         </Row>
 
         {/* Mobile Layout */}
-        <Row className="d-flex d-md-none text-center">
-          <Col>
-            <QRCode
-              className="rounded"
-              size={128}
-              style={{ maxWidth: '60%', width: '100%' }}
-              value={profileUrl}
-              viewBox="0 0 256 256"
-            />
-            <h1 className="display-5 fw-bold mt-4">Hey {userData.name?.split(' ')[0]},</h1>
-            <p className="lead mt-2 px-3">
-              Your DigiCard is ready. Share it with a scan and stand out instantly.
-            </p>
-            <div className="mt-3 d-flex flex-column gap-3">
-              <Button variant="primary" size="lg" onClick={() => navigate(profileUrl)}>
-                View My Digicard
-              </Button>
-              <OverlayTrigger placement="top" overlay={<Tooltip>Add to wallet is coming soon!</Tooltip>}>
-                <Button className="btn-dark btn-lg">Add to wallet</Button>
-              </OverlayTrigger>
-              <Button variant="secondary" size="lg">Save QR to camera roll</Button>
+        <Row className="justify-content-center align-items-center" style={{ minHeight: '80vh' }}>
+          <div className="text-center px-3">
+            <h1
+              className="fw-bold text-uppercase mb-4"
+              style={{
+                fontFamily: 'Sailor Condensed',
+                fontSize: '2rem',
+              }}
+            >
+              {userData.name?.split(' ')[0]}, ready to connect? <FaArrowTurnDown />
+            </h1>
+
+            <Container className="mx-auto" style={{ maxWidth: '600px' }}>
+              <p
+                className="lead mb-4 text-uppercase"
+                style={{ fontFamily: 'Sailor Condensed', fontSize: '1.2rem' }}
+              >
+                No app, no paper, no hassle.
+              </p>
+
+              <div className="d-grid gap-2 d-sm-flex justify-content-sm-center mb-5">
+                <Button
+                  variant="primary fontCondensed"
+                  size="lg"
+                  className="w-100 w-sm-auto"
+                  onClick={() => navigate('/dashboard')}
+                >
+                  Dashboard
+                </Button>
+                <Button
+                  variant="primary fontCondensed"
+                  size="lg"
+                  className="w-100 w-sm-auto"
+                  onClick={handleDownload}
+                >
+                  Share QR
+                </Button>
+              </div>
+            </Container>
+
+            {/* Hidden QR Code (off-screen for download purposes) */}
+            <div
+              className="position-absolute"
+              style={{
+                left: '-9999px',
+                top: '-9999px',
+                height: 0,
+                width: 0,
+                overflow: 'hidden',
+              }}
+            >
+              <div ref={qrRef}>
+                <QRCode
+                  className="rounded"
+                  size={256}
+                  style={{ width: '100%', maxWidth: '256px', display: 'block' }}
+                  value={profileUrl}
+                  viewBox="0 0 256 256"
+                />
+              </div>
             </div>
-          </Col>
+          </div>
         </Row>
       </Container>
     ) : (
       <Container id="home" className="py-5 px-5 text-center">
         <Row className="d-none d-md-flex justify-content-center align-items-center" style={{ minHeight: '80vh' }}>
           <div className="text-center">
-            <h1 className="display-3 fw-bold text-uppercase" style={{ fontFamily: 'Sailor Condensed' }}>
+            <h1 className="display-3 fw-bold text-uppercase fontNormal">
               Your digital business card, <br />
               reimagined
             </h1>
 
             <Container className="col-lg-6 mx-auto">
-              <p className="lead mb-4" style={{ fontFamily: 'Sailor' }}>
+              <p className="lead mb-4 fontCondensed">
                 Share info instantly with a tap, no paper, no hassle.
               </p>
 
@@ -133,21 +172,20 @@ const Hero = () => {
                   <Button
                     variant="primary"
                     size="lg"
-                    className="px-4 me-sm-3 rounded-5"
-                    style={{ fontFamily: 'Sailor' }}
+                    className="px-4 me-sm-3 rounded-5 fontCondensed"
                     onClick={() => navigate('/Authenticate', { state: { authState: 'SignUp' } })}
                   >
                     Create your free pass
                   </Button>
-                  <p className="pt-2 fw-bold">No credit card needed.</p>
+                  <p className="pt-2 fw-bold fontCondensed">No credit card needed.</p>
                 </div>
 
                 <div>
                   <Button
                     variant="secondary"
                     size="lg"
-                    className="px-4 rounded-5"
-                    style={{ fontFamily: 'Sailor' }}
+                    className="px-4 rounded-5 fontCondensed"
+                    
                     onClick={() => {
                       const el = document.getElementById('howitworks');
                       if (el) el.scrollIntoView({ behavior: 'smooth' });
@@ -155,14 +193,15 @@ const Hero = () => {
                   >
                     See how it works
                   </Button>
-                  <p className="pt-2 fw-bold">No wasted time.</p>
+                  <p className="pt-2 fw-bold fontCondensed">No wasted time.</p>
                 </div>
               </div>
 
-              <h3 style={{ fontFamily: 'Sailor Italic', marginTop: '3rem' }}>
+              <h3 className="fontCondensed" style={{marginTop: '3rem' }}>
                 Trusted by 5,000+ professionals
               </h3>
-              <h4 style={{ fontFamily: 'Sailor', marginTop: '0.5rem' }}>
+              <br />
+              <h4 className="fontCondensed" style={{marginTop: '0.5rem' }}>
                 3,124 cards created this week
               </h4>
             </Container>
@@ -171,20 +210,66 @@ const Hero = () => {
         </Row>
 
         {/* Mobile Layout */}
-        <Row className="d-md-none text-center">
-          <Col>
-            <QRCode size={128} className="rounded" value={homeUrl} style={{ maxWidth: '60%' }} />
-            <h1 className="display-5 fw-bold mt-4">Your Digital CV. One Scan Away.</h1>
-            <p className="lead mt-2 px-3">
-              Create, customize, and share your professional identity in seconds.
-              <span className="fw-bold"> Quick reaction for every interaction.</span>
-            </p>
-            <div className="mt-3 d-flex flex-column gap-3">
-              <Button variant="primary" size="lg">Create your digicard</Button>
-              <Button variant="outline-light" size="lg">Login</Button>
-            </div>
-          </Col>
-        </Row>
+        <Row className="justify-content-center align-items-center" style={{ minHeight: '80vh' }}>
+  <Col xs={12}>
+    <h1
+      className="fw-bold text-uppercase mb-4"
+      style={{ fontFamily: 'Sailor', fontSize: '3rem' }}
+    >
+      Your digital business card, <br />
+      reimagined
+    </h1>
+
+    <Container className="px-0" style={{ maxWidth: '100%' }}>
+      <p
+        className="lead mb-4"
+        style={{ fontFamily: 'Sailor', fontSize: '1rem' }}
+      >
+        Share info instantly with a tap, no paper, no hassle.
+      </p>
+
+      <div className="d-grid gap-3 mb-4">
+        <div>
+          <Button
+            variant="primary"
+            size="lg"
+            className="rounded-5 w-100"
+            style={{ fontFamily: 'Sailor' }}
+            onClick={() => navigate('/Authenticate', { state: { authState: 'SignUp' } })}
+          >
+            Create your free pass
+          </Button>
+          <p className="pt-2 fw-bold mb-0">No credit card needed.</p>
+        </div>
+
+        <div>
+          <Button
+            variant="secondary"
+            size="lg"
+            className="rounded-5 w-100"
+            style={{ fontFamily: 'Sailor' }}
+            onClick={() => {
+              const el = document.getElementById('howitworks');
+              if (el) el.scrollIntoView({ behavior: 'smooth' });
+            }}
+          >
+            See how it works
+          </Button>
+          <p className="pt-2 fw-bold mb-0">No wasted time.</p>
+        </div>
+      </div>
+      <div className='mt-5'>
+        <h4 style={{ fontFamily: 'Sailor Italic' }}>
+          Trusted by 5,000+ professionals
+        </h4>
+        <h5 style={{ fontFamily: 'Sailor' }}>
+          3,124 cards created this week
+        </h5>
+      </div>
+      
+    </Container>
+  </Col>
+</Row>
       </Container>
     )}
   </div>
