@@ -67,10 +67,11 @@ const Navigation = () => {
 
   return (
     <Navbar
+      data-bs-theme="dark"
       fixed="top"
       collapseOnSelect
       expand="lg"
-      className={`floating-navbar rounded-bottom m-auto shadow-lg ${
+      className={`floating-navbar rounded-bottom m-auto shadow-lg bg-body-tertiary ${
         scrolled ? 'navbar-scrolled' : 'navbar-top'
       }`}
       style={{
@@ -87,9 +88,7 @@ const Navigation = () => {
             style={{ width: 120, height: 40, marginRight: 10 }}
           />
         </Navbar.Brand>
-        <Navbar.Toggle aria-controls="responsive-navbar-nav" className="bg-primary">
-          <span className="navbar-toggler-icon" />
-        </Navbar.Toggle>
+        <Navbar.Toggle aria-controls="navbarScroll" className='border border-light'/>
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="justify-content-center mx-auto">
             <li className="nav-item">
