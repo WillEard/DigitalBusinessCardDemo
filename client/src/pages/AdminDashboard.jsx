@@ -1,5 +1,5 @@
-import { useContext, useEffect } from 'react';
-import { Container, Row, Col, Button, Card, ProgressBar, Nav, Dropdown, Table} from 'react-bootstrap';
+import { useContext, useEffect, useState } from 'react';
+import { Container, Row, Col, Button, Table} from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { AppContext } from '../context/AppContext';
@@ -9,13 +9,37 @@ import Navbar from '../components/Navbar';
 import '../Dashboard.css'; // Import custom CSS for Navbar
 import '../Fonts.css'; // Import custom font styles
 
-const Dashboard = () => {
+const AdminDashboard = () => {
   const { userData, getUserData, getAllUsers, allUsers, isLoadingUsers } = useContext(AppContext);
+  const [deletingId, setDeletingId] = useState(null);
+ 
   const navigate = useNavigate();
   const firstName = userData?.name?.split(' ')[0] || 'User';
 
-  
+  const handleDelete = async (username) => {
 
+    if (userData?.username === username) {
+        toast.error("You can't delete your own account");
+        return;
+      }
+    if (!window.confirm('Delete this user? This action cannot be undone.')) return;
+  
+    try {
+      setDeletingId(id);
+      // optimistic update
+      const prev = allUsers;
+      setAllUsers(allUsers.filter(u => u._id !== id));
+      await axios.delete(`${backendUrl}/api/admin/all-data/${id}`, { withCredentials: true });
+      toast.success('User deleted');
+    } catch (err) {
+      toast.error(err.response?.data?.message || 'Delete failed');
+      setAllUsers(prev); // revert
+    } finally {
+      setDeletingId(null);
+    }
+  };
+
+  // Redirect if user is NOT an admin
   useEffect(() => {
     // Once we know who the user is
     if (userData) {
@@ -28,11 +52,12 @@ const Dashboard = () => {
     }
   }, [userData]);
 
+  // Get all users in database
   useEffect(() => {
     getUserData();
   }, []);
 
-
+  //If userLoading hasnt loaded yet
   if (isLoadingUsers) return <p>Loading...</p>;
 
 
@@ -82,7 +107,7 @@ const Dashboard = () => {
         <td>{user.subscriptionType}</td>
         <td>{user.role}</td>
         <td>
-          <Button size="sm" variant="danger" onClick={() => deleteUser(user._id)}>
+          <Button size="sm" variant="danger" onClick={() => handleDelete(user.username)} aria-label={`Delete ${user.name}`}>
             Delete
           </Button>
         </td>
@@ -106,4 +131,4 @@ const Dashboard = () => {
   );
 };
 
-export default Dashboard;
+export default AdminDashboard;

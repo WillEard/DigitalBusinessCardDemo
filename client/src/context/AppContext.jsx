@@ -93,9 +93,7 @@ export const AppContextProvider = (props) => {
         withCredentials: true,
         headers: { 'Content-Type': 'application/json' },
       });
-  
-      console.log('getAllUsers response:', data);
-  
+    
       // If your backend wraps users in { success, users }
       if (data && data.users && Array.isArray(data.users)) {
         setAllUsers(data.users);
