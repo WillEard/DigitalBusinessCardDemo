@@ -23,6 +23,23 @@ export const AppContextProvider = (props) => {
   const [allUsers, setAllUsers] = useState(false);
   const [isLoadingUsers, setIsLoadingUsers] = useState(false);
 
+  // Audit Logs
+  const [auditLogs, setAuditLogs] = useState([]);
+  const [isLoadingLogs, setIsLoadingLogs] = useState(false);
+
+  const getAuditLogs = async () => {
+    try {
+      setIsLoadingLogs(true);
+      const res = await axios.get(`${backendUrl}/api/admin/audit-logs`, { withCredentials: true });
+      if (res.data.success) {
+        setAuditLogs(res.data.logs);
+      }
+    } catch (err) {
+      console.error("Failed to fetch audit logs", err);
+    } finally {
+      setIsLoadingLogs(false);
+    }
+  };
 
   const getAuthStatus = async () => {
     try {
@@ -114,7 +131,9 @@ export const AppContextProvider = (props) => {
     }
   };
 
-
+  useEffect(() => {
+    getAuditLogs();
+  }, []);
   
   useEffect(() => {
     const checkAuth = async () => {
@@ -149,7 +168,9 @@ export const AppContextProvider = (props) => {
     setIsLoadingUser,
     allUsers,
     getAllUsers,
-    setAllUsers
+    setAllUsers,
+    auditLogs,
+    isLoadingLogs
   };
   return (
     <AppContext.Provider value={value}>{props.children}</AppContext.Provider>

@@ -4,6 +4,9 @@ import User from '../models/userModel.js';
 export const adminAuth = async (req, res, next) => {
   try {
     const userId = req.body?.userId;
+
+    console.log('adminAuth start - req.body.userId:', req.body?.userId, 'req.user:', req.user);
+
     if (!userId) {
       return res.status(401).json({ success: false, message: 'Not authenticated' });
     }

@@ -3,6 +3,7 @@ import { Container, Row, Col, Button, Table} from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { AppContext } from '../context/AppContext';
+import axios from 'axios';
 
 import Navbar from '../components/Navbar';
 
@@ -10,34 +11,45 @@ import '../Dashboard.css'; // Import custom CSS for Navbar
 import '../Fonts.css'; // Import custom font styles
 
 const AdminDashboard = () => {
-  const { userData, getUserData, getAllUsers, allUsers, isLoadingUsers } = useContext(AppContext);
+  const { userData, getUserData, getAllUsers, allUsers, isLoadingUsers, setAllUsers, backendUrl, auditLogs, isLoadingLogs } = useContext(AppContext);
   const [deletingId, setDeletingId] = useState(null);
  
   const navigate = useNavigate();
   const firstName = userData?.name?.split(' ')[0] || 'User';
 
-  const handleDelete = async (username) => {
-
+  // Delete function
+  const handleDelete = async (id, username) => {
     if (userData?.username === username) {
-        toast.error("You can't delete your own account");
-        return;
-      }
+      toast.error("You can't delete your own account");
+      return;
+    }
+
     if (!window.confirm('Delete this user? This action cannot be undone.')) return;
   
+    const prev = allUsers;
     try {
-      setDeletingId(id);
+      setDeletingId(username);
       // optimistic update
-      const prev = allUsers;
-      setAllUsers(allUsers.filter(u => u._id !== id));
-      await axios.delete(`${backendUrl}/api/admin/all-data/${id}`, { withCredentials: true });
+      setAllUsers(allUsers.filter(u => u._id !== username));
+      await axios.delete(`${backendUrl}/api/admin/all-data/${username}`, { withCredentials: true });
       toast.success('User deleted');
     } catch (err) {
-      toast.error(err.response?.data?.message || 'Delete failed');
-      setAllUsers(prev); // revert
-    } finally {
-      setDeletingId(null);
+        console.error('Delete error:', err);
+        if (err.response) {
+          console.error('Response data:', err.response.data);
+          console.error('Response status:', err.response.status);
+          console.error('Response headers:', err.response.headers);
+          toast.error(err.response.data?.message || 'Delete failed');
+        } else if (err.request) {
+          console.error('Request error:', err.request);
+          toast.error('No response from server');
+        } else {
+          console.error('Error message:', err.message);
+          toast.error('Delete failed: ' + err.message);
+        }
+        setAllUsers(prev); // revert
+      }
     }
-  };
 
   // Redirect if user is NOT an admin
   useEffect(() => {
@@ -77,6 +89,8 @@ const AdminDashboard = () => {
                     <Button variant="outline-light" className="w-100 fontCondensed">Create new admin</Button>
                 </Col>
             </Row>
+
+            {/* USERS TABLE */}
             <Row className="gy-4 align-items-start justify-content-center">
                 <Col xs={12}>
                 <h2 className='fontCondensed'>Users</h2>
@@ -95,33 +109,72 @@ const AdminDashboard = () => {
                         </tr>
                     </thead>
                     <tbody className="align-middle">
-  {Array.isArray(allUsers) && allUsers.length > 0 ? (
-    allUsers.map((user, idx) => (
-      <tr key={user._id || idx}>
-        <td>{idx + 1}</td>
-        <td>{user.name}</td>
-        <td>{user.username}</td>
-        <td>{user.email}</td>
-        <td>{user.phoneNumber}</td>
-        <td>{user.verified ? "Yes" : "No"}</td>
-        <td>{user.subscriptionType}</td>
-        <td>{user.role}</td>
-        <td>
-          <Button size="sm" variant="danger" onClick={() => handleDelete(user.username)} aria-label={`Delete ${user.name}`}>
-            Delete
-          </Button>
-        </td>
-      </tr>
-    ))
-  ) : (
-    <tr>
-      <td colSpan="9" className="text-center">
-        No users
-      </td>
-    </tr>
-  )}
-</tbody>
+                        {Array.isArray(allUsers) && allUsers.length > 0 ? (
+                            allUsers.map((user, idx) => (
+                            <tr key={user._id || idx}>
+                                <td>{idx + 1}</td>
+                                <td>{user.name}</td>
+                                <td>{user.username}</td>
+                                <td>{user.email}</td>
+                                <td>{user.phoneNumber}</td>
+                                <td>{user.verified ? "Yes" : "No"}</td>
+                                <td>{user.subscriptionType}</td>
+                                <td>{user.role}</td>
+                                <td>
+                                <Button size="sm" variant="danger" onClick={() => handleDelete(user._id, user.username)} aria-label={`Delete ${user.name}`}>
+                                    Delete
+                                </Button>
+                                </td>
+                            </tr>
+                            ))
+                        ) : (
+                            <tr>
+                            <td colSpan="9" className="text-center">
+                                No users
+                            </td>
+                            </tr>
+                        )}
+                    </tbody>
                     </Table>
+                </Col>
+            </Row>
+            
+            {/* AUDIT LOGS */}
+            <Row className='gy-4 align-items-start justify-content-center mt-5'>
+                <Col xs={12}>
+                    <h2 className="fontCondensed">Audit Logs</h2>
+                    {isLoadingLogs ? (
+                    <p>Loading audit logs...</p>
+                    ) : auditLogs.length > 0 ? (
+                    <Table striped bordered hover variant="dark" responsive>
+                        <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Timestamp</th>
+                            <th>Admin Name</th>
+                            <th>Admin Email</th>
+                            <th>Action</th>
+                            <th>Target User</th>
+                            <th>Details</th>
+                        </tr>
+                        </thead>
+                        <tbody className="align-middle">
+                        {auditLogs.map((log, idx) => (
+                            <tr key={log._id}>
+                            <td>{idx + 1}</td>
+                            <td>{new Date(log.timestamp).toLocaleString()}</td>
+                            <td>{log.admin?.name || 'N/A'}</td>
+                            <td>{log.admin?.email || 'N/A'}</td>
+                            <td>{log.action}</td>
+                            <td>{log.targetUser?.name || 'N/A'}</td>
+                            <td>{log.details}</td>
+                            </tr>
+                        ))}
+                        </tbody>
+                    </Table>
+                    ) : (
+                    <p>No audit logs found</p>
+                    )}
                 </Col>
             </Row>
         </Container>
