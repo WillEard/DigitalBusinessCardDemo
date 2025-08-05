@@ -12,7 +12,7 @@ import CV from './pages/CV';
 import { useEffect } from 'react';
 import CookieBanner from './components/CookieBanner';
 import Payment from './pages/Payment';
-
+import AdminDashboard from './pages/AdminDashboard';
 
 const App = () => {
 
@@ -37,6 +37,8 @@ const App = () => {
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/cv/:username" element={<CV />} /> 
         <Route path="/payment" element={<Payment />} />
+        <Route path="/admin-dash" element={<AdminDashboard />} />
+        
         <Route path="*" element={<NotFound />} />
       </Routes>
       <CookieBanner />

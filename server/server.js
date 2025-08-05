@@ -6,6 +6,7 @@ import connectDB from './config/mongodb.js';
 import authRouter from './routes/authRoutes.js';
 import userRouter from './routes/userRoutes.js';
 import cvRouter from './routes/cvRoutes.js';
+import adminRouter from './routes/adminRoutes.js';
 
 const app = express();
 const PORT = process.env.PORT || 4000;
@@ -45,6 +46,7 @@ app.get('/', (req, res) => res.send("API successfully working."));
 app.use('/api/auth', authRouter);
 app.use('/api/user', userRouter); 
 app.use('/api/cv', cvRouter);
+app.use('/api/admin', adminRouter);
 
 app.listen(PORT, (err) => {
   if (err) {

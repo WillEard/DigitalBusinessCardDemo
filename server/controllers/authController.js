@@ -9,7 +9,7 @@ import { EMAIL_VERIFY_TEMPLATE, PASSWIRD_RESET_TEMPLATE, REGISTER_TEMPLATE } fro
 
 // Registration
 export const register = async (req, res) => {
-    const {name, username, email, password, phoneNumber, subscriptionType, education, experience, skills, certifications, projects, languages, hobbies, achievements} = req.body;
+    const {name, username, email, password, phoneNumber, role, subscriptionType, education, experience, skills, certifications, projects, languages, hobbies, achievements} = req.body;
 
     if (!name || !email || !password || !username)
     {
@@ -26,13 +26,11 @@ export const register = async (req, res) => {
         
         const hashedPW = await bcrypt.hash(password, 10);
 
-        const user = new userModel({name, username, email, password: hashedPW, phoneNumber, subscriptionType});
+        const user = new userModel({name, username, email, password: hashedPW, phoneNumber, subscriptionType, role});
         await user.save();
 
         const cv = new cvModel({ user_id: user._id, education, experience, skills, certifications, projects, languages, hobbies, achievements});
         await cv.save();
-
-
 
         const token = jwt.sign({id: user._id}, process.env.JWT_SECRET, {expiresIn: '7d'});
 

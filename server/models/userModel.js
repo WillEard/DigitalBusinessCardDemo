@@ -12,7 +12,8 @@ const userSchema = new mongoose.Schema({
     isVerified: {type: Boolean, default: false},
     resetOTP: {type: String, default: ''},
     resetOTPExpireAt: {type: Number, default: 0},
-    subscriptionType: {type: String, default: 'Free'}
+    subscriptionType: {type: String, default: 'Free'},
+    role: {type: String, enum: ['user', 'admin'], default: 'user'}
 });
   
 const userModel = mongoose.models.user || mongoose.model('user', userSchema);
