@@ -6,9 +6,7 @@ export default function CookieConsentBanner() {
   const [showBanner, setShowBanner] = useState(false);
 
   useEffect(() => {
-    console.log("CookieBanner mounted");
     const consent = localStorage.getItem("cookieConsent");
-    console.log("cookieConsent:", consent);
     if (!consent) {
       setShowBanner(true);
     }

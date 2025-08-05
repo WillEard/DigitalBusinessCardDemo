@@ -39,7 +39,6 @@ const CVModal = ({ profileUrl }) => {
     // Once user is available, fetch CV and phone
     useEffect(() => {
       if (username) {
-        console.log('Fetching CV data for', username);
         getCVData(username);
         setPhoneNumber(userData?.phoneNumber || '');
       }

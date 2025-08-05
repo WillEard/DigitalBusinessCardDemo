@@ -1,11 +1,7 @@
 import Container from 'react-bootstrap/esm/Container';
-import Form from 'react-bootstrap/Form';
+import { Form, Row, Col, Button, Tab, Tabs } from 'react-bootstrap';
 import Navbar from '../components/Navbar';
-import Row from 'react-bootstrap/esm/Row';
-import Col from 'react-bootstrap/esm/Col';
-import Button from 'react-bootstrap/Button';
-import Tab from 'react-bootstrap/Tab';
-import Tabs from 'react-bootstrap/Tabs';
+
 
 import { useNavigate } from 'react-router-dom';
 import { useState,useContext, useEffect } from 'react';
@@ -102,9 +98,17 @@ const Settings = () => {
                   <Form.Control value={'Premium || Free'} disabled/>
                 </Form.Group>
 
+                <Form.Group className='mb-4 '>
+                  <Form.Check // prettier-ignore
+                    type="switch"
+                    id="custom-switch"
+                    label="Show phone number to other users (verified only)"
+                  />
+                </Form.Group>
+
                 {/* Delete Account */}
                 <Form.Group className="mb-4">
-                  <Form.Label className="text-light fontCondensed">Password</Form.Label>
+                  <Form.Label className="text-light fontCondensed">Delete Account</Form.Label>
                   <div className="d-flex">
                     <Button
                       href="/reset-pass"
@@ -116,7 +120,7 @@ const Settings = () => {
                         borderBottomLeftRadius: '0.375rem'
                       }}
                     >
-                      Change
+                      Delete
                     </Button>
                     <Form.Control
                       placeholder="Enter password to delete account"

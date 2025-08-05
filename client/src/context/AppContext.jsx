@@ -19,13 +19,9 @@ export const AppContextProvider = (props) => {
   const [isLoadingUser, setIsLoadingUser] = useState(true);
   const [cvData, setCVData] = useState(false);
 
-  
-
-  
   const getAuthStatus = async () => {
     try {
       const { data } = await axios.get(`${backendUrl}/api/auth/is-Auth`, { withCredentials: true });
-      console.log('Auth status response:', data);
   
       if (data?.success) {
         setIsLoggedIn(true);

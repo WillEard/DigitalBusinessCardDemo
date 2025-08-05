@@ -20,9 +20,6 @@ const Dashboard = () => {
   const siteURL = `www.pelagopass.com`;
   const profileUrl = `${siteURL}/cv/${userData?.username}`;
 
-  console.log(userData);
-
-
   useEffect(() => {
     getUserData();
   }, []);
