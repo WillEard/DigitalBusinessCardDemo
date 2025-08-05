@@ -2,6 +2,8 @@ import mongoose from 'mongoose';
 import User from '../models/userModel.js';
 import AuditLog from '../models/auditLogModel.js';
 
+import CV from '../models/cvModel.js';  // adjust path if needed
+
 
 // Listing users still queries DB (that's fine)
 export const getAllUsers = async (req, res) => {
@@ -54,6 +56,9 @@ export const deleteUser = async (req, res) => {
         details: `User ${targetUsername} deleted by admin ${adminUsername}`
       });
   
+      // inside your try block, before deleting the user:
+      await CV.deleteMany({ user_id: targetUser._id });
+
       // Now delete the user
       const deleted = await User.findOneAndDelete({ username: targetUsername }).select('-password -resetToken').lean();
   
