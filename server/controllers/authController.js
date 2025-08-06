@@ -111,15 +111,22 @@ export const login = async (req, res) => {
 
 // Logout
 export const logout = async (req, res) => {
-
     try {
-        res.clearCookie('token', {httpOnly: true, secure: process.env.NODE_ENV === 'production', sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'strict'});
-        return res.json({success: true, message: "Logged out"});
-
+      const isProduction = process.env.NODE_ENV === 'production' || process.env.FORCE_SECURE === 'true';
+  
+      res.clearCookie('token', {
+        httpOnly: true,
+        secure: isProduction,
+        sameSite: isProduction ? 'none' : 'lax',
+        domain: isProduction ? '.pelagopass.com' : undefined,  // 🔥 match login exactly
+        path: '/', // 🔥 always include this unless you've set a different path
+      });
+  
+      return res.json({ success: true, message: "Logged out" });
     } catch (error) {
-        return res.json({success: false, message: error.message});
+      return res.json({ success: false, message: error.message });
     }
-}
+  };
 
 // Verification OTP to user email
 export const sendVerifyOtp = async (req, res) => {
