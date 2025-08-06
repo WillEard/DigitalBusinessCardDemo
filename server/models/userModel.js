@@ -13,7 +13,9 @@ const userSchema = new mongoose.Schema({
     resetOTP: {type: String, default: ''},
     resetOTPExpireAt: {type: Number, default: 0},
     subscriptionType: {type: String, default: 'Free'},
-    role: {type: String, enum: ['user', 'admin'], default: 'user'}
+    role: {type: String, enum: ['user', 'admin'], default: 'user'},
+    showMobile: {type: Boolean, default: false}
+
 });
   
 const userModel = mongoose.models.user || mongoose.model('user', userSchema);

@@ -18,6 +18,8 @@ export const AppContextProvider = (props) => {
   const [userData, setUserData] = useState(null);
   const [isLoadingUser, setIsLoadingUser] = useState(true);
   const [cvData, setCVData] = useState(false);
+  const [isUpdatingSettings, setisUpdatingSettings] = useState(false);
+
    
   // For getting ALL users
   const [allUsers, setAllUsers] = useState(false);
@@ -106,7 +108,8 @@ export const AppContextProvider = (props) => {
   const getAllUsers = async () => {
     setIsLoadingUsers(true);
     try {
-      const { data } = await axios.get(`${backendUrl}/api/admin/all-data`, {
+      const { data } = await axios.get(`${backendUrl}/api/admin/all-data`, 
+        {
         withCredentials: true,
         headers: { 'Content-Type': 'application/json' },
       });
@@ -131,26 +134,97 @@ export const AppContextProvider = (props) => {
     }
   };
 
-  useEffect(() => {
-    getAuditLogs();
-  }, []);
+  // Update TRUE/FALSE whether the user wants their phone number visible or not
+  const updateUserSetting = async (field, value) => {
+    try {
+      setisUpdatingSettings(true);
   
-  useEffect(() => {
-    const checkAuth = async () => {
-      setIsLoadingUser(true);
-      await getAuthStatus();
-      setIsLoadingUser(false);
-    };
-    checkAuth();
-  }, []);
-
-  // Fetch all users from admin endpoint once userData is loaded
-  useEffect(() => {
-    if (userData?.role === 'admin') {
-    } else {
-      setIsLoadingUser(false);
+      const res = await axios.patch(
+        `${backendUrl}/api/user/settings`,
+        { [field]: value },
+        { withCredentials: true, headers: { 'Content-Type': 'application/json' } }
+      );
+  
+      console.log('PATCH /api/user/settings response:', res.data);
+  
+      if (res.data?.success) {
+        // Accept either `user` or `data` depending on backend
+        const updatedUser = res.data.user || res.data.data || null;
+  
+        if (updatedUser && typeof updatedUser === 'object') {
+          setUserData(updatedUser); // <-- persist the authoritative user object
+          return updatedUser;
+        }
+  
+        // fallback: optimistic update if backend didn't return full user
+        setUserData(prev => (prev ? { ...prev, [field]: value } : prev));
+        return null;
+      } else {
+        throw new Error(res.data?.message || 'Update failed');
+      }
+    } catch (err) {
+      console.error(`Failed to update user setting "${field}"`, err);
+      throw err;
+    } finally {
+      setisUpdatingSettings(false);
     }
-  }, [userData]);
+  }
+
+  // run once on mount: fetch audit logs only if admin (see second effect)
+useEffect(() => {
+  // noop: leave empty so we don't run admin calls before auth
+}, []);
+
+// run once on mount: check auth and set loading properly
+useEffect(() => {
+  let mounted = true;
+
+  const checkAuth = async () => {
+    if (!mounted) return;
+    try {
+      setIsLoadingUser(true);
+      await getAuthStatus(); // should set userData internally
+    } catch (err) {
+      console.error('checkAuth error', err);
+      setUserData(null);
+    } finally {
+      if (mounted) setIsLoadingUser(false);
+    }
+  };
+
+  checkAuth();
+
+  return () => {
+    mounted = false;
+  };
+}, []);
+
+// run when userData becomes available; only fetch admin stuff when user is admin
+useEffect(() => {
+  let mounted = true;
+
+  const fetchAdminResources = async () => {
+    if (!mounted) return;
+    try {
+      // Example: getAuditLogs should be gated to admin only
+      if (userData?.role === 'admin') {
+        await getAuditLogs();
+        // you can also load other admin endpoints here
+      }
+    } catch (err) {
+      console.error('Failed to fetch admin resources', err);
+    }
+  };
+
+  // Only run fetchAdminResources when userData is set (not while loading)
+  if (userData) fetchAdminResources();
+
+  return () => {
+    mounted = false;
+  };
+}, [userData]);
+
+
 
   const value = {
     backendUrl,
@@ -170,7 +244,9 @@ export const AppContextProvider = (props) => {
     getAllUsers,
     setAllUsers,
     auditLogs,
-    isLoadingLogs
+    isLoadingLogs,
+    updateUserSetting,
+    isUpdatingSettings
   };
   return (
     <AppContext.Provider value={value}>{props.children}</AppContext.Provider>

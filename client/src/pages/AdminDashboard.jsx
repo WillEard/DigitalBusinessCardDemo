@@ -85,13 +85,21 @@ const AdminDashboard = () => {
             </div>
         
             <Row className="mb-4 g-2 mt-4">
-                <Col xs={12} md="auto">
-                    <Button variant="outline-light" className="w-100 fontCondensed">Create new admin</Button>
-                </Col>
+              <Col xs={12} md="auto" className="d-flex gap-2">
+                <Button variant="outline-light" className="fontCondensed">
+                  Create new admin
+                </Button>
+                <Button variant="outline-light" className="fontCondensed">
+                  Users
+                </Button>
+                <Button variant="outline-light" className="fontCondensed">
+                  Audit Logs
+                </Button>
+              </Col>
             </Row>
 
             {/* USERS TABLE */}
-            <Row className="gy-4 align-items-start justify-content-center">
+            <Row className="gy-4 align-items-start justify-content-center" id='users'>
                 <Col xs={12}>
                 <h2 className='fontCondensed'>Users</h2>
                     <Table striped bordered hover variant="dark" responsive>
@@ -140,7 +148,7 @@ const AdminDashboard = () => {
             </Row>
             
             {/* AUDIT LOGS */}
-            <Row className='gy-4 align-items-start justify-content-center mt-5'>
+            <Row className='gy-4 align-items-start justify-content-center mt-5' id='audit'>
                 <Col xs={12}>
                     <h2 className="fontCondensed">Audit Logs</h2>
                     {isLoadingLogs ? (
