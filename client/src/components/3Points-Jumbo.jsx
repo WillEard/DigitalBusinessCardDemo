@@ -2,8 +2,8 @@ import { useContext, useEffect } from 'react';
 import { AppContext } from '../context/AppContext';
 import Button from 'react-bootstrap/esm/Button';
 import { Container, Row, Col, Card } from 'react-bootstrap';
-import '../Fonts.css'; // Import custom font styles
-import '../ThreePoints.css'; // New CSS for background images
+import '../styles/Fonts.css'; // Import custom font styles
+import '../styles/ThreePoints.css'; // New CSS for background images
 
 
 

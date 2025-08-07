@@ -12,8 +12,8 @@ import { Image } from 'react-bootstrap';
 import { googleLogout } from '@react-oauth/google';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
-import '../Navbar.css'; // Import custom CSS for Navbar
-import '../Fonts.css'; // Import custom font styles
+import '../styles/Navbar.css'; // Import custom CSS for Navbar
+import '../styles/Fonts.css'; // Import custom font styles
 
 
 const Navigation = () => {

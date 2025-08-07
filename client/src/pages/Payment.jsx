@@ -13,7 +13,7 @@ import {
 } from "react-bootstrap";
 
 import Navbar from "../components/Navbar";
-import '../Fonts.css'; // Import custom font styles
+import '../styles/Fonts.css'; // Import custom font styles
  
 
 const PaymentPage = () => {

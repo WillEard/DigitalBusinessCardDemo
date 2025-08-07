@@ -14,8 +14,8 @@ import { toPng } from 'html-to-image';
 import { FaArrowTurnDown } from 'react-icons/fa6';
 
 // Styles
-import '../Hero.css';
-import '../Fonts.css';
+import '../styles/Hero.css';
+import '../styles/Fonts.css';
 
 const Hero = () => {
   const { userData, getUserData, isLoggedIn, isLoadingUser } = useContext(AppContext);

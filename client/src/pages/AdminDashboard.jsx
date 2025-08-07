@@ -7,8 +7,8 @@ import axios from 'axios';
 
 import Navbar from '../components/Navbar';
 
-import '../Dashboard.css'; // Import custom CSS for Navbar
-import '../Fonts.css'; // Import custom font styles
+import '../styles/Dashboard.css'; // Import custom CSS for Navbar
+import '../styles/Fonts.css'; // Import custom font styles
 
 const AdminDashboard = () => {
   const { userData, getUserData, getAllUsers, allUsers, isLoadingUsers, setAllUsers, backendUrl, auditLogs, isLoadingLogs } = useContext(AppContext);

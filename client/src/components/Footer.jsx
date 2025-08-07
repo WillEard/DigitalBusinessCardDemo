@@ -3,8 +3,8 @@ import Nav from 'react-bootstrap/Nav';
 import Col from 'react-bootstrap/Col';
 import { Row } from 'react-bootstrap';
 import Image from 'react-bootstrap/Image';
-import '../Fonts.css';
-import '../Footer.css'; // NEW: Import your features styles 
+import '../styles/Fonts.css';
+import '../styles/Footer.css'; // NEW: Import your features styles 
 import PelagoPassLogo from '../assets/PelagoPassLogo.svg';
 
 const Footer = () => {

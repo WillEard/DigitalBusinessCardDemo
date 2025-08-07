@@ -1,6 +1,6 @@
 import { Container, Row, Col } from 'react-bootstrap';
-import '../Fonts.css';
-import '../Testimonials.css';
+import '../styles/Fonts.css';
+import '../styles/Testimonials.css';
 
 function Testimonials() {
   return (

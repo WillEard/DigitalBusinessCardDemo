@@ -8,7 +8,7 @@ import { Navigate, useNavigate, useLocation } from 'react-router-dom';
 import { AppContext } from '../context/AppContext';
 import axios from 'axios';
 
-import '../Authenticate.css'; // CSS file for background and styling
+import '../styles/Authenticate.css'; // CSS file for background and styling
 
 import { GoogleLogin, googleLogout } from '@react-oauth/google';
 const backendUrl = import.meta.env.VITE_BACKEND_URL; // Adjust based on your environment

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-import '../CookieBanner.css'; // <-- import the stylesheet
+import '../styles/CookieBanner.css'; // <-- import the stylesheet
  
 export default function CookieConsentBanner() {
   const [showBanner, setShowBanner] = useState(false);

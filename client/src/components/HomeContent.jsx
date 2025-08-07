@@ -1,7 +1,7 @@
 import Button from 'react-bootstrap/esm/Button';
 import { Container, Row, Col, Card, Image } from 'react-bootstrap';
 
-import '../HomeContent.css'; // New CSS for HomeContent styling
+import '../styles/HomeContent.css'; // New CSS for HomeContent styling
 
 const HomeContent = () => {
     return (

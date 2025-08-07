@@ -8,7 +8,7 @@ import { useState } from 'react';
 import { AppContext } from '../context/AppContext';
 import axios from 'axios';
 import { toast } from 'react-toastify';
-import '../Fonts.css'; // Import custom font styles
+import '../styles/Fonts.css'; // Import custom font styles
 
 const LoginForm = () => {
   const navigate = useNavigate();

@@ -9,8 +9,8 @@ import { useNavigate } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import CVModal from '../components/CVModal';
 
-import '../Dashboard.css'; // Import custom CSS for Navbar
-import '../Fonts.css'; // Import custom font styles
+import '../styles/Dashboard.css'; // Import custom CSS for Navbar
+import '../styles/Fonts.css'; // Import custom font styles
 
 
 const Dashboard = () => {

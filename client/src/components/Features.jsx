@@ -14,8 +14,8 @@ import {
   CiMobile3,
 } from 'react-icons/ci';
 
-import '../Fonts.css';
-import '../Features.css'; // NEW: Import your features styles
+import '../styles/Fonts.css';
+import '../styles/Features.css'; // NEW: Import your features styles
 
 function Features() {
   return (

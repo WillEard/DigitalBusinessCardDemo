@@ -3,8 +3,8 @@ import { AppContext } from '../context/AppContext';
 import Button from 'react-bootstrap/esm/Button';
 import { Container, Row, Col, Card } from 'react-bootstrap';
 
-import '../Fonts.css';
-import '../Pricing.css'; // Import your pricing styles
+import '../styles/Fonts.css';
+import '../styles/Pricing.css'; // Import your pricing styles
 
 import { FaCheck } from "react-icons/fa6";
 import { RxCross2 } from "react-icons/rx";

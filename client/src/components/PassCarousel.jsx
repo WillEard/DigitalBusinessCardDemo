@@ -1,6 +1,6 @@
 import { Carousel } from 'react-bootstrap';
 import { useRef } from 'react';
-import '../PhoneCarousel.css'; // Import custom CSS for the carousel
+import '../styles/PhoneCarousel.css'; // Import custom CSS for the carousel
 
 const PhoneCarousel = () => {
     const carouselRef = useRef(null);
