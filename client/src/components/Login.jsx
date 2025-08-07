@@ -27,7 +27,6 @@ const LoginForm = () => {
     try {
       e.preventDefault();
 
-
       const { data } = await axios.post(backendUrl + '/api/auth/login', {
         email,
         password,

@@ -2,7 +2,6 @@ import { createContext, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { toast } from 'react-toastify';
 import axios from 'axios';
-
 export const AppContext = createContext();
 
 export const AppContextProvider = (props) => {
@@ -12,15 +11,15 @@ export const AppContextProvider = (props) => {
     children: PropTypes.node.isRequired,
   };
 
+
   const [authState, setAuthState] = useState('login');
   const backendUrl = import.meta.env.VITE_BACKEND_URL;
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(null);
   const [userData, setUserData] = useState(null);
   const [isLoadingUser, setIsLoadingUser] = useState(true);
   const [cvData, setCVData] = useState(false);
   const [isUpdatingSettings, setisUpdatingSettings] = useState(false);
 
-   
   // For getting ALL users
   const [allUsers, setAllUsers] = useState(false);
   const [isLoadingUsers, setIsLoadingUsers] = useState(false);
@@ -29,6 +28,9 @@ export const AppContextProvider = (props) => {
   const [auditLogs, setAuditLogs] = useState([]);
   const [isLoadingLogs, setIsLoadingLogs] = useState(false);
 
+  // FOR handling account deletion
+  
+  // GET audit logs, admin backend
   const getAuditLogs = async () => {
     try {
       setIsLoadingLogs(true);
@@ -43,6 +45,7 @@ export const AppContextProvider = (props) => {
     }
   };
 
+  // GET auth status, whether or not they're logged in
   const getAuthStatus = async () => {
     try {
       const { data } = await axios.get(`${backendUrl}/api/auth/is-Auth`, { withCredentials: true });
@@ -69,6 +72,7 @@ export const AppContextProvider = (props) => {
     }
   };
 
+  // GET user data e.g. username, email..
   const getUserData = async () => {
   try {
     const { data } = await axios.get(backendUrl + '/api/user/data', { withCredentials: true });
@@ -87,6 +91,7 @@ export const AppContextProvider = (props) => {
   }
 };
 
+  // GET cvData for a particular user
   const getCVData = async (username) => {
     if (!username) {
       console.warn('Username undefined in getCVData, skipping fetch');
@@ -105,6 +110,7 @@ export const AppContextProvider = (props) => {
     }
   };
 
+  // GET all users in database, for admin backend
   const getAllUsers = async () => {
     setIsLoadingUsers(true);
     try {
@@ -170,7 +176,37 @@ export const AppContextProvider = (props) => {
     }
   }
 
-  // run once on mount: fetch audit logs only if admin (see second effect)
+  // Verify password entered to actual password to delete account
+  const verifyPassword = async (password) => {
+    try {
+      const res = await axios.post(`${backendUrl}/api/auth/verify-password`, { password });
+      return res.data.valid === true;
+    } catch (err) {
+      console.error("Password verification failed", err);
+      toast.error(error);
+      return false;
+    }
+  };
+
+  // DELETE the specific account
+  const handleDelete = async (password) => {
+    try {
+      const res = await axios.delete(`${backendUrl}/api/user/delete-account`, {
+        data: { password },
+        timeout: 5000,
+      });
+      console.log(res.data.message);
+  
+      // Return success first
+      return true;
+    } catch (error) {
+      console.error("Delete failed:", error);
+      toast.error(error);
+      return false;
+    }
+  };
+
+ // run once on mount: fetch audit logs only if admin (see second effect)
 useEffect(() => {
   // noop: leave empty so we don't run admin calls before auth
 }, []);
@@ -187,6 +223,8 @@ useEffect(() => {
     } catch (err) {
       console.error('checkAuth error', err);
       setUserData(null);
+      setIsLoggedIn(false); // ✅ add this
+
     } finally {
       if (mounted) setIsLoadingUser(false);
     }
@@ -224,6 +262,11 @@ useEffect(() => {
   };
 }, [userData]);
 
+useEffect(() => {
+  if (isLoggedIn === true) {
+    getUserData();
+  }
+}, [isLoggedIn]);
 
 
   const value = {
@@ -246,7 +289,9 @@ useEffect(() => {
     auditLogs,
     isLoadingLogs,
     updateUserSetting,
-    isUpdatingSettings
+    isUpdatingSettings,
+    verifyPassword,
+    handleDelete
   };
   return (
     <AppContext.Provider value={value}>{props.children}</AppContext.Provider>

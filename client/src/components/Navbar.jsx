@@ -57,7 +57,7 @@ const Navigation = () => {
       if (data.success) {
         googleLogout(); // <-- clears the OAuth token
         setIsLoggedIn(false);
-        setUserData(false);
+        setUserData(null);
         navigate('/');
       }
     } catch (error) {

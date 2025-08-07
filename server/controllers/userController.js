@@ -1,4 +1,5 @@
 import userModel from '../models/userModel.js';
+import cvModel from '../models/cvModel.js';
 // Removed unused isAuthenticated import
 
 const getUserData = async (req, res) => { 
@@ -75,5 +76,36 @@ export const updateUserSettings = async (req, res) => {
       return res.status(500).json({ success: false, message: error.message || 'Server error' });
     }
   };
+
+export const deleteAccount = async (req, res) => {
+  try {
+    const userId = req.body.userId;
+    const isProduction = process.env.NODE_ENV === 'production' || process.env.FORCE_SECURE === 'true';
+
+    if (!userId) {
+      console.log("UserId invalid")
+      return res.status(401).json({ message: "Unauthorized" });
+    }
+
+    await userModel.findByIdAndDelete(userId);
+
+    // Delete the CV record for the user too
+    await cvModel.deleteMany({ user_id: userId});
+
+    return res.clearCookie('token', {
+      httpOnly: true,
+      secure: isProduction,
+      sameSite: isProduction ? 'none' : 'lax',
+      domain: isProduction ? '.pelagopass.com' : undefined,  // 🔥 match login exactly
+      path: '/', // 🔥 always include this unless you've set a different path
+    })
+    .status(200)
+    .json({ message: "Account successfully deleted" });
+
+  } catch (error) {
+    console.error("Error deleting account:", error);
+    return res.status(500).json({ message: "Internal server error" });
+  }
+};
 
 export { getUserData };

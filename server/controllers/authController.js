@@ -320,3 +320,35 @@ export const saveCV = async (req, res) => {
         return res.json({success: false, message: error.message});
     }
 }
+
+export const verifyPassword = async (req, res) => {
+    try {
+      const { password } = req.body;
+  
+      if (!password) {
+        return res.status(400).json({ valid: false, message: "Password is required" });
+      }
+  
+      // Assuming req.user contains the authenticated user ID (set by your auth middleware)
+      const userId = req.body.userId;
+  
+      // Fetch user from DB
+      const user = await userModel.findById(userId).select('+password'); // select hashed password explicitly
+  
+      if (!user) {
+        return res.status(404).json({ valid: false, message: "User not found" });
+      }
+  
+      // Compare entered password with hashed password
+      const isMatch = await bcrypt.compare(password, user.password);
+  
+      if (isMatch) {
+        return res.json({ valid: true });
+      } else {
+        return res.json({ valid: false });
+      }
+    } catch (error) {
+      console.error("Error verifying password:", error);
+      return res.status(500).json({ valid: false, message: "Server error" });
+    }
+  };

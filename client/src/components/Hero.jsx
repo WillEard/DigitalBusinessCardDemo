@@ -18,7 +18,7 @@ import '../Hero.css';
 import '../Fonts.css';
 
 const Hero = () => {
-  const { userData, getUserData } = useContext(AppContext);
+  const { userData, getUserData, isLoggedIn, isLoadingUser } = useContext(AppContext);
   const navigate = useNavigate();
   const qrRef = useRef(null);
 
@@ -27,8 +27,10 @@ const Hero = () => {
   const homeUrl = '/';
 
   useEffect(() => {
-    getUserData();
-  }, []);
+    if (!isLoadingUser && isLoggedIn) {
+      getUserData();
+    }
+  }, [isLoadingUser, isLoggedIn]);
 
   const handleDownload = async () => {
     if (!qrRef.current) return;

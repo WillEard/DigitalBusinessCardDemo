@@ -1,16 +1,29 @@
 import Container from 'react-bootstrap/esm/Container';
-import { Form, Row, Col, Button } from 'react-bootstrap';
+import { Form, Row, Col, Button, Toast, Alert  } from 'react-bootstrap';
 import Navbar from '../components/Navbar';
+import Spinner from 'react-bootstrap/Spinner';
+import Modal from 'react-bootstrap/Modal';
+import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
+
 
 import { useState, useContext, useEffect } from 'react';
 import { AppContext } from '../context/AppContext';
 
 const Settings = () => {
-  const { userData, isLoadingUser, updateUserSetting, isUpdatingSettings } = useContext(AppContext);
-  const [password, setPassword] = useState("");
-  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
+
+  const { userData, setUserData, setIsLoggedIn, isLoadingUser, updateUserSetting, isUpdatingSettings, verifyPassword, handleDelete } = useContext(AppContext);
   const [showPhoneNumber, setShowPhoneNumber] = useState(null);
   const [initialized, setInitialized] = useState(false)
+
+  // Delete Handling
+  const [password, setPassword] = useState("");
+  const [verifying, setVerifying] = useState(false);
+  const [deleting, setDeleting] = useState(false);
+  const [showConfirm, setShowConfirm] = useState(false);
+  const [error, setError] = useState("");
+
 
   // Sync checkbox state from userData when available
   useEffect(() => {
@@ -19,21 +32,39 @@ const Settings = () => {
     }
   }, [userData]);
 
-  // Handle delete account (placeholder logic)
-  const handleDelete = async () => {
-    if (!password.trim()) return;
+  
+  //  If password matches, show modal to confirm deletion
+  const handleVerifyAndConfirm = async () => {
+    setError("");
+    setVerifying(true);
+    const isValid = await verifyPassword(password);
+    setVerifying(false);
 
-    setLoading(true);
-    try {
-      // TODO: Replace with real delete API call
-      await new Promise(resolve => setTimeout(resolve, 2000));
-      console.log("Account deleted with password:", password);
+    if (isValid) {
+      setShowConfirm(true);
+    } else {
+      setError("Incorrect password. Please try again.");
+      toast.error(error);
+    }
+  };
+
+  // If password matches, call handleDelete and delete the account
+  const confirmDelete = async () => {
+    setDeleting(true);
+    const success = await handleDelete(password);
+    setDeleting(false);
+
+    if (success) {
+      setShowConfirm(false);
+      setPassword("");
+
+      setUserData(null);
+      setIsLoggedIn(false);
+
+      navigate('/');
       // Optionally redirect or show success message here
-    } catch (error) {
-      console.error("Delete failed:", error);
-      // Optionally show error message here
-    } finally {
-      setLoading(false);
+    } else {
+      setError("Failed to delete account. Please try again.");
     }
   };
 
@@ -138,66 +169,72 @@ const Settings = () => {
 
                 {/* Show Phone Number Toggle */}
                 <Form.Group className="mb-4">
-                {showPhoneNumber !== null && (
-  <Form.Check
-    type="switch"
-    id="custom-switch"
-    label="Show phone number to other users (verified only)"
-    checked={showPhoneNumber}
-    onChange={handlePhoneNumber}
-    disabled={isUpdatingSettings}
-  />
-)}
-</Form.Group>
+                  {showPhoneNumber !== null && (
+                    <Form.Check
+                      type="switch"
+                      id="custom-switch"
+                      label="Show phone number to other users (verified only)"
+                      checked={showPhoneNumber}
+                      onChange={handlePhoneNumber}
+                      disabled={isUpdatingSettings}
+                    />
+                  )}
+                </Form.Group>
 
                 {/* Delete Account */}
                 <Form.Group className="mb-4">
-                  <Form.Label className="text-light fontCondensed">Delete Account</Form.Label>
-                  <div className="d-flex">
-                    <Button
-                      variant="danger"
-                      className="bg-danger text-light px-3 fontCondensed shadow-none"
-                      style={{
-                        borderTopRightRadius: 0,
-                        borderBottomRightRadius: 0,
-                        borderTopLeftRadius: "0.375rem",
-                        borderBottomLeftRadius: "0.375rem",
-                      }}
-                      onClick={handleDelete}
-                      disabled={loading || password.trim() === ""}
-                      aria-disabled={loading || password.trim() === ""}
-                      aria-label="Delete account"
-                    >
-                      {loading ? (
-                        <>
-                          <h2
-                            as="span"
-                            animation="border"
-                            size="sm"
-                            role="status"
-                            aria-hidden="true"
-                          />{" "}
-                          Deleting...
-                        </>
-                      ) : (
-                        "Delete"
-                      )}
-                    </Button>
-                    <Form.Control
-                      type="password"
-                      value={password}
-                      onChange={(e) => setPassword(e.target.value)}
-                      placeholder="Enter password to delete account"
-                      className="text-muted"
-                      style={{
-                        borderTopLeftRadius: 0,
-                        borderBottomLeftRadius: 0,
-                        borderTopRightRadius: '0.375rem',
-                        borderBottomRightRadius: '0.375rem',
-                      }}
-                    />
-                  </div>
-                </Form.Group>
+      <Form.Label className="text-light fontCondensed">Delete Account</Form.Label>
+      <div className="d-flex">
+        <Button
+          variant="danger"
+          className="bg-danger text-light px-3 fontCondensed shadow-none"
+          style={{
+            borderTopRightRadius: 0,
+            borderBottomRightRadius: 0,
+            borderTopLeftRadius: "0.375rem",
+            borderBottomLeftRadius: "0.375rem",
+          }}
+          onClick={handleVerifyAndConfirm}
+          disabled={verifying || deleting || password.trim() === ""}
+          aria-label="Delete account"
+        >
+          {verifying ? <Spinner animation="border" size="sm" /> : "Delete"}
+        </Button>
+
+        <Form.Control
+          type="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          placeholder="Enter password to delete account"
+          className="text-muted"
+          style={{
+            borderTopLeftRadius: 0,
+            borderBottomLeftRadius: 0,
+            borderTopRightRadius: "0.375rem",
+            borderBottomRightRadius: "0.375rem",
+          }}
+        />
+      </div>
+
+      
+
+      <Modal show={showConfirm} onHide={() => setShowConfirm(false)} centered>
+        <Modal.Header closeButton>
+          <Modal.Title>Confirm Account Deletion</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          Are you sure you want to permanently delete your account? This action cannot be undone.
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={() => setShowConfirm(false)} disabled={deleting}>
+            Cancel
+          </Button>
+          <Button variant="danger" onClick={confirmDelete} disabled={deleting}>
+            {deleting ? <Spinner animation="border" size="sm" /> : "Yes, Delete"}
+          </Button>
+        </Modal.Footer>
+      </Modal>
+    </Form.Group>
               </div>
             </Col>
           </Row>
