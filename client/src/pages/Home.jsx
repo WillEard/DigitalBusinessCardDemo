@@ -5,7 +5,6 @@ import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import Hero from '../components/Hero';
 import Pricing from '../components/Pricing';
-import HomeContent from '../components/HomeContent';
 import { useNavigate } from 'react-router-dom';
 import ThreePointJumbo from '../components/3Points-Jumbo';
 import HowItWorks from '../components/HowItWorks';
@@ -37,10 +36,6 @@ const Home = () => {
         <Features />
 
         <Testimonials />
-
-        {/* Selling point section, 4 tiles 
-        <HomeContent />
-        */}
 
         {/* Pricing & Subscription section */}
         <Pricing />

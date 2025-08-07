@@ -1,21 +1,15 @@
+// React Bootstrap
 import { Container, Row, Col } from 'react-bootstrap';
-import {
-  RiFilePaperLine,
-  RiGitRepositoryPrivateLine,
-} from 'react-icons/ri';
-import {
-  BiCustomize,
-} from 'react-icons/bi';
-import {
-  BsQrCode,
-} from 'react-icons/bs';
-import {
-  CiWallet,
-  CiMobile3,
-} from 'react-icons/ci';
 
+// React Icons
+import { RiFilePaperLine, RiGitRepositoryPrivateLine } from 'react-icons/ri';
+import { BiCustomize } from 'react-icons/bi';
+import { BsQrCode } from 'react-icons/bs';
+import { CiWallet, CiMobile3 } from 'react-icons/ci';
+
+// Styles
 import '../styles/Fonts.css';
-import '../styles/Features.css'; // NEW: Import your features styles
+import '../styles/Features.css'; 
 
 function Features() {
   return (
@@ -30,7 +24,7 @@ function Features() {
           <h2 className="step-heading">Sustainable by design</h2>
           <p className="font-sailor-italic">No more paper or plastic cards</p>
         </Col>
-
+        
         <Col md={3} className="step-col">
           <div className="step-icon" aria-hidden="true">
             <BiCustomize className="step-number" size={'96px'} />

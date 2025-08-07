@@ -1,19 +1,23 @@
+// React
 import { useState, useContext, useEffect } from 'react';
+
+// App Context
 import { AppContext } from '../context/AppContext';
 
+// React Bootstrap
 import { Button, Modal, Form, Row, Col } from 'react-bootstrap';
 
+// Toast - user slide in messages
 import { toast } from 'react-toastify';
 
+// Axios for queries
 import axios from 'axios';
 
 const CVModal = ({ profileUrl }) => {
-  const [show, setShow] = useState(false);
-
   const { backendUrl, userData, cvData, getCVData, isLoadingUser} = useContext(AppContext);
-  
-  const username = userData?.username;
 
+  // Use States
+  const [show, setShow] = useState(false);
   const [phoneNumber, setPhoneNumber] = useState('');
   const [education, setEducation] = useState('');
   const [experience, setExperience] = useState('');
@@ -24,6 +28,9 @@ const CVModal = ({ profileUrl }) => {
   const [hobbies, setHobbies] = useState('');
   const [achievements, setAchievements] = useState('');
 
+  const username = userData?.username; // Maybe just remove this & use userData.username
+
+  // Open/Close Modal
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
@@ -44,7 +51,7 @@ const CVModal = ({ profileUrl }) => {
       }
     }, [username]);
   
-  
+    // Set CV data
     useEffect(() => {
       if (cvData) {
         setEducation(cvData.cv.education || '');
@@ -84,7 +91,6 @@ const CVModal = ({ profileUrl }) => {
         if (userData?.username) {
           await getCVData(userData.username);
         }
-    
       } catch (err) {
         toast.error(err.response?.data?.message || err.message);
       }
@@ -101,8 +107,7 @@ const CVModal = ({ profileUrl }) => {
         backdrop="static"
         keyboard={false}
         size="lg"
-        
-      >
+        >
         <Modal.Header closeButton className="text-light bg-dark border-0" style={{ backgroundColor: '#16182d' }}>
           <Modal.Title className="w-100" >
             My Pass

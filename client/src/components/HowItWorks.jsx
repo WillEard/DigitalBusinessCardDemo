@@ -1,9 +1,15 @@
+// React Bootstrap
 import { Container, Row, Col, Button } from 'react-bootstrap';
-import '../styles/Fonts.css';
-import '../styles/HowItWorks.css'; // Import the CSS file you just created
+
+// Icons
 import { RiNumber1, RiNumber2, RiNumber3 } from "react-icons/ri";
-import { RiPassValidFill } from "react-icons/ri";
+
+// Carousel
 import PhoneCarousel from './PassCarousel';
+
+// Styles
+import '../styles/Fonts.css';
+import '../styles/HowItWorks.css'; 
 
 
 function HowItWorks() {

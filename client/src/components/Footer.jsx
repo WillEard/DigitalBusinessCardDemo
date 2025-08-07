@@ -1,10 +1,11 @@
-import Container from 'react-bootstrap/Container';
-import Nav from 'react-bootstrap/Nav';
-import Col from 'react-bootstrap/Col';
-import { Row } from 'react-bootstrap';
-import Image from 'react-bootstrap/Image';
+// React Bootstrap
+import { Container, Image } from 'react-bootstrap';
+
+// Styles
 import '../styles/Fonts.css';
 import '../styles/Footer.css'; // NEW: Import your features styles 
+
+// PelagoPass Logo
 import PelagoPassLogo from '../assets/PelagoPassLogo.svg';
 
 const Footer = () => {
@@ -14,7 +15,6 @@ const Footer = () => {
       <div className="w-100 w-sm-50">
         <Container >
           <div className="container">
-
             <footer className="py-3 my-4 text-center">
               <Image className="footer-logo" src={PelagoPassLogo}></Image>
               <ul className="nav justify-content-center border-bottom pb-3 mb-3">

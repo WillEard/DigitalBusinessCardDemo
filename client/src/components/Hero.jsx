@@ -2,15 +2,17 @@
 import { useContext, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-// Context
+// AppContext
 import { AppContext } from '../context/AppContext';
 
-// Bootstrap
+// React Bootstrap
 import { Container, Row, Col, Button } from 'react-bootstrap';
 
 // QR and Utility
 import QRCode from 'react-qr-code';
 import { toPng } from 'html-to-image';
+
+// Icons
 import { FaArrowTurnDown } from 'react-icons/fa6';
 
 // Styles
@@ -19,12 +21,12 @@ import '../styles/Fonts.css';
 
 const Hero = () => {
   const { userData, getUserData, isLoggedIn, isLoadingUser } = useContext(AppContext);
+
   const navigate = useNavigate();
   const qrRef = useRef(null);
 
   const siteURL = 'www.pelagopass.com';
   const profileUrl = `${siteURL}/cv/${userData?.username}`;
-  const homeUrl = '/';
 
   useEffect(() => {
     if (!isLoadingUser && isLoggedIn) {
