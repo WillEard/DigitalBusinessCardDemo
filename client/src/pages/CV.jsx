@@ -1,9 +1,10 @@
+// Components
 import Navbar from '../components/Navbar';
-import Container from 'react-bootstrap/esm/Container';
 import Footer from '../components/Footer';
 import UserCV from '../components/UserCV';
-import Col from 'react-bootstrap/Col';
-import Row from 'react-bootstrap/Row';
+
+// React Bootstrap
+import Container from 'react-bootstrap/esm/Container';
 
 const CV = () => {
   return (

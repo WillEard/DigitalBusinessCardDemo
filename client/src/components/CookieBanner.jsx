@@ -24,7 +24,7 @@ export default function CookieConsentBanner() {
   return (
     <div className="container rounded bottom-0 left-0 p-4 z-50 cookie-box mb-3">
       <p className="text-light mb-2">
-        <strong style={{ fontFamily: 'Sailor' }}>This website uses cookies</strong>
+        <strong className="fontNormal">This website uses cookies</strong>
       </p>
       <p className="text-light small mb-3">
         We use cookies to improve your experience. You can accept or reject non-essential cookies.

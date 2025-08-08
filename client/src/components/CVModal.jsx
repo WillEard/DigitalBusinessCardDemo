@@ -13,6 +13,8 @@ import { toast } from 'react-toastify';
 // Axios for queries
 import axios from 'axios';
 
+import '../styles/Fonts.css'; // Import custom font styles
+
 const CVModal = ({ profileUrl }) => {
   const { backendUrl, userData, cvData, getCVData, isLoadingUser} = useContext(AppContext);
 
@@ -109,10 +111,7 @@ const CVModal = ({ profileUrl }) => {
         size="lg"
         >
         <Modal.Header closeButton className="text-light bg-dark border-0" style={{ backgroundColor: '#16182d' }}>
-          <Modal.Title className="w-100" >
-            My Pass
-            <hr className="mt-2" />
-          </Modal.Title>
+          <Modal.Title className="w-100 fontNormal" >My Pass<hr className="mt-2" /></Modal.Title>
         </Modal.Header>
 
         <Modal.Body className="px-4 py-3" style={{ backgroundColor: '#E6F4EA' }}>
@@ -120,59 +119,59 @@ const CVModal = ({ profileUrl }) => {
             <Row className="gy-4 gx-5">
               <Col md={6}>
                 <Form.Group>
-                  <Form.Label className="text-dark">Full Name</Form.Label>
+                  <Form.Label className="text-dark fontNormal">Full Name</Form.Label>
                   <Form.Control className="p-3" type="text" value={cvData?.user?.name || ''} disabled />
                 </Form.Group>
 
                 <Form.Group>
-                  <Form.Label className="text-dark mt-3">Phone Number</Form.Label>
+                  <Form.Label className="text-dark mt-3 fontNormal">Phone Number</Form.Label>
                   <Form.Control className="p-3" type="tel" value={phoneNumber} disabled/>
                 </Form.Group>
 
                 <Form.Group>
-                  <Form.Label className="text-dark mt-3">Education</Form.Label>
+                  <Form.Label className="text-dark mt-3 fontNormal">Education</Form.Label>
                   <Form.Control as="textarea" onChange={e => setEducation(e.target.value)} rows={5} value={education} />
                 </Form.Group>
 
                 <Form.Group>
-                  <Form.Label className="text-dark mt-3">Skills</Form.Label>
+                  <Form.Label className="text-dark mt-3 fontNormal">Skills</Form.Label>
                   <Form.Control as="textarea" rows={5} onChange={e => setSkills(e.target.value)}  value={skills} />
                 </Form.Group>
 
                 <Form.Group>
-                  <Form.Label className="text-dark mt-3">Projects</Form.Label>
+                  <Form.Label className="text-dark mt-3 fontNormal">Projects</Form.Label>
                   <Form.Control as="textarea" rows={5} onChange={e => setProjects(e.target.value)}  value={projects} />
                 </Form.Group>
 
                 <Form.Group>
-                  <Form.Label className="text-dark mt-3">Hobbies</Form.Label>
+                  <Form.Label className="text-dark mt-3 fontNormal">Hobbies</Form.Label>
                   <Form.Control as="textarea" rows={3} onChange={e => setHobbies(e.target.value)}  value={hobbies} />
                 </Form.Group>
               </Col>
 
               <Col md={6}>
                 <Form.Group >
-                  <Form.Label className="text-dark">Email Address</Form.Label>
+                  <Form.Label className="text-dark fontNormal">Email Address</Form.Label>
                   <Form.Control className="p-3" type="email" value={cvData?.user?.email || ''} disabled />
                 </Form.Group>
 
                 <Form.Group>
-                  <Form.Label className="text-dark mt-3">Experience</Form.Label>
+                  <Form.Label className="text-dark mt-3 fontNormal">Experience</Form.Label>
                   <Form.Control as="textarea" rows={5} onChange={e => setExperience(e.target.value)}  value={experience} />
                 </Form.Group>
 
                 <Form.Group>
-                  <Form.Label className="text-dark mt-3">Certifications</Form.Label>
+                  <Form.Label className="text-dark mt-3 fontNormal">Certifications</Form.Label>
                   <Form.Control as="textarea" rows={5} onChange={e => setCertifications(e.target.value)}  value={certifications} />
                 </Form.Group>
 
                 <Form.Group>
-                  <Form.Label className="text-dark mt-3">Languages</Form.Label>
+                  <Form.Label className="text-dark mt-3 fontNormal">Languages</Form.Label>
                   <Form.Control as="textarea" rows={2} onChange={e => setLanguages(e.target.value)}  value={languages} />
                 </Form.Group>
 
                 <Form.Group>
-                  <Form.Label className="text-dark mt-3">Personal Achievements</Form.Label>
+                  <Form.Label className="text-dark mt-3 fontNormal">Personal Achievements</Form.Label>
                   <Form.Control as="textarea" rows={4} onChange={e => setAchievements(e.target.value)}  value={achievements} />
                 </Form.Group>
               </Col>

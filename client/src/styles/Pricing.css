@@ -21,7 +21,7 @@
   }
   
   .free-plan .plan-content li {
-    font-family: 'Sailor Italic', serif;
+    font-family: 'Sailor Condensed', serif;
     font-size: 1.3rem;
     color: #1a1d3d;
     line-height: 1.6;
@@ -43,7 +43,7 @@
   }
   
   .paid-plan .plan-content li {
-    font-family: 'Sailor Italic', serif;
+    font-family: 'Sailor Condensed', serif;
     font-size: 1.2rem;
     color: white;
     line-height: 1.6;

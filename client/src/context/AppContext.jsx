@@ -1,7 +1,14 @@
+// React
 import { createContext, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
+
+// Toast for user messages
 import { toast } from 'react-toastify';
+
+// Axios
 import axios from 'axios';
+
+// App Context creation
 export const AppContext = createContext();
 
 export const AppContextProvider = (props) => {
@@ -10,7 +17,6 @@ export const AppContextProvider = (props) => {
   AppContextProvider.propTypes = {
     children: PropTypes.node.isRequired,
   };
-
 
   const [authState, setAuthState] = useState('login');
   const backendUrl = import.meta.env.VITE_BACKEND_URL;

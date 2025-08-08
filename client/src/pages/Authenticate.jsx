@@ -1,16 +1,28 @@
+// React Bootstrap
 import Container from 'react-bootstrap/esm/Container';
+
+// React
+import { useState, useEffect, useContext } from 'react';
+import { Navigate, useNavigate, useLocation } from 'react-router-dom';
+
+// Google Authentication
+import { GoogleLogin, googleLogout } from '@react-oauth/google';
+
+// Components
 import Navbar from '../components/Navbar';
 import LoginForm from '../components/Login';
 import Footer from '../components/Footer';
-import { useState, useEffect, useContext } from 'react';
 import SignupForm from '../components/Signup';
-import { Navigate, useNavigate, useLocation } from 'react-router-dom';
+
+// App Context
 import { AppContext } from '../context/AppContext';
+
+// Axios
 import axios from 'axios';
 
+// Styles
 import '../styles/Authenticate.css'; // CSS file for background and styling
 
-import { GoogleLogin, googleLogout } from '@react-oauth/google';
 const backendUrl = import.meta.env.VITE_BACKEND_URL; // Adjust based on your environment
 
 const Login = () => {
@@ -31,7 +43,6 @@ const Login = () => {
     return <Navigate to="/" />;
   }
   
-
   // Handle Google OAuth login success
   const handleGoogleLoginSuccess = async (credentialResponse) => {
     const { credential } = credentialResponse;
@@ -59,35 +70,26 @@ const Login = () => {
   };
     
 
-  
-
   return (
     <div className="d-flex flex-column min-vh-100 login-wrapper text-white">
-  <div className="login-overlay flex-grow-1">
-    <Container fluid>
-      <Navbar />
-
-      
-
-      {authState === 'SignUp' ? <SignupForm /> : <LoginForm />}
-    </Container>
-    <div className='w-25 mx-auto'>
-      <hr />
-    </div>
-    <div className="d-flex flex-column align-items-center justify-content-center my-4">
-     
-        <div className="google-login-box bg-light rounded p-3 shadow-sm text-dark">
-          <p className="mb-2 text-center fw-bold">Or continue with Google</p>
-          <GoogleLogin 
-            onSuccess={handleGoogleLoginSuccess}
-            onError={() => console.log("Login failed")}
-            width="100%" // Optional — adjust based on preference
-          /> 
+      <div className="login-overlay flex-grow-1">
+        <Container fluid>
+          <Navbar />
+            {authState === 'SignUp' ? <SignupForm /> : <LoginForm />}
+        </Container>
+        <div className='w-25 mx-auto'>
+          <hr />
         </div>
-     
-      </div>
-      
-
+        <div className="d-flex flex-column align-items-center justify-content-center my-4">
+          <div className="google-login-box bg-light rounded p-3 shadow-sm text-dark">
+            <p className="mb-2 text-center fw-bold">Or continue with Google</p>
+            <GoogleLogin 
+              onSuccess={handleGoogleLoginSuccess}
+              onError={() => console.log("Login failed")}
+              width="100%" // Optional — adjust based on preference
+            /> 
+          </div>
+        </div>
     <Footer />
   </div>
 </div>

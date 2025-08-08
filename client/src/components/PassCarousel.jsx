@@ -1,10 +1,16 @@
+// React Bootstrap
 import { Carousel } from 'react-bootstrap';
+
+// React
 import { useRef } from 'react';
+
+// Styles
 import '../styles/PhoneCarousel.css'; // Import custom CSS for the carousel
 
 const PhoneCarousel = () => {
     const carouselRef = useRef(null);
-  const images = [
+
+    const images = [
     'https://placehold.co/496x1096/cyan/black?text=Pass+1',
     'https://placehold.co/496x1096/white/black?text=Pass+2',
     'https://placehold.co/496x1096/red/white?text=Pass+3',

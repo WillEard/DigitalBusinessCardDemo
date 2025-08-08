@@ -1,17 +1,27 @@
+// React
 import { useContext, useState, useEffect } from 'react';
-import Container from 'react-bootstrap/Container';
-import Nav from 'react-bootstrap/Nav';
-import Navbar from 'react-bootstrap/Navbar';
-import NavDropdown from 'react-bootstrap/NavDropdown';
 import { useNavigate } from 'react-router-dom';
+
+
+// React Bootstrap
+import { Container, Nav, Navbar, NavDropdown, Image } from 'react-bootstrap';
+
+// App Context
 import { AppContext } from '../context/AppContext';
+
+// Axios
 import axios from 'axios';
+
+// Toast for user messages
 import { toast } from 'react-toastify';
+
+// Images
 import logo from '../assets/Pelago-Header-Logo-white.svg';
-import { Image } from 'react-bootstrap';
+
+// Google Logout Authentication
 import { googleLogout } from '@react-oauth/google';
 
-import 'bootstrap/dist/css/bootstrap.min.css';
+// Styles
 import '../styles/Navbar.css'; // Import custom CSS for Navbar
 import '../styles/Fonts.css'; // Import custom font styles
 
@@ -23,6 +33,7 @@ const Navigation = () => {
   // New state to track scroll position
   const [scrolled, setScrolled] = useState(false);
 
+  // useEffect for scrolling
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.pageYOffset > 50); // change 50 to whatever threshold you want
@@ -34,6 +45,7 @@ const Navigation = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // Send email OTP code to verify user
   const sendVerifyOTP = async () => {
     try {
       axios.defaults.withCredentials = true;
@@ -50,6 +62,7 @@ const Navigation = () => {
     }
   };
 
+  // Logout method
   const logout = async () => {
     try {
       axios.defaults.withCredentials = true;
@@ -64,8 +77,6 @@ const Navigation = () => {
       toast.error(error.message);
     }
   };
-
-
 
   return (
     <Navbar
@@ -154,7 +165,7 @@ const Navigation = () => {
                   onClick={() =>
                     navigate('/Authenticate', { state: { authState: 'Login' } })
                   }
-                  className="fw-bold text-light login rounded" style={{ fontFamily: 'Sailor Condensed' }}
+                  className="fw-bold text-light login rounded fontCondensed"
                 >
                   Login
                 </Nav.Link>

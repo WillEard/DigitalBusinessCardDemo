@@ -1,12 +1,23 @@
+// React
 import { useContext, useEffect, useState } from 'react';
-import { Container, Row, Col, Button, Table} from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
+
+// React Bootstrap
+import { Container, Row, Col, Button, Table} from 'react-bootstrap';
+
+// Toast
 import { toast } from 'react-toastify';
+
+// App Context
 import { AppContext } from '../context/AppContext';
+
+// Axios
 import axios from 'axios';
 
+// Navbar
 import Navbar from '../components/Navbar';
 
+// Styles
 import '../styles/Dashboard.css'; // Import custom CSS for Navbar
 import '../styles/Fonts.css'; // Import custom font styles
 

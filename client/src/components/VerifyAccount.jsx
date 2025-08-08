@@ -1,24 +1,29 @@
-import Button from 'react-bootstrap/Button';
-import Form from 'react-bootstrap/Form';
-import FloatingLabel from 'react-bootstrap/FloatingLabel';
-import Container from 'react-bootstrap/esm/Container';
+// React Bootstrap
+import { Button, Form, FloatingLabel, Container } from 'react-bootstrap';
+
+// React
 import { useNavigate } from 'react-router-dom';
-import { toast } from 'react-toastify';
-import axios from 'axios';
-import { useContext, useEffect } from 'react';
+import { useContext, useEffect, useState } from 'react';
+
+// App Context
 import { AppContext } from '../context/AppContext';
-import { useState } from 'react';
+
+// Toast for user messages
+import { toast } from 'react-toastify';
+
+// Axios
+import axios from 'axios';
 
 const EmailVerification = () => {
   axios.defaults.withCredentials = true;
 
   const navigate = useNavigate();
 
-  const { backendUrl, isLoggedIn, userData, getUserData } =
-    useContext(AppContext);
+  const { backendUrl, isLoggedIn, userData, getUserData } = useContext(AppContext);
 
   const [otp, setOTP] = useState('');
 
+  // Endpoint to send the OTP entered by user to verify account
   const sendVerifyOTP = async () => {
     try {
       axios.defaults.withCredentials = true;
@@ -36,6 +41,7 @@ const EmailVerification = () => {
     }
   };
 
+  // Verify form handler
   const onSubmitHandler = async (e) => {
     try {
       e.preventDefault();

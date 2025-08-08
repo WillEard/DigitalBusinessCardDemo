@@ -1,12 +1,22 @@
-import Button from 'react-bootstrap/Button';
-import Form from 'react-bootstrap/Form';
-import FloatingLabel from 'react-bootstrap/FloatingLabel';
-import Container from 'react-bootstrap/esm/Container';
-import { useNavigate } from 'react-router-dom';
-import { toast } from 'react-toastify';
-import axios from 'axios';
+// React Bootstrap
+import { Button, Form, FloatingLabel, Container } from 'react-bootstrap';
+
+// React
 import { useContext, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+
+// App Context
 import { AppContext } from '../context/AppContext';
+
+// Toast for user messages
+import { toast } from 'react-toastify';
+
+// Axios
+import axios from 'axios';
+
+// Styles
+import '../styles/Fonts.css';
+
 
 const ResetPassword = () => {
   const { backendUrl } = useContext(AppContext);
@@ -63,43 +73,40 @@ const ResetPassword = () => {
   };
 
   return (
-    <Container className="rounded text-dark mx-auto row align-items-center col-lg-5 mt-5 pt-2 pb-3">
-      <h1 className="text-center mb-1">Reset Password</h1>
+    <Container className="rounded text-dark mx-auto row align-items-center col-lg-5 mt-5 pt-2 pb-3 ">
+      <h1 className="text-center mb-1 text-light fontNormal display-4">Reset Password</h1>
 
       {/*Email Address Form */}
-
-      {!isEmailSent && (
-        <Form onSubmit={onSubmitEmail}>
-          <h5 className="text-center mt-2">
-            Enter the email address associated with your account
-          </h5>
-          <Form.Group className="mb-3 mt-3" controlId="formVerify">
-            <FloatingLabel
-              controlId="floatingInput"
-              label="Email Address"
-              className="mb-3"
-            >
-              <Form.Control
-                type="email"
-                placeholder="Email Address"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-              />
-            </FloatingLabel>
-
-            <Button className="btn btn-md mx-auto" variant="dark" type="submit">
-              reset link
-            </Button>
-          </Form.Group>
-        </Form>
-      )}
+      <div className='d-flex justify-content-center'>
+        {!isEmailSent && (
+          <Form onSubmit={onSubmitEmail}>
+            <h5 className="text-center mt-2 text-light fontCondensed">
+              Enter the email address associated with your account
+            </h5>
+            <Form.Group className="mb-3 mt-3" controlId="formVerify">
+              <FloatingLabel
+                controlId="floatingInput"
+                label="Email Address"
+                className="mb-3"
+              >
+                <Form.Control
+                  type="email"
+                  placeholder="Email Address"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
+                />
+              </FloatingLabel>
+            </Form.Group>
+            <Button className="btn btn-md mx-auto fontCondensed" variant="primary" type="submit">Reset link</Button>
+          </Form>
+        )}
+      </div>
 
       {/*OTP Form */}
-
       {!isOtpSubmitted && isEmailSent && (
         <Form onSubmit={onSubmitOtp} className="">
-          <h5 className="text-center mt-2">
+          <h5 className="text-center mt-2 text-light fontCondensed">
             Enter the 6-digit code sent to your email address
           </h5>
           <Form.Group className="mb-3" controlId="formVerify">
@@ -116,7 +123,7 @@ const ResetPassword = () => {
                 required
               />
             </FloatingLabel>
-            <Button className="btn btn-md mx-auto" variant="dark" type="submit">
+            <Button className="btn btn-md mx-auto fontCondensed" variant="primary" type="submit">
               Verify
             </Button>
           </Form.Group>
@@ -124,7 +131,6 @@ const ResetPassword = () => {
       )}
 
       {/*New Password Form */}
-
       {isOtpSubmitted && isEmailSent && (
         <Form onSubmit={onSubmitNewPassword} className="">
           <h5 className="text-center mt-2">Enter your new password</h5>

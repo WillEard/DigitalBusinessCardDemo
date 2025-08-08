@@ -1,3 +1,4 @@
+// Styles
 import '../styles/Banner.css';
 
 const Banner = ({ message = "Use code 'Conserve' for 5% off your first month", onClose }) => {

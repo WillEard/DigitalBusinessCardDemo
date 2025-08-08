@@ -1,4 +1,7 @@
+// React Bootstrap
 import { Container, Row, Col } from 'react-bootstrap';
+
+// Styles
 import '../styles/Fonts.css';
 import '../styles/Testimonials.css';
 

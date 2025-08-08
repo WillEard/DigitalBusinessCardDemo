@@ -1,11 +1,17 @@
+// React
 import { useContext, useEffect } from 'react';
-import { AppContext } from '../context/AppContext';
-import Button from 'react-bootstrap/esm/Button';
-import { Container, Row, Col, Card } from 'react-bootstrap';
 
+// App Context
+import { AppContext } from '../context/AppContext';
+
+// React Bootstrap
+import { Container, Row, Col, Card, Button } from 'react-bootstrap';
+
+// Styles
 import '../styles/Fonts.css';
 import '../styles/Pricing.css'; // Import your pricing styles
 
+// Icons
 import { FaCheck } from "react-icons/fa6";
 import { RxCross2 } from "react-icons/rx";
 
@@ -19,10 +25,10 @@ function PricingContainer() {
           <Col md={4} className="mb-4 ">
             <Card className="h-100 shadow-sm free-plan text-center rounded-5">
               <Card.Header className="py-3">
-                <h4 className="my-0 fw-normal free-heading">Free</h4>
+                <h4 className="my-0 free-heading fontNormal">Free</h4>
               </Card.Header>
               <Card.Body className='plan-content mb-3'>
-                <ul className="list-unstyled mt-3" >
+                <ul className="list-unstyled mt-3 fontCondensed" >
                   <li><FaCheck className="icon-inline"/>Create Cards</li>
                   <li><FaCheck className="icon-inline"/>QR Sharing</li>
                   <li><RxCross2 className="icon-inline"/>24/7 Support</li>
@@ -39,7 +45,7 @@ function PricingContainer() {
           <Col md={6} className="mb-4 ">
             <Card className="h-100 shadow-sm paid-plan rounded-5 text-center">
               <Card.Header className="py-3">
-                <h4 className="my-0 fw-normal paid-heading text-center">Paid</h4>
+                <h4 className="my-0 paid-heading text-center fontNormal">Paid</h4>
               </Card.Header>
               <Card.Body className="plan-content mb-3 ">
                 <Row className='px-1'>
