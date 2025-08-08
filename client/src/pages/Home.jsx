@@ -1,22 +1,19 @@
+// React
+import { useState } from 'react';
+
+// Components
 import Navbar from '../components/Navbar';
-import Container from 'react-bootstrap/esm/Container';
 import Footer from '../components/Footer';
-import Col from 'react-bootstrap/Col';
-import Row from 'react-bootstrap/Row';
 import Hero from '../components/Hero';
 import Pricing from '../components/Pricing';
-import { useNavigate } from 'react-router-dom';
 import ThreePointJumbo from '../components/3Points-Jumbo';
 import HowItWorks from '../components/HowItWorks';
 import Features from '../components/Features';
 import Testimonials from '../components/Testimonials';
 import NavBanner from '../components/NavBanner';
-import { Nav } from 'react-bootstrap';
-import { useState } from 'react';
-
-
 
 const Home = () => {
+  // Promotion banner
   const [showBanner, setShowBanner] = useState(true);
 
   return (
@@ -40,7 +37,6 @@ const Home = () => {
         {/* Pricing & Subscription section */}
         <Pricing />
 
-        {/* FAQ section */}
 
         {/* Footer at bottom */}
         <Footer />

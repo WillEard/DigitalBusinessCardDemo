@@ -1,4 +1,7 @@
+// React Bootstrap
 import Container from 'react-bootstrap/esm/Container';
+
+// Components
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import ResetPassword from '../components/ResetPassword';

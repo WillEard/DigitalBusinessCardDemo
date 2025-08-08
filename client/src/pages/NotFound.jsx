@@ -1,6 +1,11 @@
+// React Bootstrap
 import Container from 'react-bootstrap/esm/Container';
+
+// Components
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
+
+// React
 import { useNavigate } from 'react-router-dom';
 
 const NotFound = () => {
