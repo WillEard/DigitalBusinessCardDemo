@@ -12,6 +12,8 @@ import { Container, Row, Col, Button } from 'react-bootstrap';
 import QRCode from 'react-qr-code';
 import { toPng } from 'html-to-image';
 
+
+
 // Icons
 import { FaArrowTurnDown } from 'react-icons/fa6';
 
@@ -27,6 +29,7 @@ const Hero = () => {
 
   const siteURL = 'www.pelagopass.com';
   const profileUrl = `${siteURL}/cv/${userData?.username}`;
+  
 
   useEffect(() => {
     if (!isLoadingUser && isLoggedIn) {
@@ -35,36 +38,79 @@ const Hero = () => {
   }, [isLoadingUser, isLoggedIn]);
 
   const handleDownload = async () => {
-    if (!qrRef.current) return;
-    try {
-      const dataUrl = await toPng(qrRef.current, {
-        cacheBust: true,
-        pixelRatio: 3,
-      });
-      const link = document.createElement('a');
-      link.href = dataUrl;
-      link.download = `${userData.name} DigiQR.png`;
-      link.click();
-    } catch (err) {
-      console.error('Error generating high-res QR:', err);
+    const svg = qrRef.current.querySelector('svg');
+    if (!svg) {
+      console.error('SVG not found');
+      return;
     }
+  
+    const width = svg.getAttribute('width') || svg.clientWidth;
+    const height = svg.getAttribute('height') || svg.clientHeight;
+  
+    if (!width || !height || width === '0' || height === '0') {
+      console.error('SVG has zero width or height, cannot convert to PNG');
+      return;
+    }
+  
+    // Serialize SVG XML
+    const serializer = new XMLSerializer();
+    const svgString = serializer.serializeToString(svg);
+  
+    // Create a canvas
+    const canvas = document.createElement('canvas');
+    canvas.width = width;
+    canvas.height = height;
+    const ctx = canvas.getContext('2d');
+  
+    // Create an image to load the SVG string
+    const img = new Image();
+    const svgBlob = new Blob([svgString], { type: 'image/svg+xml;charset=utf-8' });
+    const url = URL.createObjectURL(svgBlob);
+  
+    img.onload = () => {
+      ctx.drawImage(img, 0, 0, width, height);
+      URL.revokeObjectURL(url);
+  
+      // Get PNG data URL and download
+      const pngDataUrl = canvas.toDataURL('image/png');
+      downloadImage(pngDataUrl, `${userData.name}.png`);
+    };
+  
+    img.onerror = (err) => {
+      console.error('Error loading SVG image', err);
+    };
+  
+    img.src = url;
   };
+
+  function downloadImage(dataUrl, filename) {
+    const link = document.createElement('a');
+    link.href = dataUrl;
+    link.download = filename || 'download.png';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  }
 
   const renderQRHidden = () => (
     <div
-      className="position-absolute"
-      style={{ left: '-9999px', top: '-9999px', height: 0, width: 0, overflow: 'hidden' }}
-    >
-      <div ref={qrRef}>
-        <QRCode
-          className="rounded"
-          size={256}
-          style={{ width: '100%', maxWidth: '256px', display: 'block' }}
-          value={profileUrl}
-          viewBox="0 0 256 256"
-        />
-      </div>
-    </div>
+    ref={qrRef}
+    style={{
+      position: 'absolute',  // remove from normal flow
+      width: 256,
+      height: 256,
+      overflow: 'hidden',
+      left: '-9999px',       // move off-screen
+      top: 'auto',
+      opacity: 0             // optional extra invisibility
+    }}
+  >
+    <QRCode
+      size={256}
+      value={profileUrl}
+      viewBox="0 0 256 256"
+    />
+  </div>
   );
 
   return (
@@ -163,6 +209,7 @@ const Hero = () => {
                       <hr />
                       <h4 className="fontCondensed mt-2">3,000+ cards created this year</h4>
                     </div>
+
                   </Container>
                 </Col>
               </Row>
