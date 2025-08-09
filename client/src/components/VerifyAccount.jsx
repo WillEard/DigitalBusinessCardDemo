@@ -14,6 +14,10 @@ import { toast } from 'react-toastify';
 // Axios
 import axios from 'axios';
 
+// Styles
+import '../styles/Fonts.css';
+import '../styles/Verify-email.css';
+
 const EmailVerification = () => {
   axios.defaults.withCredentials = true;
 
@@ -70,42 +74,47 @@ const EmailVerification = () => {
   }, [isLoggedIn, userData]);
 
   return (
-    <Container className="rounded text-dark mx-auto row align-items-center col-lg-6 mt-5 pt-2 pb-3">
-      <h1 className="text-center mb-1">Verify Email</h1>
-      <p className="text-center mt-2">
-        Enter the 6-digit code sent to the email associated with your account.{' '}
-        <br />
-        <span className="fw-bold">Not sent?</span> Click to send another. It
-        will expire after 15 minutes.
-      </p>
-      <Container className="mb-3 mx-auto text-center">
-        <Button
-          variant="primary"
-          className="btn btn-md mx-auto"
-          onClick={sendVerifyOTP}
-        >
-          Send Code
-        </Button>
-      </Container>
+    <Container className="rounded text-dark mx-auto col-lg-6 mt-5 pt-2 pb-3">
+  <h1 className="text-center mb-1 text-light fontNormal display-4">Verify Email</h1>
+  <p className="text-center mt-2 text-light fontCondensed">
+    Enter the 6-digit code sent to the email associated with your account.
+    <br />
+    <span className="fw-bold">Not sent?</span> Click to send another. It will expire after 15 minutes.
+  </p>
 
-      <Form className="" onSubmit={onSubmitHandler}>
-        <Form.Group className="mb-3" controlId="formVerify">
-          <FloatingLabel controlId="floatingInput" label="OTP" className="mb-3">
-            <Form.Control
-              type="number"
-              placeholder="OTP"
-              maxLength="1"
-              required
-              value={otp}
-              onChange={(e) => setOTP(e.target.value)}
-            />
-          </FloatingLabel>
-          <Button className="btn btn-md mx-auto" variant="dark" type="submit">
-            Verify
-          </Button>
-        </Form.Group>
-      </Form>
-    </Container>
+  {/* Send Code Button */}
+  <div className="mb-3 text-center">
+    <Button
+      variant="secondary"
+      className="btn btn-md rounded-5 fontCondensed"
+      onClick={sendVerifyOTP}
+    >
+      Send Code
+    </Button>
+  </div>
+
+  {/* OTP Form */}
+  <Form onSubmit={onSubmitHandler}>
+    <Form.Group className="mb-3" controlId="formVerify">
+      <div className="mx-auto" style={{ maxWidth: '300px' }}>
+        <FloatingLabel label="OTP" className="mb-3">
+          <Form.Control
+            type="number"
+            placeholder="OTP"
+            required
+            value={otp}
+            onChange={(e) => setOTP(e.target.value)}
+          />
+        </FloatingLabel>
+      </div>
+    </Form.Group>
+    <div className="d-flex justify-content-center">
+      <Button className="btn btn-md rounded-5 fontCondensed" variant="primary" type="submit">
+        Verify
+      </Button>
+    </div>
+  </Form>
+</Container>
   );
 };
 

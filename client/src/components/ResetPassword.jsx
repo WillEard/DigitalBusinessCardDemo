@@ -73,88 +73,90 @@ const ResetPassword = () => {
   };
 
   return (
-    <Container className="rounded text-dark mx-auto row align-items-center col-lg-5 mt-5 pt-2 pb-3 ">
-      <h1 className="text-center mb-1 text-light fontNormal display-4">Reset Password</h1>
+    <Container className="rounded text-dark mx-auto col-lg-5 mt-5 pt-2 pb-3">
+  <h1 className="text-center mb-1 text-light fontNormal display-4">
+    Reset Password
+  </h1>
 
-      {/*Email Address Form */}
-      <div className='d-flex justify-content-center'>
-        {!isEmailSent && (
-          <Form onSubmit={onSubmitEmail}>
-            <h5 className="text-center mt-2 text-light fontCondensed">
-              Enter the email address associated with your account
-            </h5>
-            <Form.Group className="mb-3 mt-3" controlId="formVerify">
-              <FloatingLabel
-                controlId="floatingInput"
-                label="Email Address"
-                className="mb-3"
-              >
-                <Form.Control
-                  type="email"
-                  placeholder="Email Address"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  required
-                />
-              </FloatingLabel>
-            </Form.Group>
-            <Button className="btn btn-md mx-auto fontCondensed" variant="primary" type="submit">Reset link</Button>
-          </Form>
-        )}
+  {/* Email Address Form */}
+  {!isEmailSent && (
+    <Form onSubmit={onSubmitEmail}>
+      <p className="text-center mt-2 text-light fontCondensed">
+        Enter the email address associated with your account
+      </p>
+      <Form.Group className="mb-3 mt-3 row justify-content-center" controlId="formEmail">
+        <div className="col-sm-12 col-md-6 col-lg-6 col-xl-10 col-xxl-6">
+          <FloatingLabel label="Email Address" className="mb-3">
+            <Form.Control
+              type="email"
+              placeholder="Email Address"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
+          </FloatingLabel>
+        </div>
+      </Form.Group>
+      <div className="d-flex justify-content-center">
+        <Button className="btn btn-md fontCondensed rounded-5" variant="primary" type="submit">
+          Reset Link
+        </Button>
       </div>
+    </Form>
+  )}
 
-      {/*OTP Form */}
-      {!isOtpSubmitted && isEmailSent && (
-        <Form onSubmit={onSubmitOtp} className="">
-          <h5 className="text-center mt-2 text-light fontCondensed">
-            Enter the 6-digit code sent to your email address
-          </h5>
-          <Form.Group className="mb-3" controlId="formVerify">
-            <FloatingLabel
-              controlId="floatingInput"
-              label="OTP"
-              className="mb-3"
-            >
-              <Form.Control
-                type="number"
-                placeholder="OTP"
-                value={otp}
-                onChange={(e) => setOtp(e.target.value)}
-                required
-              />
-            </FloatingLabel>
-            <Button className="btn btn-md mx-auto fontCondensed" variant="primary" type="submit">
-              Verify
-            </Button>
-          </Form.Group>
-        </Form>
-      )}
+  {/* OTP Form */}
+{!isOtpSubmitted && isEmailSent && (
+  <Form onSubmit={onSubmitOtp}>
+    <h5 className="text-center mt-2 text-light fontCondensed">
+      Enter the 6-digit code sent to your email address
+    </h5>
+    <Form.Group className="mb-3" controlId="formOtp">
+      <div className="mx-auto col-sm-12 col-md-6 col-lg-6 col-xl-10 col-xxl-6" style={{ maxWidth: '300px' }}>
+        <FloatingLabel label="OTP" className="mb-3">
+          <Form.Control
+            type="number"
+            placeholder="OTP"
+            value={otp}
+            onChange={(e) => setOtp(e.target.value)}
+            required
+          />
+        </FloatingLabel>
+      </div>
+    </Form.Group>
+    <div className="d-flex justify-content-center">
+      <Button className="btn btn-md fontCondensed rounded-5" variant="primary" type="submit">
+        Verify
+      </Button>
+    </div>
+  </Form>
+)}
 
-      {/*New Password Form */}
-      {isOtpSubmitted && isEmailSent && (
-        <Form onSubmit={onSubmitNewPassword} className="">
-          <h5 className="text-center mt-2">Enter your new password</h5>
-          <Form.Group className="mb-3" controlId="formVerify">
-            <FloatingLabel
-              controlId="floatingInput"
-              label="New Password"
-              className="mb-3"
-            >
-              <Form.Control
-                type="password"
-                placeholder="New Password"
-                value={newPass}
-                onChange={(e) => setNewPassword(e.target.value)}
-                required
-              />
-            </FloatingLabel>
-            <Button className="btn btn-md mx-auto" variant="dark" type="submit">
-              Reset Password
-            </Button>
-          </Form.Group>
-        </Form>
-      )}
-    </Container>
+{/* New Password Form */}
+{isOtpSubmitted && isEmailSent && (
+  <Form onSubmit={onSubmitNewPassword}>
+    <h5 className="text-center mt-2 text-light fontCondensed">Enter your new password</h5>
+    <Form.Group className="mb-3" controlId="formNewPassword">
+      <div className="mx-auto col-sm-12 col-md-6 col-lg-6 col-xl-10 col-xxl-6" style={{ maxWidth: '300px' }}>
+        <FloatingLabel label="New Password" className="mb-3">
+          <Form.Control
+            type="password"
+            placeholder="New Password"
+            value={newPass}
+            onChange={(e) => setNewPassword(e.target.value)}
+            required
+          />
+        </FloatingLabel>
+      </div>
+    </Form.Group>
+    <div className="d-flex justify-content-center">
+      <Button className="btn btn-md fontCondensed rounded-5" variant="primary" type="submit">
+        Reset Password
+      </Button>
+    </div>
+  </Form>
+)}
+</Container>
   );
 };
 

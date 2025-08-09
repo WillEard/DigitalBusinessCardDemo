@@ -1,19 +1,25 @@
-import Container from 'react-bootstrap/esm/Container';
-import { Form, Row, Col, Button, Toast, Alert  } from 'react-bootstrap';
-import Navbar from '../components/Navbar';
-import Spinner from 'react-bootstrap/Spinner';
-import Modal from 'react-bootstrap/Modal';
-import { toast } from 'react-toastify';
+// React Bootstrap
+import { Form, Row, Col, Button, Container, Modal, Spinner } from 'react-bootstrap';
+
+// React
 import { useNavigate } from 'react-router-dom';
-
-
 import { useState, useContext, useEffect } from 'react';
+
+// Components
+import Navbar from '../components/Navbar';
+
+// Toast
+import { toast } from 'react-toastify';
+
+// App Context
 import { AppContext } from '../context/AppContext';
 
 const Settings = () => {
   const navigate = useNavigate();
 
   const { userData, setUserData, setIsLoggedIn, isLoadingUser, updateUserSetting, isUpdatingSettings, verifyPassword, handleDelete } = useContext(AppContext);
+  
+  // Phone number handling
   const [showPhoneNumber, setShowPhoneNumber] = useState(null);
   const [initialized, setInitialized] = useState(false)
 
@@ -81,8 +87,6 @@ const Settings = () => {
     }
   };
 
-
-  // USE EFFECTS
 
   // Redirect or warning if user not logged in (optional)
   useEffect(() => {
@@ -183,58 +187,55 @@ const Settings = () => {
 
                 {/* Delete Account */}
                 <Form.Group className="mb-4">
-      <Form.Label className="text-light fontCondensed">Delete Account</Form.Label>
-      <div className="d-flex">
-        <Button
-          variant="danger"
-          className="bg-danger text-light px-3 fontCondensed shadow-none"
-          style={{
-            borderTopRightRadius: 0,
-            borderBottomRightRadius: 0,
-            borderTopLeftRadius: "0.375rem",
-            borderBottomLeftRadius: "0.375rem",
-          }}
-          onClick={handleVerifyAndConfirm}
-          disabled={verifying || deleting || password.trim() === ""}
-          aria-label="Delete account"
-        >
-          {verifying ? <Spinner animation="border" size="sm" /> : "Delete"}
-        </Button>
+                  <Form.Label className="text-light fontCondensed">Delete Account</Form.Label>
+                    <div className="d-flex">
+                      <Button
+                        variant="danger"
+                        className="bg-danger text-light px-3 fontCondensed shadow-none"
+                        style={{
+                          borderTopRightRadius: 0,
+                          borderBottomRightRadius: 0,
+                          borderTopLeftRadius: "0.375rem",
+                          borderBottomLeftRadius: "0.375rem",
+                        }}
+                        onClick={handleVerifyAndConfirm}
+                        disabled={verifying || deleting || password.trim() === ""}
+                        aria-label="Delete account"
+                      >
+                        {verifying ? <Spinner animation="border" size="sm" /> : "Delete"}
+                      </Button>
 
-        <Form.Control
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          placeholder="Enter password to delete account"
-          className="text-muted"
-          style={{
-            borderTopLeftRadius: 0,
-            borderBottomLeftRadius: 0,
-            borderTopRightRadius: "0.375rem",
-            borderBottomRightRadius: "0.375rem",
-          }}
-        />
-      </div>
-
-      
-
-      <Modal show={showConfirm} onHide={() => setShowConfirm(false)} centered>
-        <Modal.Header closeButton>
-          <Modal.Title>Confirm Account Deletion</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          Are you sure you want to permanently delete your account? This action cannot be undone.
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={() => setShowConfirm(false)} disabled={deleting}>
-            Cancel
-          </Button>
-          <Button variant="danger" onClick={confirmDelete} disabled={deleting}>
-            {deleting ? <Spinner animation="border" size="sm" /> : "Yes, Delete"}
-          </Button>
-        </Modal.Footer>
-      </Modal>
-    </Form.Group>
+                      <Form.Control
+                        type="password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        placeholder="Enter password to delete account"
+                        className="text-muted"
+                        style={{
+                          borderTopLeftRadius: 0,
+                          borderBottomLeftRadius: 0,
+                          borderTopRightRadius: "0.375rem",
+                          borderBottomRightRadius: "0.375rem",
+                        }}
+                      />
+                    </div>
+                    <Modal show={showConfirm} onHide={() => setShowConfirm(false)} centered>
+                      <Modal.Header closeButton>
+                        <Modal.Title>Confirm Account Deletion</Modal.Title>
+                      </Modal.Header>
+                      <Modal.Body>
+                        Are you sure you want to permanently delete your account? This action cannot be undone.
+                      </Modal.Body>
+                      <Modal.Footer>
+                        <Button variant="secondary" onClick={() => setShowConfirm(false)} disabled={deleting}>
+                          Cancel
+                        </Button>
+                        <Button variant="danger" onClick={confirmDelete} disabled={deleting}>
+                          {deleting ? <Spinner animation="border" size="sm" /> : "Yes, Delete"}
+                        </Button>
+                      </Modal.Footer>
+                    </Modal>
+                </Form.Group>
               </div>
             </Col>
           </Row>
