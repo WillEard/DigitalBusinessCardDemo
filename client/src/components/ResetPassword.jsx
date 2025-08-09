@@ -27,7 +27,7 @@ const ResetPassword = () => {
   const [newPass, setNewPassword] = useState('');
 
   const [isEmailSent, setIsEmailSent] = useState('');
-  const [otp, setOtp] = useState(0);
+  const [otp, setOtp] = useState('');
   const [isOtpSubmitted, setIsOtpSubmitted] = useState(false);
 
   // Email form handler
@@ -50,8 +50,22 @@ const ResetPassword = () => {
   // OTP Form handler
   const onSubmitOtp = async (e) => {
     e.preventDefault();
-    setOtp(otp);
-    setIsOtpSubmitted(true);
+    
+    try {
+      const { data } = await axios.post(
+        backendUrl + '/api/auth/verify-reset-otp',
+        { email, otp }
+      );
+  
+      if (data.success) {
+        toast.success('OTP verified! You can now reset your password.');
+        setIsOtpSubmitted(true);
+      } else {
+        toast.error(data.message);
+      }
+    } catch (error) {
+      toast.error('Error verifying OTP: ' + error.message);
+    }
   };
 
   // New password form handler

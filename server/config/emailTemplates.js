@@ -203,18 +203,6 @@ export const REGISTER_TEMPLATE = `
               <p style="font-size:14px; font-style:italic; margin-bottom:20px;">
                 Make sure to verify your account to get access to all basic features.
               </p>
-
-              <!-- CTA Button (table-based, works in Outlook) -->
-              <table cellspacing="0" cellpadding="0" border="0" role="presentation">
-                <tr>
-                  <td bgcolor="#007BFF" style="border-radius:5px;">
-                    <a href="{{verificationLink}}" target="_blank"
-                       style="display:inline-block; padding:12px 24px; font-size:16px; font-weight:bold; color:#ffffff; text-decoration:none; border-radius:5px; background-color:#007BFF;">
-                      Verify Account
-                    </a>
-                  </td>
-                </tr>
-              </table>
             </td>
           </tr>
         </table>
