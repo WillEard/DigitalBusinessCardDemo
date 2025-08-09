@@ -6,7 +6,7 @@ import { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 // Toast for user messages
-import { Toast } from 'bootstrap';
+import { toast } from 'react-toastify';
 
 // App Context
 import { AppContext } from '../context/AppContext';
@@ -16,6 +16,12 @@ import axios from 'axios';
 
 // Styles
 import '../styles/Fonts.css'; // Import custom font styles
+
+// Password Strength
+import zxcvbn from 'zxcvbn';
+import PasswordStrengthBar from 'react-password-strength-bar';
+
+
 
 const SignupForm = () => {
   const navigate = useNavigate();
@@ -27,6 +33,7 @@ const SignupForm = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [passwordScore, setPasswordScore] = useState(0);
   const [phoneNumber, setPhoneNumber] = useState('');
 
   const handleStateChange = () => {
@@ -52,24 +59,26 @@ const SignupForm = () => {
         getUserData();
         navigate('/');
       } else {
-        <Toast>
-          <Toast.Header>
-            <strong className="me-auto">Alert</strong>
-          </Toast.Header>
-          <Toast.Body className="danger">{data.message}</Toast.Body>
-        </Toast>;
+        toast.error(data.message);
       }
     } catch (error) {
       console.error(error);
-
-      <Toast>
-        <Toast.Header>
-          <strong className="me-auto">Alert</strong>
-        </Toast.Header>
-        <Toast.Body className="danger">{error.message}</Toast.Body>
-      </Toast>;
+      toast.error(error.message);
+      
     }
   };
+
+  // Handlers
+  const handlePasswordChange = (e) => {
+    const value = e.target.value;
+    setPassword(value);
+    const score = zxcvbn(value).score;
+    setPasswordScore(score);
+  };
+
+  const passwordsMatch = password && confirmPassword && password === confirmPassword;
+  const isStrongEnough = passwordScore >= 3; // Change threshold if needed
+  const canSubmit = isStrongEnough && passwordsMatch;
 
   return (
     //Sign Up Form
@@ -129,31 +138,33 @@ const SignupForm = () => {
             <Form.Group className="mb-3" controlId="formPassword">
               <FloatingLabel controlId="formPassword" label="Password" className="text-dark">
                 <Form.Control
-                  onChange={(e) => setPassword(e.target.value)}
-                  value={password}
                   type="password"
+                  value={password}
+                  onChange={handlePasswordChange}
                   placeholder="Enter password"
                   required
                 />
               </FloatingLabel>
-              <Form.Text className="text-light d-block text-start mt-1 fontCondensed">
-                We'll never share your password with anyone else.
-              </Form.Text>
+              <PasswordStrengthBar password={password} />
             </Form.Group>
 
             <Form.Group className="mb-3" controlId="formConfirmPassword">
               <FloatingLabel controlId="formConfirmPassword" label="Confirm Password" className="text-dark">
                 <Form.Control
-                  onChange={(e) => setConfirmPassword(e.target.value)}
-                  value={confirmPassword}
                   type="password"
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
                   placeholder="Confirm password"
                   required
+                  isInvalid={confirmPassword && !passwordsMatch}
                 />
+                <Form.Control.Feedback type="invalid">
+                  Passwords do not match.
+                </Form.Control.Feedback>
               </FloatingLabel>
             </Form.Group>
 
-            <Button type="submit" variant="primary" className="rounded-3 btn-lg mt-3 rounded-5 fontCondensed" >
+            <Button type="submit" variant="primary" className="rounded-3 btn-lg mt-5 rounded-5 fontCondensed" disabled={!canSubmit}>
               Sign Up
             </Button>
 
