@@ -15,66 +15,70 @@ import '../styles/Pricing.css'; // Import your pricing styles
 import { FaCheck } from "react-icons/fa6";
 import { RxCross2 } from "react-icons/rx";
 
+// JSX Object storing to make adding content easier
+const plans = [
+  {
+    id: 'free',
+    title: 'Free',
+    features: [
+      { text: 'Create Cards', included: true },
+      { text: 'QR Sharing', included: true },
+      { text: '24/7 Support', included: false },
+      { text: 'Show number of CV viewers', included: false }
+    ],
+    buttonText: 'Part of free version',
+    buttonClass: 'free-button disabled fontCondensed'
+  },
+  {
+    id: 'paid',
+    title: 'Paid',
+    features: [
+      { text: 'All Free Features', included: true },
+      { text: 'Premium Templates', included: true },
+      { text: 'Wallet Integration', included: true },
+      { text: 'Advanced Branding', included: true },
+      { text: 'Support Ocean Conservation', included: true },
+      { text: 'Export Share Reports', included: true },
+      { text: 'Multiple Cards', included: true },
+      { text: 'Contact Download', included: true },
+      { text: 'Team Collaboration', included: true }
+    ],
+    buttonText: 'GO Premium',
+    buttonClass: 'paid-button fontCondensed'
+  }
+];
+
 function PricingContainer() {
     return (
-      <Container fluid id="pricing" className="pricing py-5 ">
-        <h1 className="mb-4 pricing-heading text-center display-3">Pricing</h1>
-       
-        <Row className="justify-content-center ">
-          {/* Free Plan */}
-          <Col md={4} className="mb-4 ">
-            <Card className="h-100 shadow-sm free-plan text-center rounded-5">
-              <Card.Header className="py-3">
-                <h4 className="my-0 free-heading fontNormal">Free</h4>
-              </Card.Header>
-              <Card.Body className='plan-content mb-3'>
-                <ul className="list-unstyled mt-3 fontCondensed" >
-                  <li><FaCheck className="icon-inline"/>Create Cards</li>
-                  <li><FaCheck className="icon-inline"/>QR Sharing</li>
-                  <li><RxCross2 className="icon-inline"/>24/7 Support</li>
-                  <li><RxCross2 className="icon-inline"/>Show number of CV viewers</li>
-                </ul>
-                <Button className="rounded-5 btn-lg free-button" >
-                  Stay Free
-                </Button>
-              </Card.Body>
-            </Card>
-          </Col>
-  
-          {/* Paid Plan */}
-          <Col md={6} className="mb-4 ">
-            <Card className="h-100 shadow-sm paid-plan rounded-5 text-center">
-              <Card.Header className="py-3">
-                <h4 className="my-0 paid-heading text-center fontNormal">Paid</h4>
-              </Card.Header>
-              <Card.Body className="plan-content mb-3 ">
-                <Row className='px-1'>
-                  <Col xs={6}>
-                    <ul className="list-unstyled mt-3">
-                      <li><FaCheck className="icon-inline" />All Free Features</li>
-                      <li><FaCheck className="icon-inline" />Premium Templates</li>
-                      <li><FaCheck className="icon-inline" />Wallet Intergration</li>
-                      <li><FaCheck className="icon-inline" />Advanced Branding</li>
-                      <li><FaCheck className="icon-inline" />Support Ocean Conservation</li>
-                    </ul>
-                  </Col>
-                  <Col xs={6}>
-                    <ul className="list-unstyled mt-3">
-                      <li><FaCheck className="icon-inline" />Export Share Reports</li>
-                      <li><FaCheck className="icon-inline" />Multiple Cards</li>
-                      <li><FaCheck className="icon-inline" />Contact Download</li>
-                      <li><FaCheck className="icon-inline" />Team Collaboration</li>
-                    </ul>
-                  </Col>
-                </Row>
-                <div className="text-center">
-                  <Button className="rounded-5 btn-lg free-button mt-3">GO Premium</Button>
-                </div>
-              </Card.Body>
-            </Card>
-          </Col>
-        </Row>
-      </Container>
+      <Container fluid id="pricing" className="pricing py-5">
+  <h1 className="mb-4 pricing-heading text-center display-3">Pricing</h1>
+  <Row className="justify-content-center">
+    {plans.map(({ id, title, features, buttonText, buttonClass }) => (
+      <Col key={id} md={id === 'free' ? 4 : 6} className="mb-4">
+        <Card className={`h-100 shadow-sm ${id}-plan text-center rounded-5`}>
+          <Card.Header className="py-3">
+            <h4 className={`my-0 ${id}-heading fontNormal`}>{title}</h4>
+          </Card.Header>
+          <Card.Body className="plan-content mb-3">
+            <ul className="list-unstyled mt-3 fontCondensed">
+              {features.map(({ text, included }, i) => 
+                <li key={i}>
+                  {included ? <FaCheck className="icon-inline" aria-hidden="true" /> : <RxCross2 className="icon-inline" aria-hidden="true" />}
+                  {text}
+                </li>
+              )}
+            </ul>
+            <div className="text-center">
+              <Button className={`rounded-5 btn-lg ${buttonClass}`}>
+                {buttonText}
+              </Button>
+            </div>
+          </Card.Body>
+        </Card>
+      </Col>
+    ))}
+  </Row>
+</Container>
     );
   }
   

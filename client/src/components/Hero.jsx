@@ -84,10 +84,10 @@ const Hero = () => {
                       <span className='fw-bold fontCondensed'>Tap. Share. Done.</span> All without the hassle.
                     </p>
                     <div className="d-grid gap-2 d-sm-flex justify-content-sm-center mb-5">
-                      <Button variant="primary fontCondensed" size="lg" onClick={() => navigate('/dashboard')}>
+                      <Button variant="primary" className='fontCondensed rounded-5' size="lg" onClick={() => navigate('/dashboard')}>
                         View Dashboard
                       </Button>
-                      <Button variant="primary fontCondensed" size="lg" onClick={handleDownload}>
+                      <Button variant="primary" className='fontCondensed rounded-5' size="lg" onClick={handleDownload}>
                         Share my QR
                       </Button>
                     </div>

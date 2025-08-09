@@ -11,6 +11,7 @@ import { AppContext } from '../context/AppContext';
 // Components
 import Navbar from '../components/Navbar';
 import CVModal from '../components/CVModal';
+import Footer from '../components/Footer';
 
 // Styles
 import '../styles/Dashboard.css'; // Import custom CSS for Navbar
@@ -126,6 +127,7 @@ const Dashboard = () => {
             <strong style={{ fontFamily: 'Sailor Condensed' }}>Upgrade to <span className="text-info" style={{ fontFamily: 'Sailor Condensed' }}>Premium</span></strong> for custom/multiple cards and deeper analytics →
           </div>
         </Container>
+        <Footer />
       </div>
     </div>
   );

@@ -7,6 +7,7 @@ import { useState, useContext, useEffect } from 'react';
 
 // Components
 import Navbar from '../components/Navbar';
+import Footer from '../components/Footer';
 
 // Toast
 import { toast } from 'react-toastify';
@@ -240,6 +241,7 @@ const Settings = () => {
             </Col>
           </Row>
         </Container>
+        <Footer />
       </div>
     </div>
   );
