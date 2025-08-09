@@ -158,8 +158,11 @@ const Hero = () => {
                         <p className="pt-2 fw-bold fontCondensed">No wasted time.</p>
                       </div>
                     </div>
-                    <h3 className="fontCondensed mt-5">Trusted by 5,000+ professionals</h3>
-                    <h4 className="fontCondensed mt-2">3,124 cards created this week</h4>
+                    <div>
+                      <h3 className="fontCondensed mt-5">Trusted by professionals worldwide</h3>
+                      <hr />
+                      <h4 className="fontCondensed mt-2">3,000+ cards created this year</h4>
+                    </div>
                   </Container>
                 </Col>
               </Row>
