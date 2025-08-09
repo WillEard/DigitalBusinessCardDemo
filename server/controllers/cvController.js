@@ -8,7 +8,7 @@ export const getCVData = async (req, res) => {
 
   try {
     // Step 1: Find the user by username
-    const user = await User.findOne({ username }).select('name email isVerified');
+    const user = await User.findOne({ username }).select('name email isVerified phoneNumber showMobile');
   
   
     if (!user) {
@@ -21,6 +21,9 @@ export const getCVData = async (req, res) => {
       return res.status(404).json({ message: 'CV not found' });
     }
 
+    // Step 3: Conditionally include phoneNumber based on showPhoneNumber
+    const phoneNumberToSend = user.showMobile ? user.phoneNumber : null;
+
     // Step 3: Return the CV data
     res.json({
       success: true,
@@ -28,6 +31,7 @@ export const getCVData = async (req, res) => {
         name: user.name,
         email: user.email,
         isVerified: user.isVerified,
+        phoneNumber: phoneNumberToSend
       },
       cv,
     });

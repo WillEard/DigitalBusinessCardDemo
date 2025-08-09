@@ -44,7 +44,7 @@ const CVModal = () => {
           </Form.Group>
           <Form.Group className="mb-3" controlId="PhoneNumberControlInput">
               <Form.Label className='fontCondensed'>Phone Number</Form.Label>
-              <Form.Control type="tel" placeholder="[Only display if both parties are verified]" disabled/>
+              <Form.Control type="tel" placeholder={cvData?.user?.phoneNumber || 'Unavailable'} disabled/>
           </Form.Group>
             
           <Form.Group className="mb-3" controlId="EducationControlInput">
