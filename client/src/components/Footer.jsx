@@ -26,7 +26,7 @@ const Footer = () => {
   };
 
   return (
-    <div className="footer py-5 mt-5 d-flex justify-content-center">
+    <div className="footer py-5 mt-0 d-flex justify-content-center">
       <div className="w-100 w-sm-50">
         <Container>
           <div className="container">

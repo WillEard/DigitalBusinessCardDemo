@@ -73,8 +73,8 @@ const SignupForm = () => {
 
   return (
     //Sign Up Form
-    <Container className="mx-auto col-lg-5 mt-5 pt-5 pb-3">
-      <div className="mt-5 pt-4 text-center">
+    <Container className="mx-auto col-lg-5 mt-2 mt-lg-5 pt-2 pt-lg-5 pb-3">
+      <div className="mt-2 mt-lg-5 pt-2 pt-lg-4 text-center">
         <h1 className="mb-4 fontNormal">Sign Up</h1>
         <div className="d-flex justify-content-center">
           <Form onSubmit={onSubmitHandler} className="w-100" style={{ maxWidth: '400px' }}>
