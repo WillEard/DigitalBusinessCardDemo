@@ -17,11 +17,16 @@ export const register = async (req, res) => {
     }
 
     try {
-        const existingUser = await userModel.findOne({email});
+        const existingUser = await userModel.findOne({ 
+            $or: [
+              { email: email },
+              { phoneNumber: phoneNumber }
+            ]
+          });
 
         if (existingUser)
         {
-           return res.json({success: false, message: "User already exists"});
+           return res.json({success: false, message: "Email or phone number already in use"});
         }
         
         const hashedPW = await bcrypt.hash(password, 10);

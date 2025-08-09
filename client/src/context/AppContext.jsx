@@ -108,7 +108,6 @@ export const AppContextProvider = (props) => {
       // Backend returns raw CV data (not wrapped in { success: true, cvData: ... })
       if (data) {
         setCVData(data);
-        console.log(data)
       } else {
         toast.error('No CV data found');
       }

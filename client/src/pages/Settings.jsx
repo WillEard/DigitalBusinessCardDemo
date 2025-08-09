@@ -178,7 +178,7 @@ const Settings = () => {
                     <Form.Check
                       type="switch"
                       id="custom-switch"
-                      label="Show phone number to other users (verified only)"
+                      label="Show phone number to other users"
                       checked={showPhoneNumber}
                       onChange={handlePhoneNumber}
                       disabled={isUpdatingSettings}
