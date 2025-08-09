@@ -78,6 +78,24 @@ const Navigation = () => {
     }
   };
 
+  const handleScrollOrNavigate = (e, hash) => {
+    e.preventDefault();
+  
+    // Check if already on homepage
+    if (window.location.pathname === '/') {
+      // Scroll to element smoothly
+      const el = document.getElementById(hash);
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth' });
+      }
+    } else {
+      // Navigate to homepage with hash, and scroll after navigation
+      navigate('/' + (hash ? `#${hash}` : ''));
+  
+      // Optional: Scroll after a slight delay, but better to handle on homepage mount
+    }
+  };
+
   return (
     <Navbar
       data-bs-theme="dark"
@@ -105,27 +123,57 @@ const Navigation = () => {
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="justify-content-center mx-auto">
             <li className="nav-item">
-              <a className="nav-link active text-light navelement" aria-current="page" href="#home" style={{ fontFamily: 'Sailor Condensed' }}>
-                Home
+              <a
+              href="#home"
+              onClick={(e) => handleScrollOrNavigate(e, 'home')}
+              className="nav-link active text-light navelement"
+              aria-current="page"
+              style={{ fontFamily: 'Sailor Condensed' }}
+            >
+              Home
               </a>
             </li>
             <li className="nav-item">
-              <a className="nav-link active text-light navelement" aria-current="page" href="/#howitworks" style={{ fontFamily: 'Sailor Condensed' }}>
+              <a
+                href="/#howitworks"
+                onClick={(e) => handleScrollOrNavigate(e, 'howitworks')}
+                className="nav-link active text-light navelement"
+                aria-current="page"
+                style={{ fontFamily: 'Sailor Condensed' }}
+              >
                 How it works
               </a>
             </li>
             <li className="nav-item">
-              <a className="nav-link active text-light navelement" aria-current="page" href="/#features" style={{ fontFamily: 'Sailor Condensed' }}>
+              <a
+                href="/#features"
+                onClick={(e) => handleScrollOrNavigate(e, 'features')}
+                className="nav-link active text-light navelement"
+                aria-current="page"
+                style={{ fontFamily: 'Sailor Condensed' }}
+              >
                 Features
               </a>
             </li>
             <li className="nav-item">
-              <a className="nav-link active text-light navelement" aria-current="page" href="/#testimonials" style={{ fontFamily: 'Sailor Condensed' }}>
+              <a
+                href="/#testimonials"
+                onClick={(e) => handleScrollOrNavigate(e, 'testimonials')}
+                className="nav-link active text-light navelement"
+                aria-current="page"
+                style={{ fontFamily: 'Sailor Condensed' }}
+              >
                 Testimonials
               </a>
             </li>
             <li className="nav-item">
-              <a className="nav-link active text-light navelement" aria-current="page" href="/#pricing" style={{ fontFamily: 'Sailor Condensed' }}>
+              <a
+                href="/#pricing"
+                onClick={(e) => handleScrollOrNavigate(e, 'pricing')}
+                className="nav-link active text-light navelement"
+                aria-current="page"
+                style={{ fontFamily: 'Sailor Condensed' }}
+              >
                 Pricing
               </a>
             </li>

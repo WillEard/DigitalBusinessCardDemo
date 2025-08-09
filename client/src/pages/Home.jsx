@@ -1,5 +1,7 @@
 // React
 import { useState } from 'react';
+import { useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 
 // Components
 import Navbar from '../components/Navbar';
@@ -15,6 +17,20 @@ import NavBanner from '../components/NavBanner';
 const Home = () => {
   // Promotion banner
   const [showBanner, setShowBanner] = useState(true);
+
+  // Get current page location
+  const location = useLocation();
+
+  // For navigating Navbar elements when on different pages (e.g.  from login to Homepage>#features)
+  useEffect(() => {
+    if (location.hash) {
+      const el = document.getElementById(location.hash.substring(1));
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+  }, [location]);
+
 
   return (
     <div className='ocean-background '>
