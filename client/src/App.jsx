@@ -26,6 +26,7 @@ import CookieBanner from './components/CookieBanner';
 
 const App = () => {
 
+
   // UseEffect, display react-scan information in development environment
   useEffect(() => {
     if (process.env.NODE_ENV === 'development') {

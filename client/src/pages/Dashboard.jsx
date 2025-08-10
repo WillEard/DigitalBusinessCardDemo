@@ -58,12 +58,11 @@ const Dashboard = () => {
           <ProgressBar now={70} className="mb-4" variant="info" />
 
           <Row className="mb-4 g-2">
-            <Col xs={12} md="auto">
+            {userData?.subscriptionType === "Paid" ? <Col xs={12} md="auto">
               <Button variant="outline-light" className="w-100 fontCondensed">Create New Card</Button>
-            </Col>
-            <Col xs={12} md="auto">
-              <Button variant="outline-light" className="w-100 fontCondensed">Edit Existing Card</Button>
-            </Col>
+            </Col> : ''}
+            
+            
             <Col xs={12} md="auto">
               <CVModal profileUrl={profileUrl} />
             </Col>
@@ -122,13 +121,14 @@ const Dashboard = () => {
               </Card>
             </Col>
           </Row>
-
-          <div className="mt-5 p-3 rounded bg-primary bg-opacity-75 text-light text-center" style={{ fontFamily: 'Sailor Condensed' }}>
+          
+          {userData?.subscriptionType === "Free" ? <div className="mt-5 p-3 rounded bg-primary bg-opacity-75 text-light text-center" style={{ fontFamily: 'Sailor Condensed' }}>
             <strong style={{ fontFamily: 'Sailor Condensed' }}>Upgrade to <span className="text-info" style={{ fontFamily: 'Sailor Condensed' }}>Premium</span></strong> for custom/multiple cards and deeper analytics →
-          </div>
+          </div> : ''}
+          
         </Container>
-        <Footer />
       </div>
+      <Footer />
     </div>
   );
 };

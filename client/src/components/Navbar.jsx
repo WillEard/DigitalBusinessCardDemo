@@ -187,7 +187,7 @@ const Navigation = () => {
                   {!userData.isVerified ? (
                     <NavDropdown.Item onClick={sendVerifyOTP} className='fontCondensed'>Verify Account</NavDropdown.Item>
                   ) : (
-                    <NavDropdown.Item disabled>Verified</NavDropdown.Item>
+                    <NavDropdown.Item disabled className='fontCondensed'>Verified</NavDropdown.Item>
                   )}
                   <NavDropdown.Divider />
                   <NavDropdown.Item onClick={logout} eventKey={2} className="fw-bold fontCondensed">

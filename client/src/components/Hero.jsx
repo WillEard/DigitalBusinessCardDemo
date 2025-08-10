@@ -1,5 +1,5 @@
 // React & Routing
-import { useContext, useEffect, useRef } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 // AppContext
@@ -12,6 +12,7 @@ import { Container, Row, Col, Button } from 'react-bootstrap';
 import QRCode from 'react-qr-code';
 import { toPng } from 'html-to-image';
 
+import { animate, stagger, text } from 'animejs';
 
 
 // Icons
@@ -113,6 +114,40 @@ const Hero = () => {
   </div>
   );
 
+  // Smooth boat drift animation
+  let lastY = 0;
+  let lastRot = 0;
+
+  // Function to animate the boat drift
+  function smoothBoatDrift() {
+    const newY = (Math.random() * 0.4 - 0.2);  // -0.2rem to 0.2rem
+    const newRot = (-0.5 + Math.random() * 0.2); // -0.5° to -0.3°
+
+    animate('.ml6', {
+      keyframes: [
+        { translateX: '-0.3rem', translateY: lastY + 'rem', rotate: lastRot + 'deg', duration: 3000, easing: 'easeInOutSine' },
+        { translateX: '0.3rem', translateY: newY + 'rem', rotate: (-newRot) + 'deg', duration: 3000, easing: 'easeInOutSine' },
+        { translateX: '-0.3rem', translateY: lastY + 'rem', rotate: lastRot + 'deg', duration: 3000, easing: 'easeInOutSine' },
+      ],
+      duration: 9000,
+      easing: 'easeInOutSine',
+      loop: true,
+      complete: () => {
+        lastY = newY;
+        lastRot = -newRot;
+      }
+    });
+  }
+
+  // Start the animation on component mount
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      smoothBoatDrift();
+    }, 100); // delay 100ms, adjust if needed
+  
+    return () => clearTimeout(timer); // cleanup on unmount
+  }, []);
+
   return (
     <div id="home" className="hero-wrapper text-white">
       <div className="hero-overlay">
@@ -121,10 +156,12 @@ const Hero = () => {
             <>
               {/* Desktop */}
               <Row className="d-none d-md-flex justify-content-center align-items-center" style={{ minHeight: '80vh' }}>
-                <Col className="text-center">
+                <Col className="text-center ml6">
+
                   <h1 className="display-4 fw-bold text-uppercase fontNormal">
                     {userData.name?.split(' ')[0]}, ready to connect? <FaArrowTurnDown />
                   </h1>
+                  
                   <Container className="col-lg-6 mx-auto">
                     <p className="lead mb-4 text-uppercase fontCondensed">
                       <span className='fw-bold fontCondensed'>Tap. Share. Done.</span> All without the hassle.

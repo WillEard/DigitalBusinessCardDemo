@@ -91,3 +91,29 @@ export const deleteUser = async (req, res) => {
       return res.status(500).json({ success: false, message: 'Server error fetching audit logs' });
     }
   };
+
+  // Update role for a particular user
+  export const updateRole = async (req, res) => {
+    const userId = req.params.userId; // from URL param
+    const { role } = req.body;        // new role from request body
+
+    // Basic validation
+    if (!role || !['user', 'admin'].includes(role)) {
+      return res.status(400).json({ message: 'Invalid role provided' });
+    }
+
+    try {
+      const user = await User.findById(userId);
+      if (!user) {
+        return res.status(404).json({ message: 'User not found' });
+      }
+
+      user.role = role;
+      await user.save();
+
+      return res.status(200).json({ message: 'User role updated successfully' });
+    } catch (error) {
+      console.error('Error updating user role:', error);
+      return res.status(500).json({ message: 'Server error updating role' });
+    }
+  }

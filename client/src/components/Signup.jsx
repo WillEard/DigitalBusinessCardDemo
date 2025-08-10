@@ -59,11 +59,29 @@ const SignupForm = () => {
         getUserData();
         navigate('/');
       } else {
-        toast.error(data.message);
+        toast.error(data.message, {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: false,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored"
+          });
       }
     } catch (error) {
       console.error(error);
-      toast.error(error.message);
+      toast.error(error.message, {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored"
+        });
       
     }
   };
@@ -82,9 +100,9 @@ const SignupForm = () => {
 
   return (
     //Sign Up Form
-    <Container className="mx-auto col-lg-5 mt-2 mt-lg-5 pt-2 pt-lg-5 pb-3">
-      <div className="mt-2 mt-lg-5 pt-2 pt-lg-4 text-center">
-        <h1 className="mb-4 fontNormal">Sign Up</h1>
+    <Container className="mx-auto col-lg-5 mt-2 mt-lg-1 pt-2 pt-lg-5 pb-3">
+      <div className="mt-2 pt-2 text-center">
+        <h1 className="display-4 fw-bold fontNormal mb-4">Sign Up</h1>
         <div className="d-flex justify-content-center">
           <Form onSubmit={onSubmitHandler} className="w-100" style={{ maxWidth: '400px' }}>
             <Form.Group className="mb-3" controlId="formName">
