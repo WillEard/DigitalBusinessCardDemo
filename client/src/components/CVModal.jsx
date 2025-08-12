@@ -11,6 +11,7 @@ import { Button, Modal, Form, Row, Col } from 'react-bootstrap';
 import { toast } from 'react-toastify';
 
 // Axios for queries
+import axios from 'axios';
 
 import '../styles/Fonts.css'; // Import custom font styles
 
