@@ -1,0 +1,18 @@
+/* Add spacing between label and input */
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+  }
+  
+  /* Add spacing below input for the error message */
+  .form-control.is-invalid {
+    margin-bottom: -0.1rem;
+  }
+  
+  /* Style the feedback message to appear below input */
+  .invalid-feedback {
+    display: block;
+    margin-top: 0.25rem;
+    margin-bottom: 1rem;
+    font-size: 0.875rem;
+  }

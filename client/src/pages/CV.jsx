@@ -8,14 +8,15 @@ import Container from 'react-bootstrap/esm/Container';
 
 const CV = () => {
   return (
-    <div style={{ backgroundColor: '#F5F5F5' }}>
-      <Container>
+    <div className="d-flex flex-column min-vh-100 login-wrapper text-white">
+      <div className="login-overlay flex-grow-1">
         <Navbar />
 
         <UserCV />
 
-        <Footer />
-      </Container>
+        
+      </div>
+      <Footer />
     </div>
   );
 };

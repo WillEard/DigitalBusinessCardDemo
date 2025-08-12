@@ -1,91 +1,109 @@
-// React
-import { useParams } from 'react-router-dom';
+import { data, useParams } from 'react-router-dom';
 import { useContext, useEffect, useState } from 'react';
-
-// React Bootstrap
-import { Button, Form, Container, Row, Col } from 'react-bootstrap';
-
-// App Context
 import { AppContext } from '../context/AppContext';
+import { Container, Row, Col, Form, Dropdown, Button } from 'react-bootstrap';
 
-// Styles
-import '../styles/Fonts.css'; // Import custom font styles
+import '../styles/Fonts.css';
 
-const CVModal = () => {
-  const { cvData, getCVData } = useContext(AppContext);
-  const { userData, getUserData } = useContext(AppContext);
+const UserCV = () => {
+  const { username, cvId } = useParams();
+  const { getCVData, cvData } = useContext(AppContext);
 
-  const { username } = useParams();
+  const [loading, setLoading] = useState(true);
+  const [cvs, setCvs] = useState([]);
+  const [selectedCV, setSelectedCV] = useState(null);
+
+  // setSelectedCV(cvsArray[0] || null);
 
   useEffect(() => {
-    if (username) {
-      getCVData(username);
-    }
-    getUserData();
-  }, [username]);
+    const fetchData = async () => {
+      setLoading(true);
   
-  return (
-    <>
-      <Container data-bs-theme="dark" className="mt-3 mb-5 p-4 shadow-4 rounded-3 bg-body-tertiary text-light d-flex justify-content-between align-items-center">
-        <h2 className='text-start'>{cvData?.user?.name || 'Loading...'}</h2>
-        <h3 className='text-end'>{userData?.isVerified ? 'Verified' : 'Not Verified'}</h3>
-      </Container>
+      try {
+        const data = await getCVData(username, cvId);
+        console.log(data);
+  
+        if (Array.isArray(data) && data.length > 0) {
+          const firstItem = data[0];
+  
+          if (cvId) {
+            // Find the CV matching cvId inside the cvs array
+            const selected = firstItem.cvs.find(cv => cv._id === cvId) || null;
+            setSelectedCV(selected);
+            setCvs(firstItem.cvs || []);
+          } else {
+            // No specific CV requested, show all and select first
+            setCvs(firstItem.cvs || []);
+            setSelectedCV(firstItem.cvs && firstItem.cvs.length > 0 ? firstItem.cvs[0] : null);
+          }
+        } else {
+          setSelectedCV(null);
+          setCvs([]);
+        }
+      } catch (err) {
+        console.error(err);
+        setSelectedCV(null);
+        setCvs([]);
+      }
+  
+      setLoading(false);
+    };
+  
+    fetchData();
+  }, [username, cvId]);
 
-      <Row className='justify-content-center p-3'>
-        <Col className='col-lg-6 col-sm-8'>
-          <Form>
-          <Form.Group className="mb-3" controlId="FullNameControlInput">
-              <Form.Label className='fontCondensed'>Full Name</Form.Label>
-              <Form.Control type="email" placeholder={cvData?.user?.name || 'Loading...'} disabled/>
-          </Form.Group>
-          <Form.Group className="mb-3" controlId="EmailControlInput">
-              <Form.Label className='fontCondensed'>Email address</Form.Label>
-              <Form.Control type="email" placeholder={cvData?.user?.email || 'Loading...'} disabled/>
-          </Form.Group>
-          <Form.Group className="mb-3" controlId="PhoneNumberControlInput">
-              <Form.Label className='fontCondensed'>Phone Number</Form.Label>
-              <Form.Control type="tel" placeholder={cvData?.user?.phoneNumber || 'Unavailable'} disabled/>
-          </Form.Group>
+  
+  if (loading) return <p>Loading...</p>;
+  if (!selectedCV) return <p>No CV data found.</p> 
+
+  
+
+  return (
+    <Container className="d-flex flex-column justify-content-center align-items-center mt-5" style={{ minHeight: '80vh' }}>
+  {loading ? (
+    <p>Loading...</p>
+  ) : cvs.length === 0 ? (
+    <h2 className='text-center fontNormal'>No CV's were found</h2>
+  ) : (
+    <>
+      {cvs.length > 1 && (
+        <Dropdown className="mb-4" style={{ minWidth: '250px' }}>
+          <Dropdown.Toggle variant="secondary" className="w-100 text-truncate">
+            {selectedCV?.title || 'Select a CV'}
+          </Dropdown.Toggle>
+          <Dropdown.Menu className="w-100" style={{ maxHeight: '200px', overflowY: 'auto' }}>
+            {cvs.map(cv => (
+              <Dropdown.Item key={cv._id} onClick={() => setSelectedCV(cv)}>
+                {cv.title || `CV ${cv._id}`}
+              </Dropdown.Item>
+            ))}
+          </Dropdown.Menu>
+        </Dropdown>
+      )}
+
+      {selectedCV && (
+        <Row className="w-100 justify-content-center">
+          <Col md={8} lg={6} className="border rounded p-4 shadow-sm bg-secondary">
+            <h2 className="mb-3 text-center">{selectedCV.title}</h2>
+            <p><strong>Education:</strong> {selectedCV.education || 'N/A'}</p>
+            <p><strong>Experience:</strong> {selectedCV.experience || 'N/A'}</p>
+            <p><strong>Skills:</strong> {selectedCV.skills || 'N/A'}</p>
+            <p><strong>Certifications:</strong> {selectedCV.certifications || 'N/A'}</p>
+            <p><strong>Projects:</strong> {selectedCV.projects || 'N/A'}</p>
+            <p><strong>Languages:</strong> {selectedCV.languages || 'N/A'}</p>
+            <p><strong>Hobbies:</strong> {selectedCV.hobbies || 'N/A'}</p>
+            <p><strong>Achievements:</strong> {selectedCV.achievements || 'N/A'}</p>
+
+
             
-          <Form.Group className="mb-3" controlId="EducationControlInput">
-            <Form.Label className='fontCondensed'>Education</Form.Label>
-            <Form.Control as="textarea" placeholder={cvData?.cv?.education || 'Loading...'} rows={5} disabled/>
-          </Form.Group>
-          <Form.Group className="mb-3" controlId="ExperienceControlInput">
-            <Form.Label className='fontCondensed'>Experience</Form.Label>
-            <Form.Control as="textarea" rows={5} placeholder={cvData?.cv?.experience || 'Loading...'} disabled/>
-          </Form.Group>
-          <Form.Group className="mb-3" controlId="SkillsControlInput">
-            <Form.Label className='fontCondensed'>Skills</Form.Label>
-            <Form.Control as="textarea" rows={5} placeholder={cvData?.cv?.skills || 'Loading...'} disabled />
-          </Form.Group>
-          <Form.Group className="mb-3" controlId="CerficationsControlInput">
-            <Form.Label className='fontCondensed'>Certifications</Form.Label>
-            <Form.Control as="textarea" rows={5} placeholder={cvData?.cv?.certifications || 'Loading...'} disabled/>
-          </Form.Group>
-          <Form.Group className="mb-3" controlId="ProjectsControlInput">
-            <Form.Label className='fontCondensed'>Projects</Form.Label>
-            <Form.Control as="textarea" rows={5} placeholder={cvData?.cv?.projects || 'Loading...'} disabled/>
-          </Form.Group>
-          <hr />
-          <h3>Additional Personal Information</h3>
-          <Form.Group className="mb-3" controlId="LanguagesControlInput">
-            <Form.Label className='fontCondensed'>Languages</Form.Label>
-            <Form.Control as="textarea" rows={2} placeholder={cvData?.cv?.languages || 'Loading...'} disabled/>
-          </Form.Group>
-          <Form.Group className="mb-3" controlId="HobbiesControlInput">
-            <Form.Label className='fontCondensed'>Hobbies</Form.Label>
-            <Form.Control as="textarea" rows={3} placeholder={cvData?.cv?.hobbies || 'Loading...'} disabled/>
-          </Form.Group>
-          <Form.Group className="mb-3" controlId="PersonalAchievementsControlInput">
-            <Form.Label className='fontCondensed'>Personal Achievements</Form.Label>
-            <Form.Control as="textarea" rows={4} placeholder={cvData?.cv?.achievements || 'Loading...'} disabled/>
-          </Form.Group>  
-          </Form>
-        </Col>
-      </Row>  
+            {/* Add other CV fields here */}
+          </Col>
+        </Row>
+      )}
     </>
+  )}
+</Container>
   );
 };
 
-export default CVModal;
+export default UserCV;

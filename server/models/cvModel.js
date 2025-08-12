@@ -3,6 +3,7 @@ import mongoose from "mongoose";
 const cvSchema = new mongoose.Schema({
 
     user_id: { type: mongoose.Schema.Types.ObjectId, ref: 'user', required: true },
+    title: { type: String, default: 'Your CV Title' },
     education: {type: String, default: 'Add your education details here'},
     experience: {type: String, default: 'Add your work experience here'},
     skills: {type: String, default: 'Add your skills here'},

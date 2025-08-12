@@ -8,6 +8,7 @@ import { toast } from 'react-toastify';
 // Axios
 import axios from 'axios';
 
+
 // App Context creation
 export const AppContext = createContext();
 
@@ -33,6 +34,10 @@ export const AppContextProvider = (props) => {
   // Audit Logs
   const [auditLogs, setAuditLogs] = useState([]);
   const [isLoadingLogs, setIsLoadingLogs] = useState(false);
+
+  // For CVs by Id
+  const [selectedCV, setSelectedCV] = useState(null);
+
 
   // FOR handling account deletion
   
@@ -98,23 +103,34 @@ export const AppContextProvider = (props) => {
 };
 
   // GET cvData for a particular user
-  const getCVData = async (username) => {
+  const getCVData = async (username, cvId = null) => {
     if (!username) {
       console.warn('Username undefined in getCVData, skipping fetch');
       return;
     }
     try {
-      const { data } = await axios.get(`${backendUrl}/api/cv/${username}`);
-      // Backend returns raw CV data (not wrapped in { success: true, cvData: ... })
-      if (data) {
-        setCVData(data);
+      let url = `${backendUrl}/api/cv/${username}`;
+      if (cvId) url += `/${cvId}`;
+  
+      const { data } = await axios.get(url);
+  
+      if (cvId) {
+        // Single CV returned as object
+        setSelectedCV(data.cv || data);  // adapt if your API wraps single CV under `cv`
+        return data.cv || data;
       } else {
-        toast.error('No CV data found');
+        // Multiple CVs returned as array
+        // Normalize: ensure it's always an array
+        const cvsArray = Array.isArray(data) ? data : [data];
+        setCVData(cvsArray);
+        return cvsArray;
       }
     } catch (error) {
       toast.error(error.response?.data?.message || error.message);
     }
   };
+
+
 
   // GET all users in database, for admin backend
   const getAllUsers = async () => {
