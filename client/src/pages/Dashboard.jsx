@@ -143,50 +143,50 @@ const Dashboard = () => {
             <Col md={8}>
               <h4 className="mb-2 fontNormal">Active Cards</h4>
               <Row className="g-4">
-                {cvData && Array.isArray(cvData.cvs) && cvData.cvs.length > 0 ? (
-                  cvData.cvs.map((cv) => {
-                    const profileUrl = `${backendUrl}/api/cv/${userData?.username}/${cv._id}`;
-                    return (
-                      <Col md={6} key={cv._id}>
-                        <Card className="p-3 shadow-sm border rounded-3">
-                          <Card.Body>
-                            <div className="d-flex align-items-center justify-content-between mb-2">
-                              <div>
-                                <h5 className="mb-1 fontCondensed">{userData?.name}</h5>
-                                <div className="text-muted small fontCondensed">
-                                  {cv.title || 'No title set'}
-                                </div>
-                              </div>
-                              <img
-                                src={`https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=${encodeURIComponent(profileUrl)}`}
-                                alt="QR"
-                              />
-                            </div>
-                            <div className="d-flex flex-wrap gap-2 mt-3">
-                              <Button size="sm" variant="outline-dark">View</Button>
-                              <Button
-                                size="sm"
-                                variant="outline-dark"
-                                onClick={() => {
-                                  setSelectedCv(cv);
-                                  setShowModal(true);
-                                }}
-                              >
-                                Edit
-                              </Button>
-                              <Button size="sm" variant="outline-dark">Share</Button>
-                              <Button size="sm" variant="outline-dark">Add to Wallet</Button>
-                            </div>
-                          </Card.Body>
-                        </Card>
-                      </Col>
-                    );
-                  })
-                ) : (
-                  <Col>
-                    <p className="text-light fontCondensed">No cards yet</p>
-                  </Col>
-                )}
+              {cvData && Array.isArray(cvData[0]?.cvs) && cvData[0].cvs.length > 0 ? (
+  cvData[0].cvs.map((cv) => {
+    const profileUrl = `${backendUrl}/api/cv/${userData?.username}`;
+    return (
+      <Col md={6} key={cv._id}>
+        <Card className="p-3 shadow-sm border rounded-3">
+          <Card.Body>
+            <div className="d-flex align-items-center justify-content-between mb-2">
+              <div>
+                <h5 className="mb-1 fontCondensed">{userData?.name}</h5>
+                <div className="text-muted small fontCondensed">
+                  {cv.title || 'No title set'}
+                </div>
+              </div>
+              <img
+                src={`https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=${encodeURIComponent(profileUrl)}`}
+                alt="QR"
+              />
+            </div>
+            <div className="d-flex flex-wrap gap-2 mt-3">
+              <Button size="sm" variant="outline-dark">View</Button>
+              <Button
+                size="sm"
+                variant="outline-dark"
+                onClick={() => {
+                  setSelectedCv(cv);
+                  setShowModal(true);
+                }}
+              >
+                Edit
+              </Button>
+              <Button size="sm" variant="outline-dark">Share</Button>
+              <Button size="sm" variant="outline-dark">Add to Wallet</Button>
+            </div>
+          </Card.Body>
+        </Card>
+      </Col>
+    );
+  })
+) : (
+  <Col>
+    <p className="text-light fontCondensed">No cards yet</p>
+  </Col>
+)}
               </Row>
             </Col>
 
