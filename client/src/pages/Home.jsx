@@ -12,11 +12,12 @@ import ThreePointJumbo from '../components/3Points-Jumbo';
 import HowItWorks from '../components/HowItWorks';
 import Features from '../components/Features';
 import Testimonials from '../components/Testimonials';
-import NavBanner from '../components/NavBanner';
+
+import NavBanner from '../components/NavBanner'; // Promotion banner component - not used if no promotion
 
 const Home = () => {
-  // Promotion banner
-  const [showBanner, setShowBanner] = useState(true);
+  
+  const [showBanner, setShowBanner] = useState(true); // Promotion banner - not used if no promotion
 
   // Get current page location
   const location = useLocation();
