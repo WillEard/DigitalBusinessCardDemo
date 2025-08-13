@@ -16,11 +16,10 @@ import { AppContextProvider } from './context/AppContext.jsx';
 // Google Authentication
 import {GoogleOAuthProvider} from '@react-oauth/google';
 
+
 // Axios
 import axios from 'axios';
 axios.defaults.withCredentials = true
-
-
 
 
 const clientId = import.meta.env.VITE_GOOGLE_CLIENT_ID;

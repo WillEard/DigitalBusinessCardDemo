@@ -1,3 +1,5 @@
+// THIS IS A TEST FILE: IGNORE ERRORS && WARNINGS
+
 import mongoose from 'mongoose';
 import User from '../models/userModel.js'; // your User model
 import Log from '../models/auditLogModel.js';

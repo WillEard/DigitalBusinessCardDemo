@@ -15,12 +15,18 @@
     "cookie-parser": "^1.4.7",
     "cors": "^2.8.5",
     "date-and-time": "^3.6.0",
+    "depcheck": "^1.4.7",
     "dotenv": "^16.4.7",
+    "eslint": "^9.33.0",
+    "eslint-plugin-security": "^3.0.1",
     "express": "^4.21.2",
     "google-auth-library": "^10.2.0",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.9.2",
     "nodemailer": "^6.9.16",
     "nodemon": "^3.1.9"
+  },
+  "devDependencies": {
+    "eslint-plugin-react-perf": "^3.3.3"
   }
 }

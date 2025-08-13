@@ -63,8 +63,9 @@ const Dashboard = () => {
   }, [userData]);
 
   useEffect(() => {
-    console.log('cvData:', cvData);
+    
   }, [cvData]);
+
 
   return (
     <div className="d-flex flex-column min-vh-100 login-wrapper text-white">
@@ -145,7 +146,7 @@ const Dashboard = () => {
               <Row className="g-4">
               {cvData && Array.isArray(cvData[0]?.cvs) && cvData[0].cvs.length > 0 ? (
   cvData[0].cvs.map((cv) => {
-    const profileUrl = `${backendUrl}/api/cv/${userData?.username}`;
+    const profileUrl = `cv/${userData?.username}`;
     return (
       <Col md={6} key={cv._id}>
         <Card className="p-3 shadow-sm border rounded-3">

@@ -1,5 +1,6 @@
 // React
 import { useState, useEffect, useContext } from 'react';
+import PropTypes from 'prop-types';
 
 // App Context
 import { AppContext } from '../context/AppContext';
@@ -173,6 +174,41 @@ const CVModal = ({ show, handleClose, cvItem  }) => {
       </Modal.Footer>
     </Modal>
   );
+};
+
+CVModal.propTypes = {
+  show: PropTypes.bool.isRequired,
+  handleClose: PropTypes.func.isRequired,
+  cvItem: PropTypes.shape({
+    title: PropTypes.string,
+    phoneNumber: PropTypes.string,
+    education: PropTypes.string,
+    experience: PropTypes.string,
+    skills: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.arrayOf(PropTypes.string),
+    ]),
+    certifications: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.arrayOf(PropTypes.string),
+    ]),
+    projects: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.arrayOf(PropTypes.string),
+    ]),
+    languages: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.arrayOf(PropTypes.string),
+    ]),
+    hobbies: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.arrayOf(PropTypes.string),
+    ]),
+    achievements: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.arrayOf(PropTypes.string),
+    ]),
+  }),
 };
 
 export default CVModal;
