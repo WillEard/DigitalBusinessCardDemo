@@ -1,5 +1,5 @@
 // React
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 // React Bootstrap
@@ -74,49 +74,37 @@ const AdminDashboard = () => {
       }
     }
 
-    // Edit handler for specific user
-    const handleEdit = (userId, currentRole) => {
-      setEditingUserId(userId);
-      setEditedRole(currentRole);
-    };
+  // Edit handler for specific user
+  const handleEdit = useCallback((userId, currentRole) => {
+    setEditingUserId(userId);
+    setEditedRole(currentRole);
+  }, []);
 
-    // Save the new role selected by admin e.g.  user->admin
-    const saveRoleChange = async (userId) => {
-      const prev = allUsers; // save previous state
+  // Save the new role selected by admin e.g.  user->admin
+  const saveRoleChange = useCallback(async (userId) => {
+    const prev = allUsers;
 
-      try {
-        // optimistic update
-        setAllUsers(prevUsers =>
-          prevUsers.map(user =>
-            user._id === userId ? { ...user, role: editedRole } : user
-          )
-        );
+    try {
+      setAllUsers(prevUsers =>
+        prevUsers.map(user =>
+          user._id === userId ? { ...user, role: editedRole } : user
+        )
+      );
 
-        // API call to update role on backend
-        await axios.put(
-          `${backendUrl}/api/admin/update-role/${userId}`,
-          { role: editedRole },
-          { withCredentials: true }
-        );
+      await axios.put(
+        `${backendUrl}/api/admin/update-role/${userId}`,
+        { role: editedRole },
+        { withCredentials: true }
+      );
 
-        toast.success('User role updated successfully');
-
-        setEditingUserId(null);
-        setEditedRole('');
-      } catch (err) {
-        console.error('Role update error:', err);
-
-        if (err.response) {
-          toast.error(err.response.data?.message || 'Failed to update role');
-        } else if (err.request) {
-          toast.error('No response from server');
-        } else {
-          toast.error('Error: ' + err.message);
-        }
-
-        setAllUsers(prev); // revert state on failure
-      }
-    };
+      toast.success('User role updated successfully');
+      setEditingUserId(null);
+      setEditedRole('');
+    } catch (err) {
+      setAllUsers(prev); // revert
+      toast.error('Failed to update role');
+    }
+  }, [allUsers, backendUrl, editedRole]);
 
   // Redirect if user is NOT an admin
   useEffect(() => {
@@ -189,7 +177,7 @@ const AdminDashboard = () => {
                               <td>{user.username}</td>
                               <td>{user.email}</td>
                               <td>{user.phoneNumber}</td>
-                              <td>{user.verified ? "Yes" : "No"}</td>
+                              <td>{user.isVerified ? "Yes" : "No"}</td>
                               <td>{user.subscriptionType}</td>
                               <td>
                                 {editingUserId === user._id ? (
