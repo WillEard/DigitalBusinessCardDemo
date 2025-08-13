@@ -1,13 +1,13 @@
-import { data, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { useContext, useEffect, useState } from 'react';
 import { AppContext } from '../context/AppContext';
-import { Container, Row, Col, Form, Dropdown, Button } from 'react-bootstrap';
+import { Container, Row, Col, Dropdown, Button } from 'react-bootstrap';
 
 import '../styles/Fonts.css';
 
 const UserCV = () => {
   const { username, cvId } = useParams();
-  const { getCVData, cvData } = useContext(AppContext);
+  const { getCVData } = useContext(AppContext);
 
   const [loading, setLoading] = useState(true);
   const [cvs, setCvs] = useState([]);

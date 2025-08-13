@@ -7,23 +7,29 @@ import Footer from '../components/Footer';
 
 // React
 import { useNavigate } from 'react-router-dom';
+import { useCallback } from 'react';
 
 const NotFound = () => {
   const navigate = useNavigate();
 
+  const handleGoHome = useCallback(() => {navigate('/');}, [navigate]);
+
   return (
-    <Container>
+    <div className="d-flex flex-column min-vh-100 login-wrapper text-white">
+      <div className="login-overlay d-flex flex-column flex-grow-1">
       <Navbar />
-      <Container className="container text-sm-center p-5 bg-light mt-4 bg-dark text-light rounded text-center">
-        <h1>Error 404: Page not found</h1>
-        <p>The page you were looking for does not exist.</p>
-        <button onClick={() => navigate('/')} className="btn btn-primary">
+      <Container className="container text-sm-center p-5 bg-light mt-4 bg-light text-dark rounded text-center rounded">
+        <h1 className='fontNormal'>Error 404: Page not found</h1>
+        <p className='fontCondensed'>The page you were looking for does not exist.</p>
+        <button onClick={handleGoHome} className="btn btn-primary btn-md rounded-pill fontCondensed">
           Home
         </button>
       </Container>
 
-      <Footer />
-    </Container>
+      
+    </div>
+    <Footer />
+    </div>
   );
 };
 

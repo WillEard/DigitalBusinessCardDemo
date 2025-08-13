@@ -1,6 +1,3 @@
-// React Bootstrap
-import Container from 'react-bootstrap/esm/Container';
-
 // Components
 import EmailVerification from '../components/VerifyAccount';
 import Navbar from '../components/Navbar';
