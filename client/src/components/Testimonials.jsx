@@ -14,13 +14,13 @@ function Testimonials() {
       <Row className="justify-content-center mb-3">
         <Col md={3}>
           <p className="testimonial-quote">
-            "I love that I never have to print business cards again!" – Lewis
+            &quot;I love that I never have to print business cards again!&quot; – Lewis
           </p>
         </Col>
 
         <Col md={3}>
           <p className="testimonial-quote">
-            "The data I can collect from my team at events is just invaluable!" – Jessica
+          &quot;The data I can collect from my team at events is just invaluable!&quot; – Jessica
           </p>
         </Col>
       </Row>
@@ -28,13 +28,13 @@ function Testimonials() {
       <Row className="justify-content-center mb-3 py-3">
         <Col md={3}>
           <p className="testimonial-quote">
-            "The Apple Wallet feature saves so much time! No more scrambling for cards" – Jack
+          &quot;The Apple Wallet feature saves so much time! No more scrambling for cards&quot; – Jack
           </p>
         </Col>
 
         <Col md={3}>
           <p className="testimonial-quote">
-            "I get so many compliments on my Pelagopass! #TooEasy" – Nina
+          &quot;I get so many compliments on my Pelagopass! #TooEasy&quot;– Nina
           </p>
         </Col>
       </Row>
@@ -42,13 +42,13 @@ function Testimonials() {
       <Row className="justify-content-center">
         <Col md={3}>
           <p className="testimonial-quote">
-            "Stylish, simple, saves time AND the planet" – Will
+          &quot;Stylish, simple, saves time AND the planet&quot; – Will
           </p>
         </Col>
 
         <Col md={3}>
           <p className="testimonial-quote">
-            "I loved the easy setup, getting my own brand on my card and showing the world in minutes!" – Courtney
+          &quot;I loved the easy setup, getting my own brand on my card and showing the world in minutes!&quot; – Courtney
           </p>
         </Col>
       </Row>
