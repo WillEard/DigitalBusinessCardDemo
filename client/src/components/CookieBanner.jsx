@@ -1,9 +1,9 @@
 // React
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 
 // Styles
-import '../styles/CookieBanner.css'; // <-- import the stylesheet
- 
+import '../styles/CookieBanner.css';
+
 export default function CookieConsentBanner() {
   const [showBanner, setShowBanner] = useState(false);
 
@@ -14,10 +14,14 @@ export default function CookieConsentBanner() {
     }
   }, []);
 
-  const handleConsent = (choice) => {
+  const handleConsent = useCallback((choice) => {
     localStorage.setItem("cookieConsent", choice);
     setShowBanner(false);
-  };
+  }, []);
+
+  // Stable handlers to avoid creating new functions on every render
+  const acceptCookies = useCallback(() => handleConsent("accepted"), [handleConsent]);
+  const rejectCookies = useCallback(() => handleConsent("rejected"), [handleConsent]);
 
   if (!showBanner) return null;
 
@@ -31,16 +35,14 @@ export default function CookieConsentBanner() {
       </p>
       <div className="d-flex gap-2">
         <button
-          onClick={() => handleConsent("accepted")}
-          className="btn btn-light rounded-pill px-3"
-          style={{ backgroundColor: '#c3e0e5', color: '#252a57' }}
+          onClick={acceptCookies}
+          className="btn btn-light rounded-pill px-3 cookie-banner"
         >
           Accept
         </button>
         <button
-          onClick={() => handleConsent("rejected")}
-          className="btn btn-light rounded-pill px-3"
-          style={{ backgroundColor: '#c3e0e5', color: '#252a57' }}
+          onClick={rejectCookies}
+          className="btn btn-light rounded-pill px-3 cookie-banner"
         >
           Reject
         </button>
