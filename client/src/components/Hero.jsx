@@ -1,5 +1,5 @@
 // React & Routing
-import { useContext, useEffect, useRef, useState } from 'react';
+import { useContext, useEffect, useRef, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 // AppContext
@@ -10,7 +10,6 @@ import { Container, Row, Col, Button } from 'react-bootstrap';
 
 // QR and Utility
 import QRCode from 'react-qr-code';
-import { toPng } from 'html-to-image';
 
 import { animate, stagger, text } from 'animejs';
 
@@ -38,6 +37,8 @@ const Hero = () => {
     }
   }, [isLoadingUser, isLoggedIn]);
 
+
+  // Handle QR code download
   const handleDownload = async () => {
     const svg = qrRef.current.querySelector('svg');
     if (!svg) {
@@ -84,6 +85,7 @@ const Hero = () => {
     img.src = url;
   };
 
+  // Function to download image
   function downloadImage(dataUrl, filename) {
     const link = document.createElement('a');
     link.href = dataUrl;
@@ -93,6 +95,7 @@ const Hero = () => {
     document.body.removeChild(link);
   }
 
+  // Render QR code off-screen
   const renderQRHidden = () => (
     <div
     ref={qrRef}
@@ -119,10 +122,10 @@ const Hero = () => {
   let lastRot = 0;
 
   // Function to animate the boat drift
-  function smoothBoatDrift() {
-    const newY = (Math.random() * 0.4 - 0.2);  // -0.2rem to 0.2rem
-    const newRot = (-0.5 + Math.random() * 0.2); // -0.5° to -0.3°
-
+  const smoothBoatDrift = useCallback(() => {
+    const newY = (Math.random() * 0.4 - 0.2);
+    const newRot = (-0.5 + Math.random() * 0.2);
+  
     animate('.ml6', {
       keyframes: [
         { translateX: '-0.3rem', translateY: lastY + 'rem', rotate: lastRot + 'deg', duration: 3000, easing: 'easeInOutSine' },
@@ -137,7 +140,7 @@ const Hero = () => {
         lastRot = -newRot;
       }
     });
-  }
+  }, []);
 
   // Start the animation on component mount
   useEffect(() => {
@@ -146,7 +149,7 @@ const Hero = () => {
     }, 100); // delay 100ms, adjust if needed
   
     return () => clearTimeout(timer); // cleanup on unmount
-  }, []);
+  }, [smoothBoatDrift]);
 
   return (
     <div id="home" className="hero-wrapper text-white">

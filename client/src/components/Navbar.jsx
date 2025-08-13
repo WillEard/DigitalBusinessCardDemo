@@ -1,7 +1,6 @@
 // React
-import { useContext, useState, useEffect } from 'react';
+import { useContext, useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
-
 
 // React Bootstrap
 import { Container, Nav, Navbar, NavDropdown, Image } from 'react-bootstrap';
@@ -9,17 +8,8 @@ import { Container, Nav, Navbar, NavDropdown, Image } from 'react-bootstrap';
 // App Context
 import { AppContext } from '../context/AppContext';
 
-// Axios
-import axios from 'axios';
-
-// Toast for user messages
-import { toast } from 'react-toastify';
-
 // Images
 import logo from '../assets/Pelago-Header-Logo-white.svg';
-
-// Google Logout Authentication
-import { googleLogout } from '@react-oauth/google';
 
 // Styles
 import '../styles/Navbar.css'; // Import custom CSS for Navbar
@@ -27,11 +17,11 @@ import '../styles/Fonts.css'; // Import custom font styles
 
 
 const Navigation = () => {
-  const navigate = useNavigate();
-  const { userData, backendUrl, setUserData, setIsLoggedIn } = useContext(AppContext);
+  const navigate = useNavigate(); // Navigation
 
-  // New state to track scroll position
-  const [scrolled, setScrolled] = useState(false);
+  const { userData, logout, sendVerifyOTP } = useContext(AppContext); // App Context
+
+  const [scrolled, setScrolled] = useState(false); // New state to track scroll position
 
   // useEffect for scrolling
   useEffect(() => {
@@ -45,56 +35,30 @@ const Navigation = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Send email OTP code to verify user
-  const sendVerifyOTP = async () => {
-    try {
-      axios.defaults.withCredentials = true;
-      const { data } = await axios.post(backendUrl + '/api/auth/send-verify-otp');
-
-      if (data.success) {
-        navigate('/verify-email');
-        toast.success(data.message);
-      } else {
-        toast.error(data.message);
-      }
-    } catch (error) {
-      toast.error(error.message);
-    }
-  };
-
-  // Logout method
-  const logout = async () => {
-    try {
-      axios.defaults.withCredentials = true;
-      const { data } = await axios.post(backendUrl + '/api/auth/logout');
-      if (data.success) {
-        googleLogout(); // <-- clears the OAuth token
-        setIsLoggedIn(false);
-        setUserData(null);
-        navigate('/');
-      }
-    } catch (error) {
-      toast.error(error.message);
-    }
-  };
-
-  const handleScrollOrNavigate = (e, hash) => {
+  // Handle scrolling or navigating to homepage
+  const handleScrollOrNavigate = useCallback((e, hash) => {
     e.preventDefault();
   
-    // Check if already on homepage
     if (window.location.pathname === '/') {
-      // Scroll to element smoothly
       const el = document.getElementById(hash);
       if (el) {
         el.scrollIntoView({ behavior: 'smooth' });
       }
     } else {
-      // Navigate to homepage with hash, and scroll after navigation
       navigate('/' + (hash ? `#${hash}` : ''));
-  
-      // Optional: Scroll after a slight delay, but better to handle on homepage mount
     }
-  };
+  }, [navigate]);
+
+  // Handlers for navigation links
+  const handleHomeClick = useCallback((e) => handleScrollOrNavigate(e, 'home'), [handleScrollOrNavigate]);
+  const handleHowItWorksClick = useCallback((e) => handleScrollOrNavigate(e, 'howitworks'), [handleScrollOrNavigate]);
+  const handleFeaturesClick = useCallback((e) => handleScrollOrNavigate(e, 'features'), [handleScrollOrNavigate]);
+  const handleTestimonialsClick = useCallback((e) => handleScrollOrNavigate(e, 'testimonials'), [handleScrollOrNavigate]);
+  const handlePricingClick = useCallback((e) => handleScrollOrNavigate(e, 'pricing'), [handleScrollOrNavigate]);
+
+  const handleSignUpClick = useCallback(() => navigate('/Authenticate', { state: { authState: 'SignUp' } }),[navigate]);
+  const handleLoginClick = useCallback(() => navigate('/Authenticate', { state: { authState: 'Login' } }),[navigate]);
+
 
   return (
     <Navbar
@@ -125,10 +89,9 @@ const Navigation = () => {
             <li className="nav-item">
               <a
               href="#home"
-              onClick={(e) => handleScrollOrNavigate(e, 'home')}
-              className="nav-link active text-light navelement"
+              onClick={handleHomeClick}
+              className="nav-link active text-light navelement fontCondensed"
               aria-current="page"
-              style={{ fontFamily: 'Sailor Condensed' }}
             >
               Home
               </a>
@@ -136,10 +99,9 @@ const Navigation = () => {
             <li className="nav-item">
               <a
                 href="/#howitworks"
-                onClick={(e) => handleScrollOrNavigate(e, 'howitworks')}
-                className="nav-link active text-light navelement"
+                onClick={handleHowItWorksClick}
+                className="nav-link active text-light navelement fontCondensed"
                 aria-current="page"
-                style={{ fontFamily: 'Sailor Condensed' }}
               >
                 How it works
               </a>
@@ -147,10 +109,9 @@ const Navigation = () => {
             <li className="nav-item">
               <a
                 href="/#features"
-                onClick={(e) => handleScrollOrNavigate(e, 'features')}
-                className="nav-link active text-light navelement"
+                onClick={handleFeaturesClick}
+                className="nav-link active text-light navelement fontCondensed"
                 aria-current="page"
-                style={{ fontFamily: 'Sailor Condensed' }}
               >
                 Features
               </a>
@@ -158,10 +119,9 @@ const Navigation = () => {
             <li className="nav-item">
               <a
                 href="/#testimonials"
-                onClick={(e) => handleScrollOrNavigate(e, 'testimonials')}
-                className="nav-link active text-light navelement"
+                onClick={handleTestimonialsClick}
+                className="nav-link active text-light navelement fontCondensed"
                 aria-current="page"
-                style={{ fontFamily: 'Sailor Condensed' }}
               >
                 Testimonials
               </a>
@@ -169,10 +129,9 @@ const Navigation = () => {
             <li className="nav-item">
               <a
                 href="/#pricing"
-                onClick={(e) => handleScrollOrNavigate(e, 'pricing')}
-                className="nav-link active text-light navelement"
+                onClick={handlePricingClick}
+                className="nav-link active text-light navelement fontCondensed"
                 aria-current="page"
-                style={{ fontFamily: 'Sailor Condensed' }}
               >
                 Pricing
               </a>
@@ -202,17 +161,13 @@ const Navigation = () => {
             ) : (
               <>
                 <Nav.Link
-                  onClick={() =>
-                    navigate('/Authenticate', { state: { authState: 'SignUp' } })
-                  }
+                  onClick={handleSignUpClick}
                   className="fw-bold text-dark rounded signup mx-1 fontCondensed" style={{ backgroundColor: '#b4d4ed' }}
                 >
                   Sign Up
                 </Nav.Link>
                 <Nav.Link
-                  onClick={() =>
-                    navigate('/Authenticate', { state: { authState: 'Login' } })
-                  }
+                  onClick={handleLoginClick}
                   className="fw-bold text-light login rounded fontCondensed"
                 >
                   Login

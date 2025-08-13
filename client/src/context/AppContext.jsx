@@ -8,11 +8,19 @@ import { toast } from 'react-toastify';
 // Axios
 import axios from 'axios';
 
+// Google Logout Authentication
+import { googleLogout } from '@react-oauth/google';
+
+import { useNavigate } from 'react-router-dom';
+
 
 // App Context creation
 export const AppContext = createContext();
 
 export const AppContextProvider = (props) => {
+
+  const navigate = useNavigate(); 
+
   axios.defaults.withCredentials = true;
 
   AppContextProvider.propTypes = {
@@ -217,14 +225,50 @@ export const AppContextProvider = (props) => {
         data: { password },
         timeout: 5000,
       });
+
+      // If the backend returns a success message
+      setIsLoggedIn(false);
+      setUserData(null);
       console.log(res.data.message);
   
       // Return success first
       return true;
     } catch (error) {
-      console.error("Delete failed:", error);
       toast.error(error);
       return false;
+    }
+  };
+
+  // Send email OTP code to verify user
+  const sendVerifyOTP = async () => {
+    try {
+      axios.defaults.withCredentials = true;
+      const { data } = await axios.post(backendUrl + '/api/auth/send-verify-otp');
+
+      if (data.success) {
+        navigate('/verify-email');
+        toast.success(data.message);
+      } else {
+        toast.error(data.message);
+      }
+    } catch (error) {
+      toast.error(error.message);
+    }
+  };
+
+  // Logout method
+  const logout = async () => {
+    try {
+      axios.defaults.withCredentials = true;
+      const { data } = await axios.post(backendUrl + '/api/auth/logout');
+      if (data.success) {
+        googleLogout(); // <-- clears the OAuth token
+        setIsLoggedIn(false);
+        setUserData(null);
+        navigate('/');
+      }
+    } catch (error) {
+      toast.error(error.message);
     }
   };
 
@@ -313,7 +357,9 @@ useEffect(() => {
     updateUserSetting,
     isUpdatingSettings,
     verifyPassword,
-    handleDelete
+    handleDelete,
+    logout,
+    sendVerifyOTP
   };
   return (
     <AppContext.Provider value={value}>{props.children}</AppContext.Provider>
