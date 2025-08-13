@@ -13,8 +13,6 @@ const UserCV = () => {
   const [cvs, setCvs] = useState([]);
   const [selectedCV, setSelectedCV] = useState(null);
 
-  // setSelectedCV(cvsArray[0] || null);
-
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
@@ -68,7 +66,7 @@ const UserCV = () => {
     <>
       {cvs.length > 1 && (
         <Dropdown className="mb-4" style={{ minWidth: '250px' }}>
-          <Dropdown.Toggle variant="secondary" className="w-100 text-truncate">
+          <Dropdown.Toggle variant="primary" className="w-100 text-truncate fontCondensed rounded-5">
             {selectedCV?.title || 'Select a CV'}
           </Dropdown.Toggle>
           <Dropdown.Menu className="w-100" style={{ maxHeight: '200px', overflowY: 'auto' }}>
@@ -83,18 +81,23 @@ const UserCV = () => {
 
       {selectedCV && (
         <Row className="w-100 justify-content-center">
-          <Col md={8} lg={6} className="border rounded p-4 shadow-sm bg-secondary">
-            <h2 className="mb-3 text-center">{selectedCV.title}</h2>
-            <p><strong>Education:</strong> {selectedCV.education || 'N/A'}</p>
-            <p><strong>Experience:</strong> {selectedCV.experience || 'N/A'}</p>
-            <p><strong>Skills:</strong> {selectedCV.skills || 'N/A'}</p>
-            <p><strong>Certifications:</strong> {selectedCV.certifications || 'N/A'}</p>
-            <p><strong>Projects:</strong> {selectedCV.projects || 'N/A'}</p>
-            <p><strong>Languages:</strong> {selectedCV.languages || 'N/A'}</p>
-            <p><strong>Hobbies:</strong> {selectedCV.hobbies || 'N/A'}</p>
-            <p><strong>Achievements:</strong> {selectedCV.achievements || 'N/A'}</p>
+          <Col md={8} lg={6} className="border rounded p-4 shadow-sm bg-dark">
+            <h2 className="mb-3 text-center fontNormal">{selectedCV.title}</h2>
+            <ul className='fontCondensed text-white'>
+              <p><strong className='fontCondensed'>Education:</strong> {selectedCV.education || 'N/A'}</p>
+              <p><strong className='fontCondensed'>Experience:</strong> {selectedCV.experience || 'N/A'}</p>
+              <p><strong className='fontCondensed'>Skills:</strong> {selectedCV.skills || 'N/A'}</p>
+              <p><strong className='fontCondensed'>Certifications:</strong> {selectedCV.certifications || 'N/A'}</p>
+              <p><strong className='fontCondensed'>Projects:</strong> {selectedCV.projects || 'N/A'}</p>
+              <p><strong className='fontCondensed'>Languages:</strong> {selectedCV.languages || 'N/A'}</p>
+              <p><strong className='fontCondensed'>Hobbies:</strong> {selectedCV.hobbies || 'N/A'}</p>
+              <p><strong className='fontCondensed'>Achievements:</strong> {selectedCV.achievements || 'N/A'}</p>
+            </ul>
+            
 
-
+            <div className='mx-auto mt-4 d-flex justify-content-center'>
+              <Button className='fontCondensed rounded-5'>Add to contacts</Button>
+            </div>
             
             {/* Add other CV fields here */}
           </Col>
