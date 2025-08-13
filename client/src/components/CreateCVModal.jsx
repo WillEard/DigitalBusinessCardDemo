@@ -1,94 +1,73 @@
 import { useState, useContext } from 'react';
 import { Modal, Button, Form } from 'react-bootstrap';
-
 import { toast } from 'react-toastify';
-
 import axios from 'axios';
+import PropTypes from 'prop-types';
 
 import { AppContext } from '../context/AppContext';
-import '../styles/Fonts.css'; // Import custom font styles
-
+import '../styles/Fonts.css';
 
 export default function CreateCVModal({ show, onHide, onSave }) {
+  const { backendUrl, userData } = useContext(AppContext);
 
-    const { backendUrl, userData } = useContext(AppContext);
+  const [formData, setFormData] = useState({
+    title: '',
+    education: '',
+    experience: '',
+    skills: '',
+    certifications: '',
+    projects: '',
+    languages: '',
+    hobbies: '',
+    achievements: '',
+  });
 
+  const handleChange = (field) => (e) => {
+    setFormData((prev) => ({ ...prev, [field]: e.target.value }));
+  };
 
-    const [title, setTitle] = useState('');
-    const [education, setEducation] = useState('');
-    const [experience, setExperience] = useState('');
-    const [skills, setSkills] = useState('');
-    const [certifications, setCertifications] = useState('');
-    const [projects, setProjects] = useState('');
-    const [languages, setLanguages] = useState('');
-    const [hobbies, setHobbies] = useState('');
-    const [achievements, setAchievements] = useState('');
-
-
-  const handleSave = () => {
-    if (!title.trim()) {
-      alert('Please enter a CV title.');
-      return;
-    }
-
-    onSave({
-      _id: Date.now().toString(), // simple unique id
-      title,
-      info,
+  const resetForm = () => {
+    setFormData({
+      title: '',
+      education: '',
+      experience: '',
+      skills: '',
+      certifications: '',
+      projects: '',
+      languages: '',
+      hobbies: '',
+      achievements: '',
     });
-
-    // Clear fields after save
-    setTitle('');
-    setInfo('');
   };
 
   const handleClose = () => {
-    // Reset on close as well
-    setTitle('');
-    setEducation('');
-    setExperience('');
-    setSkills('');
-    setCertifications('');
-    setProjects('');
-    setLanguages('');
-    setHobbies('');
-    setAchievements('');
+    resetForm();
     onHide();
   };
 
   const handleCreate = async () => {
     try {
-      const response = await axios.post(`${backendUrl}/api/cv/${userData.username}/newCv`, {
-        title,
-        education,
-        experience,
-        skills,
-        certifications,
-        projects,
-        languages,
-        hobbies,
-        achievements,
-      });
-  
+      await axios.post(`${backendUrl}/api/cv/${userData.username}/newCv`, formData);
       toast.success('New CV created successfully');
-      
-      //setCVData(prev => [...prev, response.data.cv]);    // THIS IS BROKEN
-
-        setTitle('');
-        setEducation('');
-        setExperience('');
-        setSkills('');
-        setCertifications('');
-        setProjects('');
-        setLanguages('');
-        setHobbies('');
-        setAchievements('');
-  
-      handleClose(); // close modal
+      resetForm();
+      handleClose();
+      if (onSave) onSave(); // optional callback
     } catch (error) {
       toast.error(error.response?.data?.message || error.message);
     }
   };
+
+  const fields = [
+    { key: 'title', label: 'Pass Title', placeholder: 'Enter CV title' },
+    { key: 'education', label: 'Education', placeholder: 'Enter Education' },
+    { key: 'experience', label: 'Experience', placeholder: 'Enter Experience' },
+    { key: 'skills', label: 'Skills', placeholder: 'Enter Skills' },
+    { key: 'certifications', label: 'Certifications', placeholder: 'Enter Certifications' },
+    { key: 'projects', label: 'Projects', placeholder: 'Enter Projects' },
+    { key: 'languages', label: 'Languages', placeholder: 'Enter Languages' },
+    { key: 'achievements', label: 'Personal Achievements', placeholder: 'Enter Personal Achievements' },
+    { key: 'hobbies', label: 'Hobbies', placeholder: 'Enter Hobbies' },
+  ];
 
   return (
     <Modal show={show} onHide={handleClose}>
@@ -97,104 +76,18 @@ export default function CreateCVModal({ show, onHide, onSave }) {
       </Modal.Header>
       <Modal.Body>
         <Form>
-          <Form.Group controlId="formCvTitle" className="mb-3">
-            <Form.Label>Pass Title</Form.Label>
-            <Form.Control
-              type="text"
-              placeholder="Enter CV title"
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
-              autoFocus
-            />
-          </Form.Group>
-
-          <Form.Group controlId="formCvTitle" className="mb-3">
-            <Form.Label>Education</Form.Label>
-            <Form.Control
-              type="text"
-              placeholder="Enter Education"
-              value={education}
-              onChange={(e) => setEducation(e.target.value)}
-              autoFocus
-            />
-          </Form.Group>
-
-          <Form.Group controlId="formCvTitle" className="mb-3">
-            <Form.Label>Experience</Form.Label>
-            <Form.Control
-              type="text"
-              placeholder="Enter Experience"
-              value={experience}
-              onChange={(e) => setExperience(e.target.value)}
-              autoFocus
-            />
-          </Form.Group>
-
-          <Form.Group controlId="formCvTitle" className="mb-3">
-            <Form.Label>Skills</Form.Label>
-            <Form.Control
-              type="text"
-              placeholder="Enter Skills"
-              value={skills}
-              onChange={(e) => setSkills(e.target.value)}
-              autoFocus
-            />
-          </Form.Group>
-
-          <Form.Group controlId="formCvTitle" className="mb-3">
-            <Form.Label>Certifications</Form.Label>
-            <Form.Control
-              type="text"
-              placeholder="Enter Certifications"
-              value={certifications}
-              onChange={(e) => setCertifications(e.target.value)}
-              autoFocus
-            />
-          </Form.Group>
-
-          <Form.Group controlId="formCvTitle" className="mb-3">
-            <Form.Label>Projects</Form.Label>
-            <Form.Control
-              type="text"
-              placeholder="Enter Projects"
-              value={projects}
-              onChange={(e) => setProjects(e.target.value)}
-              autoFocus
-            />
-          </Form.Group>
-
-          <Form.Group controlId="formCvTitle" className="mb-3">
-            <Form.Label>Languages</Form.Label>
-            <Form.Control
-              type="text"
-              placeholder="Enter Lanaguages"
-              value={languages}
-              onChange={(e) => setLanguages(e.target.value)}
-              autoFocus
-            />
-          </Form.Group>
-
-          <Form.Group controlId="formCvTitle" className="mb-3">
-            <Form.Label>Personal Achievements</Form.Label>
-            <Form.Control
-              type="text"
-              placeholder="Enter Personal Achievements"
-              value={achievements}
-              onChange={(e) => setAchievements(e.target.value)}
-              autoFocus
-            />
-          </Form.Group>
-
-          <Form.Group controlId="formCvTitle" className="mb-3">
-            <Form.Label>Hobbies</Form.Label>
-            <Form.Control
-              type="text"
-              placeholder="Enter Hobbies"
-              value={hobbies}
-              onChange={(e) => setHobbies(e.target.value)}
-              autoFocus
-            />
-          </Form.Group>
+          {fields.map((field, index) => (
+            <Form.Group controlId={`formCv${field.key}`} className="mb-3" key={field.key}>
+              <Form.Label>{field.label}</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder={field.placeholder}
+                value={formData[field.key]}
+                onChange={handleChange(field.key)}
+                autoFocus={index === 0} // only first field
+              />
+            </Form.Group>
+          ))}
         </Form>
       </Modal.Body>
       <Modal.Footer>
@@ -208,3 +101,10 @@ export default function CreateCVModal({ show, onHide, onSave }) {
     </Modal>
   );
 }
+
+// PropTypes after component definition
+CreateCVModal.propTypes = {
+  show: PropTypes.bool.isRequired,
+  onHide: PropTypes.func.isRequired,
+  onSave: PropTypes.func, // optional
+};
