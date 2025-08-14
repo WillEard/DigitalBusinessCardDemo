@@ -3,7 +3,7 @@ import { Button, Form, FloatingLabel, Container } from 'react-bootstrap';
 
 // React
 import { useNavigate } from 'react-router-dom';
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useState, useCallback } from 'react';
 
 // App Context
 import { AppContext } from '../context/AppContext';
@@ -28,7 +28,7 @@ const EmailVerification = () => {
   const [otp, setOTP] = useState('');
 
   // Endpoint to send the OTP entered by user to verify account
-  const sendVerifyOTP = async () => {
+  const sendVerifyOTP = useCallback(async () => {
     try {
       axios.defaults.withCredentials = true;
       const { data } = await axios.post(
@@ -43,10 +43,10 @@ const EmailVerification = () => {
     } catch (error) {
       toast.error(error.message);
     }
-  };
+  }, [backendUrl] );
 
   // Verify form handler
-  const onSubmitHandler = async (e) => {
+  const onSubmitHandler = useCallback(async (e) => {
     try {
       e.preventDefault();
 
@@ -67,11 +67,13 @@ const EmailVerification = () => {
     } catch (error) {
       toast.error(error.message);
     }
-  };
+  }, [backendUrl, otp, getUserData, navigate]);
 
   useEffect(() => {
     isLoggedIn && userData && userData.isVerified && navigate('/');
-  }, [isLoggedIn, userData]);
+  }, [isLoggedIn, userData, navigate]);
+
+  const handleOTPChange = useCallback((e) => {setOTP(e.target.value);}, []);
 
   return (
     <Container className="rounded text-dark mx-auto col-lg-6 mt-5 pt-2 pb-3">
@@ -96,14 +98,14 @@ const EmailVerification = () => {
   {/* OTP Form */}
   <Form onSubmit={onSubmitHandler}>
     <Form.Group className="mb-3" controlId="formVerify">
-      <div className="mx-auto" style={{ maxWidth: '300px' }}>
+      <div className="mx-auto otp-width">
         <FloatingLabel label="OTP" className="mb-3">
           <Form.Control
             type="number"
             placeholder="OTP"
             required
             value={otp}
-            onChange={(e) => setOTP(e.target.value)}
+            onChange={handleOTPChange}
           />
         </FloatingLabel>
       </div>
