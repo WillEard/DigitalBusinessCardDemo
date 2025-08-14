@@ -1,5 +1,5 @@
 // React
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 // React Bootstrap
@@ -62,9 +62,9 @@ const Dashboard = () => {
     }
   }, [userData]);
 
-  useEffect(() => {
-    
-  }, [cvData]);
+
+
+  const handleEditCv = useCallback((cv) => {setSelectedCv(cv);setShowModal(true);}, []);
 
 
   return (
@@ -168,10 +168,7 @@ const Dashboard = () => {
               <Button
                 size="sm"
                 variant="outline-dark"
-                onClick={() => {
-                  setSelectedCv(cv);
-                  setShowModal(true);
-                }}
+                onClick={() => handleEditCv(cv)}
               >
                 Edit
               </Button>
@@ -194,7 +191,7 @@ const Dashboard = () => {
             <Col md={4} className="align-self-start">
               <Card className="mb-3 shadow-sm analytics">
                 <Card.Body>
-                  <h6 className="fw-semibold fs-5" style={{ fontFamily: 'Sailor' }}>Analytics</h6>
+                  <h6 className="fw-semibold fs-5 fontNormal">Analytics</h6>
                   <p className="mb-0 fontCondensed">132 Total Scans</p>
                   <p className="text-muted fontCondensed">Mon 3rd – Most Active Day</p>
                   <Button variant="link" className="p-0 fontCondensed">View Full Analytics</Button>
@@ -202,11 +199,11 @@ const Dashboard = () => {
               </Card>
               <Card className="shadow-sm">
                 <Card.Body>
-                  <h6 className="fw-semibold fs-5" style={{ fontFamily: 'Sailor' }}>Notifications</h6>
-                  <p className="mb-0 fw-normal fs-6" style={{ fontFamily: 'Sailor Condensed' }}>
+                  <h6 className="fw-semibold fs-5 fontNormal">Notifications</h6>
+                  <p className="mb-0 fw-normal fs-6 fontCondensed">
                     Your card was scanned 3 times today
                   </p>
-                  <p className="text-muted fw-normal fs-6" style={{ fontFamily: 'Sailor Condensed' }}>
+                  <p className="text-muted fw-normal fs-6 fontCondensed">
                     Find out who using <span className="text-info">Premium</span>
                   </p>
                 </Card.Body>

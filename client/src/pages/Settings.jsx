@@ -3,7 +3,7 @@ import { Form, Row, Col, Button, Container, Modal, Spinner } from 'react-bootstr
 
 // React
 import { useNavigate } from 'react-router-dom';
-import { useState, useContext, useEffect } from 'react';
+import { useState, useContext, useEffect, useCallback } from 'react';
 
 // Components
 import Navbar from '../components/Navbar';
@@ -14,6 +14,10 @@ import { toast } from 'react-toastify';
 
 // App Context
 import { AppContext } from '../context/AppContext';
+
+// Styles
+import '../styles/Settings.css';
+import '../styles/fonts.css'; 
 
 const Settings = () => {
   const navigate = useNavigate();
@@ -41,52 +45,48 @@ const Settings = () => {
 
   
   //  If password matches, show modal to confirm deletion
-  const handleVerifyAndConfirm = async () => {
+  const handleVerifyAndConfirm = useCallback(async () => {
     setError("");
     setVerifying(true);
     const isValid = await verifyPassword(password);
     setVerifying(false);
-
+  
     if (isValid) {
       setShowConfirm(true);
     } else {
       setError("Incorrect password. Please try again.");
-      toast.error(error);
+      void toast.error("Incorrect password. Please try again."); // Show error toast (void to avoid promise warning)
     }
-  };
+  }, [password, verifyPassword]);
 
   // If password matches, call handleDelete and delete the account
-  const confirmDelete = async () => {
+  const handleConfirmDelete = useCallback(async () => {
     setDeleting(true);
     const success = await handleDelete(password);
     setDeleting(false);
-
+  
     if (success) {
       setShowConfirm(false);
       setPassword("");
-
       setUserData(null);
       setIsLoggedIn(false);
-
       navigate('/');
-      // Optionally redirect or show success message here
     } else {
       setError("Failed to delete account. Please try again.");
     }
-  };
+  }, [handleDelete, password, navigate, setUserData, setIsLoggedIn]);
 
   // Toggle phone number visibility setting
-  const handlePhoneNumber = async (e) => {
+  const handlePhoneNumber = useCallback(async (e) => {
     const newValue = e.target.checked;
-    setShowPhoneNumber(newValue); // optimistic update
-
+    setShowPhoneNumber(newValue);
     try {
-      await updateUserSetting('showMobile', newValue); // context handles API + DB
+      await updateUserSetting('showMobile', newValue);
     } catch (err) {
       console.error('Failed to update setting', err);
-      setShowPhoneNumber(!newValue); // revert if failed
+      setShowPhoneNumber(!newValue);
     }
-  };
+  }, [updateUserSetting]);
 
 
   // Redirect or warning if user not logged in (optional)
@@ -107,6 +107,10 @@ const Settings = () => {
   useEffect(() => {
   }, [showPhoneNumber]);
 
+  const handlePasswordChange = useCallback((e) => {setPassword(e.target.value);}, []);
+  const handleVerifyClick = useCallback(() => {handleVerifyAndConfirm();}, [handleVerifyAndConfirm]);
+  const handleCloseConfirm = useCallback(() => {setShowConfirm(false);}, []);
+  
   return (
     <div className="d-flex flex-column min-vh-100 login-wrapper text-white">
       <div className="login-overlay flex-grow-1">
@@ -126,26 +130,14 @@ const Settings = () => {
                   <div className="d-flex">
                     <Button
                       href="/reset-pass"
-                      className="bg-primary text-light px-3 fontCondensed"
-                      style={{
-                        borderTopRightRadius: 0,
-                        borderBottomRightRadius: 0,
-                        borderTopLeftRadius: '0.375rem',
-                        borderBottomLeftRadius: '0.375rem',
-                      }}
+                      className="bg-primary text-light px-3 fontCondensed button-border"
                     >
                       Change
                     </Button>
                     <Form.Control
                       placeholder="*******"
                       disabled
-                      className="text-muted"
-                      style={{
-                        borderTopLeftRadius: 0,
-                        borderBottomLeftRadius: 0,
-                        borderTopRightRadius: '0.375rem',
-                        borderBottomRightRadius: '0.375rem',
-                      }}
+                      className="text-muted button-border"
                     />
                   </div>
                 </Form.Group>
@@ -192,14 +184,8 @@ const Settings = () => {
                     <div className="d-flex">
                       <Button
                         variant="danger"
-                        className="bg-danger text-light px-3 fontCondensed shadow-none"
-                        style={{
-                          borderTopRightRadius: 0,
-                          borderBottomRightRadius: 0,
-                          borderTopLeftRadius: "0.375rem",
-                          borderBottomLeftRadius: "0.375rem",
-                        }}
-                        onClick={handleVerifyAndConfirm}
+                        className="bg-danger text-light px-3 fontCondensed shadow-none button-border"
+                        onClick={handleVerifyClick}
                         disabled={verifying || deleting || password.trim() === ""}
                         aria-label="Delete account"
                       >
@@ -209,18 +195,12 @@ const Settings = () => {
                       <Form.Control
                         type="password"
                         value={password}
-                        onChange={(e) => setPassword(e.target.value)}
+                        onChange={handlePasswordChange}
                         placeholder="Enter password to delete account"
-                        className="text-muted"
-                        style={{
-                          borderTopLeftRadius: 0,
-                          borderBottomLeftRadius: 0,
-                          borderTopRightRadius: "0.375rem",
-                          borderBottomRightRadius: "0.375rem",
-                        }}
+                        className="text-muted button-border"
                       />
                     </div>
-                    <Modal show={showConfirm} onHide={() => setShowConfirm(false)} centered>
+                    <Modal show={showConfirm} onHide={handleCloseConfirm} centered>
                       <Modal.Header closeButton>
                         <Modal.Title>Confirm Account Deletion</Modal.Title>
                       </Modal.Header>
@@ -228,10 +208,10 @@ const Settings = () => {
                         Are you sure you want to permanently delete your account? This action cannot be undone.
                       </Modal.Body>
                       <Modal.Footer>
-                        <Button variant="secondary" onClick={() => setShowConfirm(false)} disabled={deleting}>
+                        <Button variant="secondary" onClick={handleCloseConfirm} disabled={deleting}>
                           Cancel
                         </Button>
-                        <Button variant="danger" onClick={confirmDelete} disabled={deleting}>
+                        <Button variant="danger" onClick={handleConfirmDelete} disabled={deleting}>
                           {deleting ? <Spinner animation="border" size="sm" /> : "Yes, Delete"}
                         </Button>
                       </Modal.Footer>

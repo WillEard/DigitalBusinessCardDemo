@@ -1,5 +1,5 @@
 // React
-import { createContext, useEffect, useState } from 'react';
+import { createContext, useEffect, useState, useCallback, useMemo } from 'react';
 import PropTypes from 'prop-types';
 
 // Toast for user messages
@@ -46,26 +46,28 @@ export const AppContextProvider = (props) => {
   // For CVs by Id
   const [selectedCV, setSelectedCV] = useState(null);
 
-
-  // FOR handling account deletion
   
-  // GET audit logs, admin backend
-  const getAuditLogs = async () => {
+   // GET user data e.g. username, email..
+  const getUserData = useCallback(async () => {
     try {
-      setIsLoadingLogs(true);
-      const res = await axios.get(`${backendUrl}/api/admin/audit-logs`, { withCredentials: true });
-      if (res.data.success) {
-        setAuditLogs(res.data.logs);
+      const { data } = await axios.get(backendUrl + '/api/user/data', { withCredentials: true });
+      if (data.success) {
+        setUserData(data.userData);
+      } else {
+        setUserData(null);
+        toast.error('Server Error: ' + data.message);
       }
-    } catch (err) {
-      console.error("Failed to fetch audit logs", err);
-    } finally {
-      setIsLoadingLogs(false);
+    } catch (error) {
+      if (error.response?.status === 401) {
+        setUserData(null);
+      } else {
+        toast.error(`Unexpected Error: ${error.message}`);
+      }
     }
-  };
+  }, [backendUrl]);
 
   // GET auth status, whether or not they're logged in
-  const getAuthStatus = async () => {
+  const getAuthStatus = useCallback(async () => {
     try {
       const { data } = await axios.get(`${backendUrl}/api/auth/is-Auth`, { withCredentials: true });
   
@@ -89,33 +91,29 @@ export const AppContextProvider = (props) => {
         toast.error('Unexpected Error: ' + error.message);
       }
     }
-  };
+  }, [backendUrl, getUserData]);
 
-  // GET user data e.g. username, email..
-  const getUserData = async () => {
-  try {
-    const { data } = await axios.get(backendUrl + '/api/user/data', { withCredentials: true });
-    if (data.success) {
-      setUserData(data.userData);
-    } else {
-      setUserData(null);
-      toast.error('Server Error: ' + data.message);
+  // GET audit logs, admin backend
+  const getAuditLogs = useCallback(async () => {
+    try {
+      setIsLoadingLogs(true);
+      const res = await axios.get(`${backendUrl}/api/admin/audit-logs`, { withCredentials: true });
+      if (res.data.success) {
+        setAuditLogs(res.data.logs);
+      }
+    } catch (err) {
+      console.error("Failed to fetch audit logs", err);
+    } finally {
+      setIsLoadingLogs(false);
     }
-  } catch (error) {
-    if (error.response?.status === 401) {
-      setUserData(null);
-    } else {
-      toast.error(`Unexpected Error: ${error.message}`);
-    }
-  }
-};
+  }, [backendUrl]);
+
+  
 
   // GET cvData for a particular user
-  const getCVData = async (username, cvId = null) => {
-    if (!username) {
-      console.warn('Username undefined in getCVData, skipping fetch');
-      return;
-    }
+  const getCVData = useCallback(async (username, cvId = null) => {
+    if (!username) return;
+  
     try {
       let url = `${backendUrl}/api/cv/${username}`;
       if (cvId) url += `/${cvId}`;
@@ -123,12 +121,9 @@ export const AppContextProvider = (props) => {
       const { data } = await axios.get(url);
   
       if (cvId) {
-        // Single CV returned as object
-        setSelectedCV(data.cv || data);  // adapt if your API wraps single CV under `cv`
+        setSelectedCV(data.cv || data);
         return data.cv || data;
       } else {
-        // Multiple CVs returned as array
-        // Normalize: ensure it's always an array
         const cvsArray = Array.isArray(data) ? data : [data];
         setCVData(cvsArray);
         return cvsArray;
@@ -136,12 +131,12 @@ export const AppContextProvider = (props) => {
     } catch (error) {
       toast.error(error.response?.data?.message || error.message);
     }
-  };
+  }, [backendUrl]);
 
 
 
   // GET all users in database, for admin backend
-  const getAllUsers = async () => {
+  const getAllUsers = useCallback(async () => {
     setIsLoadingUsers(true);
     try {
       const { data } = await axios.get(`${backendUrl}/api/admin/all-data`, 
@@ -150,49 +145,39 @@ export const AppContextProvider = (props) => {
         headers: { 'Content-Type': 'application/json' },
       });
     
-      // If your backend wraps users in { success, users }
       if (data && data.users && Array.isArray(data.users)) {
         setAllUsers(data.users);
       } else if (Array.isArray(data)) {
-        // If backend returns the array directly
         setAllUsers(data);
       } else {
-        // unexpected shape — clear and show message
         setAllUsers([]);
         toast.error(data?.message || 'No users returned');
       }
     } catch (err) {
       console.error('getAllUsers error:', err);
-      setAllUsers([]); // ensure it's always an array
+      setAllUsers([]);
       toast.error(err.response?.data?.message || err.message || 'Failed to fetch users');
     } finally {
       setIsLoadingUsers(false);
     }
-  };
+  }, [backendUrl]);
 
   // Update TRUE/FALSE whether the user wants their phone number visible or not
-  const updateUserSetting = async (field, value) => {
+  const updateUserSetting = useCallback(async (field, value) => {
     try {
       setisUpdatingSettings(true);
-  
       const res = await axios.patch(
         `${backendUrl}/api/user/settings`,
         { [field]: value },
         { withCredentials: true, headers: { 'Content-Type': 'application/json' } }
       );
   
-      console.log('PATCH /api/user/settings response:', res.data);
-  
       if (res.data?.success) {
-        // Accept either `user` or `data` depending on backend
         const updatedUser = res.data.user || res.data.data || null;
-  
         if (updatedUser && typeof updatedUser === 'object') {
-          setUserData(updatedUser); // <-- persist the authoritative user object
+          setUserData(updatedUser);
           return updatedUser;
         }
-  
-        // fallback: optimistic update if backend didn't return full user
         setUserData(prev => (prev ? { ...prev, [field]: value } : prev));
         return null;
       } else {
@@ -204,47 +189,43 @@ export const AppContextProvider = (props) => {
     } finally {
       setisUpdatingSettings(false);
     }
-  }
+  }, [backendUrl]);
 
   // Verify password entered to actual password to delete account
-  const verifyPassword = async (password) => {
+  const verifyPassword = useCallback(async (password) => {
     try {
       const res = await axios.post(`${backendUrl}/api/auth/verify-password`, { password });
       return res.data.valid === true;
     } catch (err) {
       console.error("Password verification failed", err);
-      toast.error(error);
+      toast.error(err.response?.data?.message || err.message || "Password verification failed");
       return false;
     }
-  };
+  }, [backendUrl]);
 
-  // DELETE the specific account
-  const handleDelete = async (password) => {
+  // DELETE Called from users Settings page
+  const handleDelete = useCallback(async (password) => {
     try {
       const res = await axios.delete(`${backendUrl}/api/user/delete-account`, {
         data: { password },
         timeout: 5000,
       });
-
-      // If the backend returns a success message
       setIsLoggedIn(false);
       setUserData(null);
       console.log(res.data.message);
-  
-      // Return success first
       return true;
     } catch (error) {
-      toast.error(error);
+      toast.error(error.message || error);
       return false;
     }
-  };
+  }, [backendUrl]);
 
   // Send email OTP code to verify user
-  const sendVerifyOTP = async () => {
+  const sendVerifyOTP = useCallback(async () => {
     try {
       axios.defaults.withCredentials = true;
       const { data } = await axios.post(backendUrl + '/api/auth/send-verify-otp');
-
+  
       if (data.success) {
         navigate('/verify-email');
         toast.success(data.message);
@@ -254,15 +235,15 @@ export const AppContextProvider = (props) => {
     } catch (error) {
       toast.error(error.message);
     }
-  };
+  }, [backendUrl, navigate]);
 
   // Logout method
-  const logout = async () => {
+  const logout = useCallback(async () => {
     try {
       axios.defaults.withCredentials = true;
       const { data } = await axios.post(backendUrl + '/api/auth/logout');
       if (data.success) {
-        googleLogout(); // <-- clears the OAuth token
+        googleLogout();
         setIsLoggedIn(false);
         setUserData(null);
         navigate('/');
@@ -270,72 +251,68 @@ export const AppContextProvider = (props) => {
     } catch (error) {
       toast.error(error.message);
     }
-  };
+  }, [backendUrl, navigate]);
 
- // run once on mount: fetch audit logs only if admin (see second effect)
-useEffect(() => {
-  // noop: leave empty so we don't run admin calls before auth
-}, []);
+  // run once on mount: fetch audit logs only if admin (see second effect)
+  useEffect(() => {
+    // noop: leave empty so we don't run admin calls before auth
+  }, []);
 
-// run once on mount: check auth and set loading properly
-useEffect(() => {
-  let mounted = true;
-
-  const checkAuth = async () => {
-    if (!mounted) return;
-    try {
-      setIsLoadingUser(true);
-      await getAuthStatus(); // should set userData internally
-    } catch (err) {
-      console.error('checkAuth error', err);
-      setUserData(null);
-      setIsLoggedIn(false); // ✅ add this
-
-    } finally {
-      if (mounted) setIsLoadingUser(false);
-    }
-  };
-
-  checkAuth();
-
-  return () => {
-    mounted = false;
-  };
-}, []);
-
-// run when userData becomes available; only fetch admin stuff when user is admin
-useEffect(() => {
-  let mounted = true;
-
-  const fetchAdminResources = async () => {
-    if (!mounted) return;
-    try {
-      // Example: getAuditLogs should be gated to admin only
-      if (userData?.role === 'admin') {
-        await getAuditLogs();
-        // you can also load other admin endpoints here
+  // check auth once on mount
+  useEffect(() => {
+    let mounted = true;
+    const checkAuth = async () => {
+      if (!mounted) return;
+      try {
+        setIsLoadingUser(true);
+        await getAuthStatus(); // sets userData internally
+      } catch (err) {
+        console.error('checkAuth error', err);
+        setUserData(null);
+        setIsLoggedIn(false);
+      } finally {
+        if (mounted) setIsLoadingUser(false);
       }
-    } catch (err) {
-      console.error('Failed to fetch admin resources', err);
+    };
+    checkAuth();
+    return () => { mounted = false; }
+  }, [getUserData, getAuthStatus]);
+
+  // run when userData becomes available; only fetch admin stuff when user is admin
+  useEffect(() => {
+    if (!userData) return;
+
+    let mounted = true;
+    const fetchAdminResources = async () => {
+      if (!mounted) return;
+      try {
+        if (userData?.role === 'admin') {
+          await getAuditLogs();
+        }
+      } catch (err) {
+        console.error('Failed to fetch admin resources', err);
+      }
+    };
+
+    fetchAdminResources();
+
+    return () => { mounted = false; }
+  }, [userData, getAuditLogs]);
+
+  useEffect(() => {
+    let mounted = true;
+    if (isLoggedIn === true) {
+      const fetchUser = async () => {
+        if (!mounted) return;
+        await getUserData();
+      };
+      fetchUser();
     }
-  };
-
-  // Only run fetchAdminResources when userData is set (not while loading)
-  if (userData) fetchAdminResources();
-
-  return () => {
-    mounted = false;
-  };
-}, [userData]);
-
-useEffect(() => {
-  if (isLoggedIn === true) {
-    getUserData();
-  }
-}, [isLoggedIn]);
+    return () => { mounted = false; }
+  }, [isLoggedIn, getUserData]);
 
 
-  const value = {
+  const value = useMemo(() => ({
     backendUrl,
     isLoggedIn,
     setIsLoggedIn,
@@ -348,6 +325,7 @@ useEffect(() => {
     authState,
     setAuthState,
     isLoadingUser,
+    isLoadingUsers,
     setIsLoadingUser,
     allUsers,
     getAllUsers,
@@ -359,8 +337,38 @@ useEffect(() => {
     verifyPassword,
     handleDelete,
     logout,
-    sendVerifyOTP
-  };
+    sendVerifyOTP,
+    selectedCV,
+    setSelectedCV
+  }), [
+    backendUrl,
+    isLoggedIn,
+    setIsLoggedIn,
+    userData,
+    cvData,
+    setUserData,
+    getUserData,
+    getCVData,
+    setCVData,
+    authState,
+    setAuthState,
+    isLoadingUser,
+    isLoadingUsers,
+    setIsLoadingUser,
+    allUsers,
+    getAllUsers,
+    setAllUsers,
+    auditLogs,
+    isLoadingLogs,
+    updateUserSetting,
+    isUpdatingSettings,
+    verifyPassword,
+    handleDelete,
+    logout,
+    sendVerifyOTP,
+    selectedCV,
+    setSelectedCV
+  ]);
   return (
     <AppContext.Provider value={value}>{props.children}</AppContext.Provider>
   );
