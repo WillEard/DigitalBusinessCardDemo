@@ -36,9 +36,7 @@ const SignupForm = () => {
   const [passwordScore, setPasswordScore] = useState(0);
   const [phoneNumber, setPhoneNumber] = useState('');
 
-  const handleStateChange = () => {
-    setAuthState('Login'); // Send new state to the context
-  };
+  const [confirmTouched, setConfirmTouched] = useState(false);
 
   const onSubmitHandler = async (e) => {
     try {
@@ -90,12 +88,12 @@ const SignupForm = () => {
   const handlePasswordChange = (e) => {
     const value = e.target.value;
     setPassword(value);
-    const score = zxcvbn(value).score;
-    setPasswordScore(score);
+    setPasswordScore(zxcvbn(value).score);
+    // ✅ Do NOT touch confirmTouched here
   };
 
-  const passwordsMatch = password && confirmPassword && password === confirmPassword;
-  const isStrongEnough = passwordScore >= 3; // Change threshold if needed
+  const passwordsMatch = password === confirmPassword && password.length > 0;
+  const isStrongEnough = passwordScore >= 3;
   const canSubmit = isStrongEnough && passwordsMatch;
 
   return (
@@ -170,13 +168,13 @@ const SignupForm = () => {
               <FloatingLabel controlId="formConfirmPassword" label="Confirm Password" className="text-dark">
                 <Form.Control
                   type="password"
+                  placeholder="Confirm password"
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
-                  placeholder="Confirm password"
-                  required
-                  isInvalid={confirmPassword && !passwordsMatch}
+                  onBlur={() => setConfirmTouched(true)}
+                  isInvalid={confirmTouched && confirmPassword.length > 0 && password !== confirmPassword}
                 />
-                <Form.Control.Feedback type="invalid">
+                <Form.Control.Feedback type="invalid" tooltip>
                   Passwords do not match.
                 </Form.Control.Feedback>
               </FloatingLabel>
