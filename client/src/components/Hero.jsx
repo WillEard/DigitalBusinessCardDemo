@@ -1,5 +1,5 @@
 // React & Routing
-import { useContext, useEffect, useRef, useCallback } from 'react';
+import { useContext, useEffect, useRef, useCallback, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 // AppContext
@@ -10,8 +10,6 @@ import { Container, Row, Col, Button } from 'react-bootstrap';
 
 // QR and Utility
 import QRCode from 'react-qr-code';
-
-import { animate, stagger, text } from 'animejs';
 
 
 // Icons
@@ -28,128 +26,76 @@ const Hero = () => {
   const qrRef = useRef(null);
 
   const siteURL = 'www.pelagopass.com';
-  const profileUrl = `${siteURL}/cv/${userData?.username}`;
+  const profileUrl = useMemo(() => `${siteURL}/cv/${userData?.username}`, [userData]);
   
 
   useEffect(() => {
     if (!isLoadingUser && isLoggedIn) {
       getUserData();
     }
-  }, [isLoadingUser, isLoggedIn]);
+  }, [isLoadingUser, isLoggedIn, getUserData]);
 
 
   // Handle QR code download
-  const handleDownload = async () => {
+  const handleDownload = useCallback(() => {
+    if (!qrRef.current) return console.error('QR ref not found');
     const svg = qrRef.current.querySelector('svg');
-    if (!svg) {
-      console.error('SVG not found');
-      return;
+    if (!svg) return console.error('SVG not found');
+  
+    try {
+      const svgString = new XMLSerializer().serializeToString(svg);
+      const blob = new Blob([svgString], { type: 'image/svg+xml;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+  
+      const img = new Image();
+      img.onload = () => {
+        const canvas = document.createElement('canvas');
+        canvas.width = 256;
+        canvas.height = 256;
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(img, 0, 0, 256, 256);
+  
+        const link = document.createElement('a');
+        link.href = canvas.toDataURL('image/png');
+        link.download = `${userData?.name || 'qr'}.png`;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+  
+        URL.revokeObjectURL(url);
+      };
+  
+      img.onerror = (err) => {
+        console.error('Error loading SVG as image', err);
+        URL.revokeObjectURL(url);
+      };
+  
+      img.src = url;
+    } catch (err) {
+      console.error('Error in handleDownload', err);
     }
-  
-    const width = svg.getAttribute('width') || svg.clientWidth;
-    const height = svg.getAttribute('height') || svg.clientHeight;
-  
-    if (!width || !height || width === '0' || height === '0') {
-      console.error('SVG has zero width or height, cannot convert to PNG');
-      return;
-    }
-  
-    // Serialize SVG XML
-    const serializer = new XMLSerializer();
-    const svgString = serializer.serializeToString(svg);
-  
-    // Create a canvas
-    const canvas = document.createElement('canvas');
-    canvas.width = width;
-    canvas.height = height;
-    const ctx = canvas.getContext('2d');
-  
-    // Create an image to load the SVG string
-    const img = new Image();
-    const svgBlob = new Blob([svgString], { type: 'image/svg+xml;charset=utf-8' });
-    const url = URL.createObjectURL(svgBlob);
-  
-    img.onload = () => {
-      ctx.drawImage(img, 0, 0, width, height);
-      URL.revokeObjectURL(url);
-  
-      // Get PNG data URL and download
-      const pngDataUrl = canvas.toDataURL('image/png');
-      downloadImage(pngDataUrl, `${userData.name}.png`);
-    };
-  
-    img.onerror = (err) => {
-      console.error('Error loading SVG image', err);
-    };
-  
-    img.src = url;
-  };
+  }, [qrRef, userData]);
 
-  // Function to download image
-  function downloadImage(dataUrl, filename) {
-    const link = document.createElement('a');
-    link.href = dataUrl;
-    link.download = filename || 'download.png';
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-  }
-
+  const qrContainerStyle = useMemo(() => ({
+    position: 'absolute',
+    width: 256,
+    height: 256,
+    overflow: 'hidden',
+    left: '-9999px',
+    top: 'auto',
+    opacity: 0
+  }), []);
   // Render QR code off-screen
-  const renderQRHidden = () => (
-    <div
-    ref={qrRef}
-    style={{
-      position: 'absolute',  // remove from normal flow
-      width: 256,
-      height: 256,
-      overflow: 'hidden',
-      left: '-9999px',       // move off-screen
-      top: 'auto',
-      opacity: 0             // optional extra invisibility
-    }}
-  >
-    <QRCode
-      size={256}
-      value={profileUrl}
-      viewBox="0 0 256 256"
-    />
-  </div>
-  );
+  const renderQRHidden = useMemo(() => (
+    <div ref={qrRef} style={qrContainerStyle}>
+      <QRCode size={256} value={profileUrl} viewBox="0 0 256 256" />
+    </div>
+  ), [profileUrl, qrContainerStyle]);
 
-  // Smooth boat drift animation
-  let lastY = 0;
-  let lastRot = 0;
+  const handleGoDashboard = useCallback(() => {navigate('/dashboard');}, [navigate]);
+  const goToSignUp = useCallback(() => {navigate('/Authenticate', { state: { authState: 'SignUp' } });}, [navigate]);
+  const scrollToHowItWorks = useCallback(() => {const el = document.getElementById('howitworks');if (el) el.scrollIntoView({ behavior: 'smooth' });}, []);
 
-  // Function to animate the boat drift
-  const smoothBoatDrift = useCallback(() => {
-    const newY = (Math.random() * 0.4 - 0.2);
-    const newRot = (-0.5 + Math.random() * 0.2);
-  
-    animate('.ml6', {
-      keyframes: [
-        { translateX: '-0.3rem', translateY: lastY + 'rem', rotate: lastRot + 'deg', duration: 3000, easing: 'easeInOutSine' },
-        { translateX: '0.3rem', translateY: newY + 'rem', rotate: (-newRot) + 'deg', duration: 3000, easing: 'easeInOutSine' },
-        { translateX: '-0.3rem', translateY: lastY + 'rem', rotate: lastRot + 'deg', duration: 3000, easing: 'easeInOutSine' },
-      ],
-      duration: 9000,
-      easing: 'easeInOutSine',
-      loop: true,
-      complete: () => {
-        lastY = newY;
-        lastRot = -newRot;
-      }
-    });
-  }, []);
-
-  // Start the animation on component mount
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      smoothBoatDrift();
-    }, 100); // delay 100ms, adjust if needed
-  
-    return () => clearTimeout(timer); // cleanup on unmount
-  }, [smoothBoatDrift]);
 
   return (
     <div id="home" className="hero-wrapper text-white">
@@ -158,8 +104,8 @@ const Hero = () => {
           {userData ? (
             <>
               {/* Desktop */}
-              <Row className="d-none d-md-flex justify-content-center align-items-center" style={{ minHeight: '80vh' }}>
-                <Col className="text-center ml6">
+              <Row className="d-none d-md-flex justify-content-center align-items-center row" >
+                <Col className="text-center">
 
                   <h1 className="display-4 fw-bold text-uppercase fontNormal">
                     {userData.name?.split(' ')[0]}, ready to connect? <FaArrowTurnDown />
@@ -170,7 +116,7 @@ const Hero = () => {
                       <span className='fw-bold fontCondensed'>Tap. Share. Done.</span> All without the hassle.
                     </p>
                     <div className="d-grid gap-2 d-sm-flex justify-content-sm-center mb-5">
-                      <Button variant="primary" className='fontCondensed rounded-5' size="lg" onClick={() => navigate('/dashboard')}>
+                      <Button variant="primary" className='fontCondensed rounded-5' size="lg" onClick={handleGoDashboard}>
                         View Dashboard
                       </Button>
                       <Button variant="primary" className='fontCondensed rounded-5' size="lg" onClick={handleDownload}>
@@ -178,22 +124,22 @@ const Hero = () => {
                       </Button>
                     </div>
                   </Container>
-                  {renderQRHidden()}
+                  {renderQRHidden}
                 </Col>
               </Row>
 
               {/* Mobile */}
-              <Row className="d-md-none justify-content-center align-items-center text-center" style={{ minHeight: '80vh' }}>
+              <Row className="d-md-none justify-content-center align-items-center text-center row">
                 <Col>
-                  <h1 className="fw-bold text-uppercase mb-4 fontNormal" style={{fontSize: '3rem' }}>
+                  <h1 className="fw-bold text-uppercase mb-4 fontNormal mobile-h1-size">
                     {userData.name?.split(' ')[0]}, ready to connect? <FaArrowTurnDown />
                   </h1>
-                  <Container style={{ maxWidth: '600px' }}>
-                    <p className="lead mb-4 text-uppercase fontCondensed" style={{fontSize: '1.2rem' }}>
+                  <Container className="mobile-container-width">
+                    <p className="lead mb-4 text-uppercase fontCondensed mobile-p-size" >
                       No app, no paper, no hassle.
                     </p>
                     <div className="d-grid gap-3 mb-5">
-                      <Button variant="primary fontCondensed" size="lg" className="w-100" onClick={() => navigate('/dashboard')}>
+                      <Button variant="primary fontCondensed" size="lg" className="w-100" onClick={handleGoDashboard}>
                         Dashboard
                       </Button>
                       <Button variant="primary fontCondensed" size="lg" className="w-100" onClick={handleDownload}>
@@ -201,14 +147,14 @@ const Hero = () => {
                       </Button>
                     </div>
                   </Container>
-                  {renderQRHidden()}
+                  {renderQRHidden}
                 </Col>
               </Row>
             </>
           ) : (
             <>
               {/* Desktop */}
-              <Row className="d-none d-md-flex justify-content-center align-items-center" style={{ minHeight: '80vh' }}>
+              <Row className="d-none d-md-flex justify-content-center align-items-center row">
                 <Col className="text-center">
                   <h1 className="display-3 fw-bold text-uppercase fontNormal">
                     Your digital business card, <br /> reimagined
@@ -223,7 +169,7 @@ const Hero = () => {
                           variant="primary"
                           size="lg"
                           className="px-4 me-sm-3 rounded-5 fontCondensed"
-                          onClick={() => navigate('/Authenticate', { state: { authState: 'SignUp' } })}
+                          onClick={goToSignUp}
                         >
                           Create your free pass
                         </Button>
@@ -234,10 +180,7 @@ const Hero = () => {
                           variant="secondary"
                           size="lg"
                           className="px-4 rounded-5 fontCondensed"
-                          onClick={() => {
-                            const el = document.getElementById('howitworks');
-                            if (el) el.scrollIntoView({ behavior: 'smooth' });
-                          }}
+                          onClick={scrollToHowItWorks}
                         >
                           See how it works
                         </Button>
@@ -255,13 +198,13 @@ const Hero = () => {
               </Row>
 
               {/* Mobile */}
-              <Row className="d-md-none justify-content-center align-items-center text-center" style={{ minHeight: '80vh' }}>
+              <Row className="d-md-none justify-content-center align-items-center text-center row">
                 <Col>
-                  <h1 className="fw-bold text-uppercase mb-4 fontNormal" style={{fontSize: '3em' }}>
+                  <h1 className="fw-bold text-uppercase mb-4 fontNormal mobile-h1-size">
                     Your digital business card, <br /> reimagined
                   </h1>
-                  <Container style={{ maxWidth: '600px' }}>
-                    <p className="lead mb-4 fontCondensed" style={{fontSize: '1.5rem' }}>
+                  <Container className='mobile-container-width'>
+                    <p className="lead mb-4 fontCondensed mobile-p-size">
                       Share info instantly with a tap, no paper, no hassle.
                     </p>
                     <div className="d-grid gap-3 mb-4">
@@ -269,28 +212,25 @@ const Hero = () => {
                         variant="primary"
                         size="lg"
                         className="rounded-5 w-100 fontNormal"
-                        onClick={() => navigate('/Authenticate', { state: { authState: 'SignUp' } })}
+                        onClick={goToSignUp}
                       >
                         Create your free pass
                       </Button>
-                      <p className="fw-bold mb-0 fontCondensed" style={{fontSize: '1rem' }}>No credit card needed.</p>
+                      <p className="fw-bold mb-0 fontCondensed mobile-p-size">No credit card needed.</p>
 
                       <Button
                         variant="secondary"
                         size="lg"
                         className="rounded-5 w-100 fontNormal"
-                        onClick={() => {
-                          const el = document.getElementById('howitworks');
-                          if (el) el.scrollIntoView({ behavior: 'smooth' });
-                        }}
+                        onClick={scrollToHowItWorks}
                       >
                         See how it works
                       </Button>
-                      <p className="pt-2 fw-bold mb-0 fontCondensed" style={{fontSize: '1rem' }}>No wasted time.</p>
+                      <p className="pt-2 fw-bold mb-0 fontCondensed mobile-p-size">No wasted time.</p>
                     </div>
                     <div className="mt-5">
-                      <h4 style={{ fontFamily: 'Sailor Italic' }}>Trusted by 5,000+ professionals</h4>
-                      <h5 style={{ fontFamily: 'Sailor' }}>3,124 cards created this week</h5>
+                      <h4 className='fontCondensed'>Trusted by 5,000+ professionals</h4>
+                      <h5 className='fontCondensed'>3,124 cards created this week</h5>
                     </div>
                   </Container>
                 </Col>
