@@ -33,38 +33,49 @@ const Dashboard = () => {
   const [selectedCv, setSelectedCv] = useState(null);
   const [showModal, setShowModal] = useState(false);
 
-  const handleClose = () => setShowModal(false);
-  const handleOpen = () => setShowModal(true);
+  const handleClose = useCallback(() => setShowModal(false), [setShowModal]);
+
+  
 
   // useStates for CreateCVModal
   const [showCreateModal, setShowCreateModal] = useState(false);
+
   
   const siteURL = `www.pelagopass.com`;
   const firstName = userData?.name?.split(' ')[0] || 'User';
 
-  const backendUrl = import.meta.env.VITE_BACKEND_URL;
-
-  const handleAddNewCv = (newCv) => {
-    setCvData((prev) => ({
+  const handleAddNewCv = useCallback(async(newCv) => {
+    setCVData((prev) => ({
       ...prev,
       cvs: [...(prev.cvs || []), newCv],
     }));
     setShowCreateModal(false);
-  };
+  }, [setCVData, setShowCreateModal]);
 
   useEffect(() => {
     getUserData();
-  }, []);
+  }, [getUserData]);
 
   useEffect(() => {
     if (userData?.username) {
       getCVData(userData.username);
     }
-  }, [userData]);
+  }, [userData, getCVData]);
 
 
+  const handleCloseCreateModal = useCallback (() => setShowCreateModal(false), [setShowCreateModal]);
+  const handleOpenCreateModal = useCallback(() => setShowCreateModal(true), [setShowCreateModal]);
 
   const handleEditCv = useCallback((cv) => {setSelectedCv(cv);setShowModal(true);}, []);
+  const handleVerifyEmail = useCallback(() => navigate('/verify-email'), [navigate]);
+  const handlePayment = useCallback(() => navigate('/verify-email'), [navigate]);
+
+  const handleEditCvById = useCallback((cvId) => {
+    const cv = cvData[0].cvs.find(c => c._id === cvId);
+    setSelectedCv(cv);
+    setShowModal(true);
+  }, [cvData]);
+
 
 
   return (
@@ -90,7 +101,7 @@ const Dashboard = () => {
           <Row className="g-2">
             {userData?.subscriptionType === "Paid" && (
               <Col xs={12} md="auto">
-                <Button variant="outline-light" className="w-100 fontCondensed" onClick={() => setShowCreateModal(true)}>
+                <Button variant="outline-light" className="w-100 fontCondensed" onClick={handleOpenCreateModal}>
                   Create New Card
                 </Button>
               </Col>
@@ -101,7 +112,7 @@ const Dashboard = () => {
                 <Button
                   variant="success"
                   className="w-100 fontCondensed rounded-5"
-                  onClick={() => navigate('/payment')}
+                  onClick={handlePayment}
                 >
                   Go premium
                 </Button>
@@ -112,7 +123,7 @@ const Dashboard = () => {
             <CVModal
               profileUrl={selectedCv ? `${siteURL}/cv/${userData?.username}/${selectedCv._id}` : ''}
               show={showModal}
-              handleClose={() => setShowModal(false)}  // <-- name it exactly as CVModal expects
+              handleClose={handleClose}  // <-- name it exactly as CVModal expects
               cvItem={selectedCv}
               setCVData={setCVData}
               userData={userData}
@@ -122,7 +133,7 @@ const Dashboard = () => {
             <Col xs={12} md="auto">
               <CreateCVModal
                 show={showCreateModal}
-                onHide={() => setShowCreateModal(false)}
+                onHide={handleCloseCreateModal}
                 onSave={handleAddNewCv}
               />
             </Col>
@@ -132,7 +143,7 @@ const Dashboard = () => {
                 <Button
                   variant="primary"
                   className="w-100 fontCondensed rounded-5"
-                  onClick={() => navigate('/verify-email')}
+                  onClick={handleVerifyEmail}
                 >
                   Verify Account
                 </Button>
@@ -168,7 +179,7 @@ const Dashboard = () => {
               <Button
                 size="sm"
                 variant="outline-dark"
-                onClick={() => handleEditCv(cv)}
+                onClick={() => handleEditCvById(cv._id)}
               >
                 Edit
               </Button>
@@ -217,7 +228,7 @@ const Dashboard = () => {
                 Upgrade to{' '}
                 <a
                   className="text-info fontCondensed"
-                  onClick={() => navigate('/payment')}
+                  onClick={handlePayment}
                 >
                   Premium
                 </a>

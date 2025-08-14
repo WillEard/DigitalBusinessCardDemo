@@ -3,7 +3,7 @@ import Container from 'react-bootstrap/esm/Container';
 
 // React
 import { useState, useEffect, useContext, useCallback } from 'react';
-import { Navigate, useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 // Google Authentication
 import { GoogleLogin } from '@react-oauth/google';

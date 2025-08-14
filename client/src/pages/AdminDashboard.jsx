@@ -103,9 +103,9 @@ const AdminDashboard = () => {
       setEditedRole('');
     } catch (err) {
       setAllUsers(prev); // revert
-      toast.error('Failed to update role');
+      toast.error(err.message, 'Failed to update role');
     }
-  }, [allUsers, backendUrl, editedRole]);
+  }, [allUsers, backendUrl, editedRole, setAllUsers, setEditingUserId, setEditedRole]);
 
   // Redirect if user is NOT an admin
   useEffect(() => {
@@ -118,12 +118,17 @@ const AdminDashboard = () => {
         getAllUsers();
       }
     }
-  }, [userData]);
+  }, [userData, getAllUsers, navigate]);
 
   // Get all users in database
   useEffect(() => {
     getUserData();
-  }, []);
+  }, [getUserData]);
+
+  const goToUsers = useCallback(() => {navigate('/admin-dash/#users');}, [navigate]);
+  const goToAuditLogs = useCallback(() => {navigate('/admin-dash/#audit');}, [navigate]);
+  
+  
 
   //If userLoading hasnt loaded yet
   if (isLoadingUsers) return <p>Loading...</p>;
@@ -142,10 +147,10 @@ const AdminDashboard = () => {
       
           <Row className="mb-4 g-2 mt-4">
             <Col xs={12} md="auto" className="d-flex gap-2">
-              <Button variant="outline-light" className="fontCondensed" onClick={() => navigate('/admin-dash/#users')}>
+              <Button variant="outline-light" className="fontCondensed" onClick={goToUsers}>
                 Users
               </Button>
-              <Button variant="outline-light" className="fontCondensed" onClick={() => navigate('/admin-dash/#audit')}>
+              <Button variant="outline-light" className="fontCondensed" onClick={goToAuditLogs}>
                 Audit Logs
               </Button>
             </Col>

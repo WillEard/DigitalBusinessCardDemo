@@ -3,8 +3,6 @@ import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import UserCV from '../components/UserCV';
 
-// React Bootstrap
-import Container from 'react-bootstrap/esm/Container';
 
 const CV = () => {
   return (
