@@ -55,9 +55,9 @@ const Settings = () => {
       setShowConfirm(true);
     } else {
       setError("Incorrect password. Please try again.");
-      void toast.error("Incorrect password. Please try again."); // Show error toast (void to avoid promise warning)
+      toast.error(error.message, "Incorrect password. Please try again."); // Show error toast (void to avoid promise warning)
     }
-  }, [password, verifyPassword]);
+  }, [password, verifyPassword, setError, error]);
 
   // If password matches, call handleDelete and delete the account
   const handleConfirmDelete = useCallback(async () => {
@@ -73,8 +73,9 @@ const Settings = () => {
       navigate('/');
     } else {
       setError("Failed to delete account. Please try again.");
+      toast.error(error.message, "Failed to delete account. Please try again.");
     }
-  }, [handleDelete, password, navigate, setUserData, setIsLoggedIn]);
+  }, [handleDelete, password, navigate, setUserData, setIsLoggedIn, setError, error]);
 
   // Toggle phone number visibility setting
   const handlePhoneNumber = useCallback(async (e) => {
