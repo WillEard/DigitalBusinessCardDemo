@@ -72,7 +72,7 @@ const CVModal = ({ show, handleClose, cvItem  }) => {
   }, [cvItem]);
 
   // Save changes to backend
-  const handleSave = async () => {
+  const handleSave = useCallback(async () => {
     if (!cvItem?._id) {
       toast.error('CV item is not defined');
       return;
@@ -93,7 +93,7 @@ const CVModal = ({ show, handleClose, cvItem  }) => {
     } catch (err) {
       toast.error(err.response?.data?.message || err.message);
     }
-  };
+  }, [backendUrl, cvItem, formData, userData, getCVData, handleClose]);
 
   return (
     <Modal
