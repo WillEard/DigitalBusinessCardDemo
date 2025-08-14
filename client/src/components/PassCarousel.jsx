@@ -2,7 +2,7 @@
 import { Carousel } from 'react-bootstrap';
 
 // React
-import { useRef } from 'react';
+import { useRef, useCallback } from 'react';
 
 // Styles
 import '../styles/PhoneCarousel.css'; // Import custom CSS for the carousel
@@ -16,13 +16,13 @@ const PhoneCarousel = () => {
     'https://placehold.co/496x1096/red/white?text=Pass+3',
   ];
 
-  const handlePrev = () => {
+  const handlePrev = useCallback(() => {
     carouselRef.current?.prev();
-  };
+  }, [] );
 
-  const handleNext = () => {
+  const handleNext = useCallback(() => {
     carouselRef.current?.next();
-  };
+  }, []);
 
   return (
     <div className="phone-carousel-wrapper">
