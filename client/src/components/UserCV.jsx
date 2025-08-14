@@ -1,9 +1,10 @@
 import { useParams } from 'react-router-dom';
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useState, useCallback } from 'react';
 import { AppContext } from '../context/AppContext';
 import { Container, Row, Col, Dropdown, Button } from 'react-bootstrap';
 
 import '../styles/Fonts.css';
+import '../styles/UserCV.css';
 
 const UserCV = () => {
   const { username, cvId } = useParams();
@@ -48,30 +49,31 @@ const UserCV = () => {
     };
   
     fetchData();
-  }, [username, cvId]);
+  }, [username, cvId, getCVData]);
+
+  const handleSelectCV = useCallback((cv) => {setSelectedCV(cv);},[] );
 
   
   if (loading) return <p>Loading...</p>;
   if (!selectedCV) return <p>No CV data found.</p> 
-
   
 
   return (
-    <Container className="d-flex flex-column justify-content-center align-items-center mt-5" style={{ minHeight: '80vh' }}>
+    <Container className="d-flex flex-column justify-content-center align-items-center mt-5 container" >
   {loading ? (
     <p>Loading...</p>
   ) : cvs.length === 0 ? (
-    <h2 className='text-center fontNormal'>No CV's were found</h2>
+    <h2 className='text-center fontNormal'>No CV&apos;s were found</h2>
   ) : (
     <>
       {cvs.length > 1 && (
-        <Dropdown className="mb-4" style={{ minWidth: '250px' }}>
+        <Dropdown className="mb-4 cv-width">
           <Dropdown.Toggle variant="primary" className="w-100 text-truncate fontCondensed rounded-5">
             {selectedCV?.title || 'Select a CV'}
           </Dropdown.Toggle>
-          <Dropdown.Menu className="w-100" style={{ maxHeight: '200px', overflowY: 'auto' }}>
+          <Dropdown.Menu className="w-100 dropdown-menu">
             {cvs.map(cv => (
-              <Dropdown.Item key={cv._id} onClick={() => setSelectedCV(cv)}>
+              <Dropdown.Item key={cv._id} onClick={() => handleSelectCV(cv)}>
                 {cv.title || `CV ${cv._id}`}
               </Dropdown.Item>
             ))}
