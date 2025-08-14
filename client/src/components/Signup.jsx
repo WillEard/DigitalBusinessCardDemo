@@ -2,7 +2,7 @@
 import { Button, Form, FloatingLabel, Container } from 'react-bootstrap';
 
 // React
-import { useContext, useState } from 'react';
+import { useContext, useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 // Toast for user messages
@@ -16,6 +16,7 @@ import axios from 'axios';
 
 // Styles
 import '../styles/Fonts.css'; // Import custom font styles
+import '../styles/Signup.css'; // Import custom styles for Signup component
 
 // Password Strength
 import zxcvbn from 'zxcvbn';
@@ -26,7 +27,7 @@ import PasswordStrengthBar from 'react-password-strength-bar';
 const SignupForm = () => {
   const navigate = useNavigate();
 
-  const { backendUrl, setIsLoggedIn, getUserData, setAuthState } =useContext(AppContext);
+  const { backendUrl, setIsLoggedIn, getUserData } =useContext(AppContext);
 
   const [name, setName] = useState('');
   const [username, setUsername] = useState('');
@@ -38,75 +39,85 @@ const SignupForm = () => {
 
   const [confirmTouched, setConfirmTouched] = useState(false);
 
-  const onSubmitHandler = async (e) => {
-    try {
+  const passwordsMatch = password === confirmPassword && password.length > 0;
+  const isStrongEnough = passwordScore >= 3;
+  const canSubmit = isStrongEnough && passwordsMatch;
+
+  const onSubmitHandler = useCallback(
+    async (e) => {
       e.preventDefault();
-
-      axios.defaults.withCredentials = true;
-
-      const { data } = await axios.post(backendUrl + '/api/auth/register', {
-        name,
-        username,
-        email,
-        password,
-        phoneNumber
-      });
-
-      if (data.success) {
-        setIsLoggedIn(true);
-        getUserData();
-        navigate('/');
-      } else {
-        toast.error(data.message, {
-          position: "top-right",
+  
+      try {
+        axios.defaults.withCredentials = true;
+  
+        const { data } = await axios.post(`${backendUrl}/api/auth/register`, {
+          name,
+          username,
+          email,
+          password,
+          phoneNumber,
+        });
+  
+        if (data.success) {
+          setIsLoggedIn(true);
+          getUserData();
+          navigate('/');
+        } else {
+          toast.error(data.message, {
+            position: 'top-right',
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: false,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: 'colored',
+          });
+        }
+      } catch (error) {
+        console.error(error);
+        toast.error(error.message, {
+          position: 'top-right',
           autoClose: 5000,
           hideProgressBar: false,
           closeOnClick: false,
           pauseOnHover: true,
           draggable: true,
           progress: undefined,
-          theme: "colored"
-          });
-      }
-    } catch (error) {
-      console.error(error);
-      toast.error(error.message, {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: false,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "colored"
+          theme: 'colored',
         });
-      
-    }
-  };
+      }
+    },
+    [backendUrl, email, name, navigate, password, phoneNumber, setIsLoggedIn, getUserData, username]
+  );
+
+  const goToLogin = useCallback(() => {navigate('/Authenticate', { state: { authState: 'login' } });}, [navigate]);
+  const handleNameChange = useCallback((e) => setName(e.target.value), []);
+  const handleUsernameChange = useCallback((e) => setUsername(e.target.value), []);
+  const handleEmailChange = useCallback((e) => setEmail(e.target.value), []);
+  const handlePhoneNumberChange = useCallback((e) => setPhoneNumber(e.target.value), []);
+
+  const handleConfirmPasswordChange = useCallback((e) => setConfirmPassword(e.target.value),[]);
+  const handleConfirmBlur = useCallback(() => setConfirmTouched(true),[]);
 
   // Handlers
-  const handlePasswordChange = (e) => {
+  const handlePasswordChange = useCallback((e) => {
     const value = e.target.value;
     setPassword(value);
     setPasswordScore(zxcvbn(value).score);
-    // ✅ Do NOT touch confirmTouched here
-  };
-
-  const passwordsMatch = password === confirmPassword && password.length > 0;
-  const isStrongEnough = passwordScore >= 3;
-  const canSubmit = isStrongEnough && passwordsMatch;
-
+  }, []);
+  
   return (
     //Sign Up Form
     <Container className="mx-auto col-lg-5 mt-2 mt-lg-1 pt-2 pt-lg-5 pb-3">
       <div className="mt-2 pt-2 text-center">
         <h1 className="display-4 fw-bold fontNormal mb-4">Sign Up</h1>
         <div className="d-flex justify-content-center">
-          <Form onSubmit={onSubmitHandler} className="w-100" style={{ maxWidth: '400px' }}>
+          <Form onSubmit={onSubmitHandler} className="w-100 formWidth">
             <Form.Group className="mb-3" controlId="formName">
               <FloatingLabel controlId="formName" label="Name" className="text-dark">
                 <Form.Control
-                  onChange={(e) => setName(e.target.value)}
+                  onChange={handleNameChange}
                   value={name}
                   type="text"
                   placeholder="Enter name"
@@ -118,7 +129,7 @@ const SignupForm = () => {
             <Form.Group className="mb-3" controlId="formUsername">
               <FloatingLabel controlId="formUsername" label="Username" className="text-dark">
                 <Form.Control
-                  onChange={(e) => setUsername(e.target.value)}
+                  onChange={handleUsernameChange}
                   value={username}
                   type="text"
                   placeholder="Enter username"
@@ -130,7 +141,7 @@ const SignupForm = () => {
             <Form.Group className="mb-3" controlId="formEmail">
               <FloatingLabel controlId="formEmail" label="Email address" className="text-dark">
                 <Form.Control
-                  onChange={(e) => setEmail(e.target.value)}
+                  onChange={handleEmailChange}
                   value={email}
                   type="email"
                   placeholder="Enter email"
@@ -142,7 +153,7 @@ const SignupForm = () => {
             <Form.Group className="mb-3" controlId="formPhoneNumber">
               <FloatingLabel controlId="formPhoneNumber" label="Phone Number" className="text-dark">
                 <Form.Control
-                  onChange={(e) => setPhoneNumber(e.target.value)}
+                  onChange={handlePhoneNumberChange}
                   value={phoneNumber}
                   type="tel"
                   placeholder="Enter phone number"
@@ -170,8 +181,8 @@ const SignupForm = () => {
                   type="password"
                   placeholder="Confirm password"
                   value={confirmPassword}
-                  onChange={(e) => setConfirmPassword(e.target.value)}
-                  onBlur={() => setConfirmTouched(true)}
+                  onChange={handleConfirmPasswordChange}
+                  onBlur={handleConfirmBlur}
                   isInvalid={confirmTouched && confirmPassword.length > 0 && password !== confirmPassword}
                 />
                 <Form.Control.Feedback type="invalid" tooltip>
@@ -185,11 +196,9 @@ const SignupForm = () => {
             </Button>
 
             <Form.Text className="text-secondary d-block text-center mt-3">
-            <a className="text-light text-decoration-none fontCondensed" onClick={() =>
-                        navigate('/Authenticate', { state: { authState: 'login' } })
-                      } role="button" >
+            <Button className="text-light btn-secondary fontCondensed" onClick={goToLogin} role="button" >
                 Have an account? Login <span className='fontCondensed text-decoration-underline'>here</span>
-              </a>
+              </Button>
             </Form.Text>
           </Form>
         </div>
