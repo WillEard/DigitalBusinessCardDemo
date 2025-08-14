@@ -140,7 +140,7 @@ const Dashboard = () => {
             )}
           </Row>
 
-          <Row className="gy-2 align-items-start justify-content-center">
+          <Row className="mt-2 gy-2 align-items-start justify-content-center">
             <Col md={8}>
               <h4 className="mb-2 fontNormal">Active Cards</h4>
               <Row className="g-4">

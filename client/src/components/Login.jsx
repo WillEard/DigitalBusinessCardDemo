@@ -31,6 +31,8 @@ const LoginForm = () => {
   // Validation state
   const [emailTouched, setEmailTouched] = useState(false);
   const [passwordTouched, setPasswordTouched] = useState(false);
+  const [formSubmitted, setFormSubmitted] = useState(false);
+
 
   // Validation checks
   const emailIsValid = /^\S+@\S+\.\S+$/.test(email);
@@ -52,6 +54,7 @@ const LoginForm = () => {
   
       setEmailTouched(true);
       setPasswordTouched(true);
+      setFormSubmitted(true);
   
       if (!formIsValid) return;
   
@@ -111,49 +114,44 @@ const LoginForm = () => {
             className="w-100 formWidth"
             noValidate
           >
-            <Form.Group className="mb-3" controlId="formEmail">
-              <FloatingLabel controlId="formEmail" label="Email address" className="text-dark">
-                <Form.Control
-                  type="email"
-                  placeholder="Enter email"
-                  value={email}
-                  onChange={handleEmailChange}
-                  onBlur={handleEmailBlur}
-                  isInvalid={emailTouched && !emailIsValid}
-                  isValid={emailTouched && emailIsValid}
-                  required
-                />
+            <FloatingLabel controlId="formEmail" label="Email address" className="text-dark mb-4">
+              <Form.Control
+                type="email"
+                placeholder="Enter email"
+                value={email}
+                onChange={handleEmailChange}
+                onBlur={handleEmailBlur}
+                isInvalid={(emailTouched || formSubmitted) && !emailIsValid}
+                required
+              />
+              {(emailTouched || formSubmitted) && !emailIsValid && (
                 <Form.Control.Feedback type="invalid">
                   Please enter a valid email.
                 </Form.Control.Feedback>
-              </FloatingLabel>
-            </Form.Group>
+              )}
+            </FloatingLabel>
 
-            <Form.Group className="mb-3" controlId="formPassword">
-              <FloatingLabel controlId="formPassword" label="Password" className="text-dark">
-                <Form.Control
-                  type="password"
-                  placeholder="Password"
-                  value={password}
-                  onChange={handlePasswordChange}
-                  onBlur={handlePasswordBlur}
-                  isInvalid={passwordTouched && !passwordIsValid}
-                  isValid={passwordTouched && passwordIsValid}
-                  required
-                />
+            <FloatingLabel controlId="formPassword" label="Password" className="text-dark mb-4">
+              <Form.Control
+                type="password"
+                placeholder="Password"
+                value={password}
+                onChange={handlePasswordChange}
+                onBlur={handlePasswordBlur}
+                isInvalid={(passwordTouched || formSubmitted) && !passwordIsValid}
+                required
+              />
+              {(passwordTouched || formSubmitted) && !passwordIsValid && (
                 <Form.Control.Feedback type="invalid">
                   Password must be at least {passwordlengthRequirement} characters.
                 </Form.Control.Feedback>
-              </FloatingLabel>
-              <Form.Text className="text-light d-block text-start mt-5 text-center fontCondensed">
-                We&lsquo;ll never share your password with anyone else.
-              </Form.Text>
-            </Form.Group>
+              )}
+            </FloatingLabel>
 
             <Button
               type="submit"
               variant="primary"
-              className="rounded-3 btn-lg mt-3 fontCondensed"
+              className="rounded-3 btn-lg mt-3 fontCondensed rounded-5"
               disabled={!formIsValid} // disable if form is invalid
             >
               Login
