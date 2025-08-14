@@ -1,9 +1,3 @@
-// React
-import { useContext, useEffect } from 'react';
-
-// App Context
-import { AppContext } from '../context/AppContext';
-
 // React Bootstrap
 import { Container, Row, Col, Card, Button } from 'react-bootstrap';
 
