@@ -2,7 +2,7 @@
 import { Button, Form, FloatingLabel, Container } from 'react-bootstrap';
 
 // React
-import { useContext, useState } from 'react';
+import { useContext, useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 // App Context
@@ -12,16 +12,19 @@ import { AppContext } from '../context/AppContext';
 import axios from 'axios';
 
 // Toast for user messages
-import { Bounce, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 
 // Styles
 import '../styles/Fonts.css'; // Import custom font styles
+import '../styles/Login.css'; // Import custom styles for login
 
 const LoginForm = () => {
-  const navigate = useNavigate();
 
-  const { backendUrl, setIsLoggedIn, getUserData, setAuthState } = useContext(AppContext);
+  const navigate = useNavigate(); // Navigate to other routes
 
+  const { backendUrl, setIsLoggedIn, getUserData } = useContext(AppContext); // Access context values
+
+  // State for form fields
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -31,27 +34,32 @@ const LoginForm = () => {
 
   // Validation checks
   const emailIsValid = /^\S+@\S+\.\S+$/.test(email);
-  const passwordlengthRequirement = 8
+  const passwordlengthRequirement = 8 // Change here for password length requirement
   const passwordIsValid = password.length >= passwordlengthRequirement;  // example rule: min 6 chars
 
-   // Overall form validity
-  const formIsValid = emailIsValid && passwordIsValid;
+  const formIsValid = emailIsValid && passwordIsValid; // Overall form validity
 
-  const onSubmitHandler = async (e) => {
+  // Handlers for input changes and validation
+  const handleEmailChange = useCallback((e) => {setEmail(e.target.value);}, []);
+  const handleEmailBlur = useCallback(() => {setEmailTouched(true);}, []);
+  const handlePasswordChange = useCallback((e) => {setPassword(e.target.value);}, []);
+  const handlePasswordBlur = useCallback(() => {setPasswordTouched(true);}, []);
+  const handleSignUpNavigate = useCallback(() => {navigate('/Authenticate', { state: { authState: 'SignUp' } });}, [navigate]);
+
+  const onSubmitHandler = useCallback(async (e) => {
     try {
       e.preventDefault();
-
-       // Mark fields as touched on submit to show errors if any
+  
       setEmailTouched(true);
       setPasswordTouched(true);
-      
-      if (!formIsValid) return;  // Prevent submit if invalid
-
+  
+      if (!formIsValid) return;
+  
       const { data } = await axios.post(backendUrl + '/api/auth/login', {
         email,
         password,
       });
-
+  
       if (data.success) {
         setIsLoggedIn(true);
         getUserData();
@@ -64,33 +72,34 @@ const LoginForm = () => {
           pauseOnHover: true,
           draggable: true,
           progress: undefined,
-          theme: "colored",
+          theme: 'colored',
         });
       } else {
         toast.error(data.message, {
-          position: "top-right",
+          position: 'top-right',
           autoClose: 5000,
           hideProgressBar: false,
           closeOnClick: false,
           pauseOnHover: true,
           draggable: true,
           progress: undefined,
-          theme: "colored"
-          });
+          theme: 'colored',
+        });
       }
     } catch (error) {
       toast.error(error.message, {
-        position: "top-right",
+        position: 'top-right',
         autoClose: 5000,
         hideProgressBar: false,
         closeOnClick: false,
         pauseOnHover: true,
         draggable: true,
         progress: undefined,
-        theme: "colored"
-        });
+        theme: 'colored',
+      });
     }
-  };
+  }, [backendUrl, email, password, formIsValid, setIsLoggedIn, getUserData, navigate]);
+    
 
   return (
     <Container className="mx-auto col-lg-5 mt-2 mt-lg-1 pt-2 pt-lg-3 pb-3">
@@ -99,8 +108,7 @@ const LoginForm = () => {
         <div className="d-flex justify-content-center">
           <Form
             onSubmit={onSubmitHandler}
-            className="w-100"
-            style={{ maxWidth: '400px' }}
+            className="w-100 formWidth"
             noValidate
           >
             <Form.Group className="mb-3" controlId="formEmail">
@@ -109,8 +117,8 @@ const LoginForm = () => {
                   type="email"
                   placeholder="Enter email"
                   value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  onBlur={() => setEmailTouched(true)}
+                  onChange={handleEmailChange}
+                  onBlur={handleEmailBlur}
                   isInvalid={emailTouched && !emailIsValid}
                   isValid={emailTouched && emailIsValid}
                   required
@@ -127,8 +135,8 @@ const LoginForm = () => {
                   type="password"
                   placeholder="Password"
                   value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  onBlur={() => setPasswordTouched(true)}
+                  onChange={handlePasswordChange}
+                  onBlur={handlePasswordBlur}
                   isInvalid={passwordTouched && !passwordIsValid}
                   isValid={passwordTouched && passwordIsValid}
                   required
@@ -138,7 +146,7 @@ const LoginForm = () => {
                 </Form.Control.Feedback>
               </FloatingLabel>
               <Form.Text className="text-light d-block text-start mt-5 text-center fontCondensed">
-                We'll never share your password with anyone else.
+                We&lsquo;ll never share your password with anyone else.
               </Form.Text>
             </Form.Group>
 
@@ -152,13 +160,13 @@ const LoginForm = () => {
             </Button>
 
             <Form.Text className="d-block text-center mt-3">
-              <a
-                className="text-light text-decoration-none fontCondensed"
-                onClick={() => navigate('/Authenticate', { state: { authState: 'SignUp' } })}
+              <Button
+                className="text-light text-decoration-none fontCondensed btn-sm btn-secondary"
+                onClick={handleSignUpNavigate}
                 role="button"
               >
-                New? Create an account <span className="fontCondensed text-decoration-underline">here</span>
-              </a>
+                New? Create an account here
+              </Button>
             </Form.Text>
           </Form>
         </div>
