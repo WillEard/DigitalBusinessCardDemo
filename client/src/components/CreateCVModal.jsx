@@ -1,4 +1,4 @@
-import { useState, useContext } from 'react';
+import { useState, useContext, useCallback, useRef, useEffect } from 'react';
 import { Modal, Button, Form } from 'react-bootstrap';
 import { toast } from 'react-toastify';
 import axios from 'axios';
@@ -9,6 +9,8 @@ import '../styles/Fonts.css';
 
 export default function CreateCVModal({ show, onHide, onSave }) {
   const { backendUrl, userData } = useContext(AppContext);
+
+  const firstInputRef = useRef(null);
 
   const [formData, setFormData] = useState({
     title: '',
@@ -26,7 +28,7 @@ export default function CreateCVModal({ show, onHide, onSave }) {
     setFormData((prev) => ({ ...prev, [field]: e.target.value }));
   };
 
-  const resetForm = () => {
+  const resetForm = useCallback(() => {
     setFormData({
       title: '',
       education: '',
@@ -38,14 +40,14 @@ export default function CreateCVModal({ show, onHide, onSave }) {
       hobbies: '',
       achievements: '',
     });
-  };
+  }, [setFormData] );
 
-  const handleClose = () => {
+  const handleClose = useCallback(() => {
     resetForm();
     onHide();
-  };
+  }, [resetForm, onHide] );
 
-  const handleCreate = async () => {
+  const handleCreate = useCallback(async () => {
     try {
       await axios.post(`${backendUrl}/api/cv/${userData.username}/newCv`, formData);
       toast.success('New CV created successfully');
@@ -55,7 +57,7 @@ export default function CreateCVModal({ show, onHide, onSave }) {
     } catch (error) {
       toast.error(error.response?.data?.message || error.message);
     }
-  };
+  }, [backendUrl, userData, formData, handleClose, onSave, resetForm] );
 
   const fields = [
     { key: 'title', label: 'Pass Title', placeholder: 'Enter CV title' },
@@ -68,6 +70,12 @@ export default function CreateCVModal({ show, onHide, onSave }) {
     { key: 'achievements', label: 'Personal Achievements', placeholder: 'Enter Personal Achievements' },
     { key: 'hobbies', label: 'Hobbies', placeholder: 'Enter Hobbies' },
   ];
+
+  useEffect(() => {
+    if (firstInputRef.current) {
+      firstInputRef.current.focus();
+    }
+  }, []);
 
   return (
     <Modal show={show} onHide={handleClose}>
@@ -84,7 +92,7 @@ export default function CreateCVModal({ show, onHide, onSave }) {
                 placeholder={field.placeholder}
                 value={formData[field.key]}
                 onChange={handleChange(field.key)}
-                autoFocus={index === 0} // only first field
+                ref={index === 0 ? firstInputRef : null}
               />
             </Form.Group>
           ))}
