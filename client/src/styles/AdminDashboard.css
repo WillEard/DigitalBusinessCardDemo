@@ -1,0 +1,32 @@
+.hero-wrapper {
+    position: relative;
+    margin-top: -80px; /* adjust if navbar height changes */
+    height: 100vh;
+    width: 100%;
+    background: url('/hero-bg.png') no-repeat center center;
+    background-size: cover;
+    background-attachment: scroll; /* or fixed for parallax */
+    color: white;
+    overflow: hidden;
+  }
+  
+  .hero-wrapper::after {
+    content: '';
+    position: absolute;
+    bottom: -1px; /* Slight overlap to blend */
+    left: 0;
+    width: 120%;
+    height: 150px;
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, white 100%);
+    z-index: 3;
+    pointer-events: none;
+  }
+  
+  .hero-overlay {
+    background-color: rgba(0, 0, 0, 0.5); /* Optional: darken the image for readability */
+    height: 100%;
+    width: 100%;
+    padding-top: 80px; /* adjust if navbar height changes */
+    position: relative;
+    z-index: 3; /* ensure it's above the gradient */
+  }

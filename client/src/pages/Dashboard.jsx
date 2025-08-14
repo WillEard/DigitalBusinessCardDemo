@@ -87,7 +87,7 @@ const Dashboard = () => {
           <p className="mb-3 text-light fontCondensed" >70% complete</p>
           <ProgressBar now={70} className="mb-4" variant="info" />
 
-          <Row className="mb-4 g-2">
+          <Row className="g-2">
             {userData?.subscriptionType === "Paid" && (
               <Col xs={12} md="auto">
                 <Button variant="outline-light" className="w-100 fontCondensed" onClick={() => setShowCreateModal(true)}>
@@ -100,7 +100,7 @@ const Dashboard = () => {
               <Col xs={12} md="auto">
                 <Button
                   variant="success"
-                  className="w-100 fontCondensed"
+                  className="w-100 fontCondensed rounded-5"
                   onClick={() => navigate('/payment')}
                 >
                   Go premium
@@ -131,7 +131,7 @@ const Dashboard = () => {
               <Col xs={12} md="auto">
                 <Button
                   variant="primary"
-                  className="w-100 fontCondensed"
+                  className="w-100 fontCondensed rounded-5"
                   onClick={() => navigate('/verify-email')}
                 >
                   Verify Account
@@ -140,7 +140,7 @@ const Dashboard = () => {
             )}
           </Row>
 
-          <Row className="gy-4 align-items-start justify-content-center">
+          <Row className="gy-2 align-items-start justify-content-center">
             <Col md={8}>
               <h4 className="mb-2 fontNormal">Active Cards</h4>
               <Row className="g-4">

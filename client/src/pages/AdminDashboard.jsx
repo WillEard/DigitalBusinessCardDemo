@@ -16,9 +16,10 @@ import axios from 'axios';
 
 // Navbar
 import Navbar from '../components/Navbar';
+import Footer from '../components/Footer';
 
 // Styles
-import '../styles/Dashboard.css'; // Import custom CSS for Navbar
+import '../styles/AdminDashboard.css'; // Import custom CSS for Navbar
 import '../styles/Fonts.css'; // Import custom font styles
 
 const AdminDashboard = () => {
@@ -255,6 +256,7 @@ const AdminDashboard = () => {
           </Row>
         </Container>
       </div>
+      <Footer />
 </div>
 
   );

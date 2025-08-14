@@ -8,6 +8,10 @@
   background-attachment: scroll; /* or fixed for parallax */
   color: white;
   overflow: hidden;
+  display: flex;                /* enable flexbox */
+  align-items: center;          /* vertical centering */
+  justify-content: center;      /* horizontal centering */
+  text-align: center;           /* center text inside */
 }
 
 .hero-wrapper::after {
@@ -23,17 +27,24 @@
 }
 
 .hero-overlay {
-  background-color: rgba(0, 0, 0, 0.5); /* Optional: darken the image for readability */
+  background-color: rgba(0, 0, 0, 0.5); /* darken the image for readability */
   height: 100%;
   width: 100%;
-  padding-top: 80px; /* adjust if navbar height changes */
+  display: flex;            /* enable flex for centering content inside */
+  align-items: center;      /* vertical centering */
+  justify-content: center;  /* horizontal centering */
+  padding-top: 0;           /* remove previous top padding */
   position: relative;
-  z-index: 3; /* ensure it's above the gradient */
+  z-index: 3;               /* ensure it's above the gradient */
+  flex-direction: column;   /* stack children vertically */
 }
 
-.row {
-  min-height: 80vh !important; 
+.hero-container {
+  max-width: 800px;          /* limit content width */
+  padding: 0 1rem;           /* horizontal padding */
 }
+
+
 
 .mobile-h1-size {
   font-size: 3em; /* Adjust as needed for mobile */
