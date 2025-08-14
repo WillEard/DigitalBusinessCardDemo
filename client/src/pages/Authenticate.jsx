@@ -2,11 +2,11 @@
 import Container from 'react-bootstrap/esm/Container';
 
 // React
-import { useState, useEffect, useContext } from 'react';
+import { useState, useEffect, useContext, useCallback } from 'react';
 import { Navigate, useNavigate, useLocation } from 'react-router-dom';
 
 // Google Authentication
-import { GoogleLogin, googleLogout } from '@react-oauth/google';
+import { GoogleLogin } from '@react-oauth/google';
 
 // Components
 import Navbar from '../components/Navbar';
@@ -21,43 +21,39 @@ import { AppContext } from '../context/AppContext';
 import axios from 'axios';
 
 // Styles
-import '../styles/Authenticate.css'; // CSS file for background and styling
+import '../styles/Authenticate.css';
 
-const backendUrl = import.meta.env.VITE_BACKEND_URL; // Adjust based on your environment
+const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
 const Login = () => {
   const location = useLocation();
-  const { isLoggedIn } = useContext(AppContext);
+  const { isLoggedIn, setUserData, setIsLoggedIn } = useContext(AppContext);
   const navAuthState = location.state?.authState;
   const [authState, setAuthState] = useState(navAuthState || 'Login');
   const navigate = useNavigate();
-  const { setUserData, setIsLoggedIn } = useContext(AppContext);
 
   useEffect(() => {
-    if (navAuthState) {
-      setAuthState(navAuthState);
-    }
-  }, [navAuthState]);
+    if (navAuthState) setAuthState(navAuthState);
 
-  if (isLoggedIn) {
-    return <Navigate to="/" />;
-  }
-  
-  // Handle Google OAuth login success
-  const handleGoogleLoginSuccess = async (credentialResponse) => {
-    const { credential } = credentialResponse;
-  
+    if (isLoggedIn) {
+      navigate('/');
+    }
+  }, [navAuthState, isLoggedIn, navigate]);
+
+  // Google login success callback
+  const handleGoogleLoginSuccess = useCallback(async (credentialResponse) => {
+    if (!credentialResponse?.credential) return;
+
     try {
-      const res = await axios.post(`${backendUrl}/api/auth/google-login`, {
-        token: credential,
-      }, {
-        withCredentials: true, // ✅ Needed to receive the secure cookie
-      });
-  
+      const res = await axios.post(
+        `${backendUrl}/api/auth/google-login`,
+        { token: credentialResponse.credential },
+        { withCredentials: true }
+      );
+
       const data = res.data;
-  
+
       if (data.success) {
-        console.log('User logged in:', data.user);
         setUserData(data.user);
         setIsLoggedIn(true);
         navigate('/');
@@ -67,31 +63,39 @@ const Login = () => {
     } catch (err) {
       console.error('Error during login:', err.response?.data || err.message);
     }
-  };
-    
+  }, [navigate, setUserData, setIsLoggedIn]); // Removed backendUrl
+
+  // Google login error callback
+  const handleGoogleLoginError = useCallback(() => {
+    console.log('Login failed');
+  }, []);
+
+
 
   return (
     <div className="d-flex flex-column min-vh-100 login-wrapper text-white">
       <div className="login-overlay flex-grow-1">
         <Container fluid>
           <Navbar />
-            {authState === 'SignUp' ? <SignupForm /> : <LoginForm />}
+          {authState === 'SignUp' ? <SignupForm /> : <LoginForm />}
         </Container>
-        <div className='w-25 mx-auto'>
+
+        <div className="w-25 mx-auto">
           <hr />
         </div>
+
         <div className="d-flex flex-column align-items-center justify-content-center my-4">
           <div className="google-login-box bg-light rounded p-3 shadow-sm text-dark">
             <p className="mb-2 text-center fw-bold">Or continue with Google</p>
-            <GoogleLogin 
+            <GoogleLogin
               onSuccess={handleGoogleLoginSuccess}
-              onError={() => console.log("Login failed")}
-              width="100%" // Optional — adjust based on preference
-            /> 
+              onError={handleGoogleLoginError}
+              width="100%"
+            />
           </div>
         </div>
-    
       </div>
+
       <Footer />
     </div>
   );
