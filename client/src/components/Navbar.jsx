@@ -49,7 +49,7 @@ const Navigation = () => {
     }
   }, [navigate]);
 
-  // Handlers for navigation links
+  // callBack Handlers for navigation links
   const handleHomeClick = useCallback((e) => handleScrollOrNavigate(e, 'home'), [handleScrollOrNavigate]);
   const handleHowItWorksClick = useCallback((e) => handleScrollOrNavigate(e, 'howitworks'), [handleScrollOrNavigate]);
   const handleFeaturesClick = useCallback((e) => handleScrollOrNavigate(e, 'features'), [handleScrollOrNavigate]);
@@ -66,21 +66,16 @@ const Navigation = () => {
       fixed="top"
       collapseOnSelect
       expand="lg"
-      className={`floating-navbar rounded-bottom m-auto shadow-lg bg-body-tertiary ${
+      className={`floating-navbar rounded-bottom m-auto shadow-lg bg-body-tertiary design ${
         scrolled ? 'navbar-scrolled' : 'navbar-top'
       }`}
-      style={{
-        backdropFilter: 'blur(4px)',
-        transition: 'background-color 0.3s ease',
-      }}
     >
       <Container>
         <Navbar.Brand href="/" className="d-flex align-items-center logohover">
           <Image
             src={logo}
-            className='logohover'
+            className='logohover navbrand'
             alt="Pelago Logo"
-            style={{ width: 120, height: 40, marginRight: 10 }}
           />
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="navbarScroll" className='border border-light'/>
@@ -140,7 +135,7 @@ const Navigation = () => {
           <Nav>
             {userData ? (
               <>
-                <NavDropdown title={<span style={{ color: 'white' }} className='fontCondensed'>Account</span>} id="collapsible-nav-dropdown">
+                <NavDropdown title={<span className='text-white fontCondensed'>Account</span>} id="collapsible-nav-dropdown">
                   <NavDropdown.Item href="/dashboard" className='fontCondensed'>Dashboard</NavDropdown.Item>
                   <NavDropdown.Item href="/account" className='fontCondensed'>Account</NavDropdown.Item>
                   {!userData.isVerified ? (
@@ -162,7 +157,7 @@ const Navigation = () => {
               <>
                 <Nav.Link
                   onClick={handleSignUpClick}
-                  className="fw-bold text-dark rounded signup mx-1 fontCondensed" style={{ backgroundColor: '#b4d4ed' }}
+                  className="fw-bold text-dark rounded signup mx-1 fontCondensed sign-up"
                 >
                   Sign Up
                 </Nav.Link>

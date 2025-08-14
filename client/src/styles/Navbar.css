@@ -21,3 +21,20 @@
 .logohover:hover {
   color: black !important; /* Change to your desired hover color */
 }
+
+.design {
+  backdrop-filter: blur(5px);
+  transition: background-color 0.3s ease;
+}
+
+.navbrand {
+  width: 120px;
+  height: 40px; 
+  margin-right: 10px;
+}
+
+.sign-up {
+  background-color: #b4d4ed;
+  color: #000;
+  font-weight: bold;
+}
