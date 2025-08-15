@@ -11,6 +11,8 @@ import { CiWallet, CiMobile3 } from 'react-icons/ci';
 import '../styles/Fonts.css';
 import '../styles/Features.css'; 
 
+
+
 function Features() {
   return (
     <Container fluid id="features" className="features-section">

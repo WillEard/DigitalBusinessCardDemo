@@ -15,7 +15,7 @@ import '../styles/HowItWorks.css';
 function HowItWorks() {
   return (
     <Container id="howitworks" className="text-center howitworks-section">
-      <h1 className="mb-5 display-3 fw-bold fontNormal">How it works</h1>
+      <h1 className=" display-3 fw-bold fontNormal">How it works</h1>
 
       <Row className="justify-content-center">
         <Col md={6} className="step-col">
