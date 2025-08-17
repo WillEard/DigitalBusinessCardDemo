@@ -12,10 +12,10 @@ import ScrollStack, { ScrollStackItem } from '../assets/react-bits/ScrollStack';
 function HowItWorks() {
 
   const cards = [
-    "../../public/howitworks-img/1.png",
-    "../../public/howitworks-img/2.png",
-    "../../public/howitworks-img/3.png",
-    "../../public/howitworks-img/4.png",
+    ".howitworks-img/1.png",
+    "howitworks-img/2.png",
+    "howitworks-img/3.png",
+    "howitworks-img/4.png",
   ]
   return (
     <Container fluid id="howitworks" className="text-center howitworks-section">
