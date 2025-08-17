@@ -5,6 +5,7 @@
 
 .step-col {
     position: relative;
+    z-index: 1;
   }
   
   .step-icon {
@@ -17,11 +18,11 @@
     opacity: 0.1;
     pointer-events: none;
     user-select: none;
-    z-index: 0;
+    z-index: -1; /* <-- important */
   }
-  
-  .step-heading {
-    position: relative;
-    z-index: 1;
-    margin-bottom: 0.5rem;
-  }
+
+.step-heading {
+  position: relative;
+  z-index: 1;
+  margin-bottom: 0.5rem;
+}

@@ -19,6 +19,7 @@ import CreateCVModal from '../components/CreateCVModal';
 import '../styles/Dashboard.css';
 import '../styles/Fonts.css';
 
+
 const Dashboard = () => {
   const {
     userData,
@@ -68,7 +69,7 @@ const Dashboard = () => {
 
   const handleEditCv = useCallback((cv) => {setSelectedCv(cv);setShowModal(true);}, []);
   const handleVerifyEmail = useCallback(() => navigate('/verify-email'), [navigate]);
-  const handlePayment = useCallback(() => navigate('/verify-email'), [navigate]);
+  const handlePayment = useCallback(() => navigate('/payment'), [navigate]);
 
   const handleEditCvById = useCallback((cvId) => {
     const cv = cvData[0].cvs.find(c => c._id === cvId);

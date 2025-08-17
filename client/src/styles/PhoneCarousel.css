@@ -4,6 +4,8 @@
     align-items: center;
     justify-content: center;
     gap: 20px; /* spacing between phone and arrows */
+    overflow-x: auto;
+  
   }
   
   .carousel-nav {
@@ -29,7 +31,8 @@
   
   .phone-outline {
     width: 280px;
-    height: 580px;
+    height: 60vh; /* scales with viewport height */
+    max-height: 580px; /* optional max size */
     border: 16px solid #333;
     border-radius: 40px;
     background: #000;
