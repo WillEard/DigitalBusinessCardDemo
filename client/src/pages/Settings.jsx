@@ -19,6 +19,7 @@ import { AppContext } from '../context/AppContext';
 import '../styles/Settings.css';
 import '../styles/fonts.css'; 
 
+
 const Settings = () => {
   const navigate = useNavigate();
 
