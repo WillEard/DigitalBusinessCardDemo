@@ -1,6 +1,8 @@
 /* HowItWorks.css */
 .howitworks-section {
   margin-top: 8rem;
+  padding-left: 0;
+  padding-right: 0;
 }
 
 .step-col {
@@ -8,21 +10,22 @@
     z-index: 1;
   }
   
-  .step-icon {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 180px;
-    height: 180px;
-    transform: translate(-50%, -50%);
-    opacity: 0.1;
-    pointer-events: none;
-    user-select: none;
-    z-index: -1; /* <-- important */
-  }
+.step-icon {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 180px;
+  height: 180px;
+  transform: translate(-50%, -50%);
+  opacity: 0.1;
+  pointer-events: none;
+  user-select: none;
+  z-index: -1; /* <-- important */
+}
 
 .step-heading {
   position: relative;
   z-index: 1;
   margin-bottom: 0.5rem;
 }
+

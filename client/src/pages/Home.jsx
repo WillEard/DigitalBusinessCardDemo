@@ -52,9 +52,6 @@ const Home = () => {
 
         <PhoneCarouselContainer />
 
-        
-        
-
         <Features />
 
         <Testimonials />

@@ -15,24 +15,23 @@ import '../styles/PhoneCarousel.css';
 function HowItWorks() {
   return (
     <Container id="howitworks" className="text-center howitworks-section">
+      {/* Carousel + Button */}
+      <Row className="justify-content-center">
+        <Col md={12} className="step-col">
+          <h2 className="heading fontNormal mb-4">
+            See what your card could look like in seconds!
+          </h2>
 
-  {/* Carousel + Button */}
-  <Row className="justify-content-center">
-    <Col md={12} className="step-col">
-      <h2 className="step-heading fontNormal mb-4">
-        See what your card could look like in seconds!
-      </h2>
+          <div className="d-flex justify-content-center py-3">
+            <PhoneCarousel />
+          </div>
 
-      <div className="d-flex justify-content-center py-3">
-        <PhoneCarousel />
-      </div>
-
-      <Button className="btn-lg rounded-5 fontCondensed mt-1">
-        Start creating
-      </Button>
-    </Col>
-  </Row>
-</Container>
+          <Button className="btn-lg rounded-5 fontCondensed mt-1">
+            Start creating
+          </Button>
+        </Col>
+      </Row>
+    </Container>
   );
 }
 

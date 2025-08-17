@@ -1,87 +1,106 @@
 // React Bootstrap
 import { Container, Row, Col, Button } from 'react-bootstrap';
 
-// Icons
-import { RiNumber1, RiNumber2, RiNumber3 } from "react-icons/ri";
 
-// Carousel
-import PhoneCarousel from './PassCarousel';
 
 // Styles
 import '../styles/Fonts.css';
 import '../styles/HowItWorks.css'; 
 
-import Stepper, { Step } from '../assets/react-bits/Stepper'; // Stepper component
-
-
+import ScrollStack, { ScrollStackItem } from '../assets/react-bits/ScrollStack'; // ScrollStack component
 
 function HowItWorks() {
+
+  const cards = [
+    "../../public/howitworks-img/1.png",
+    "../../public/howitworks-img/2.png",
+    "../../public/howitworks-img/3.png",
+    "../../public/howitworks-img/4.png",
+  ]
   return (
-    <Container id="howitworks" className="text-center howitworks-section">
-  <h1 className="display-3 fw-bold fontNormal mb-5">How it works</h1>
+    <Container fluid id="howitworks" className="text-center howitworks-section">
+      <h1 className=" display-3 fw-bold fontNormal">How it works</h1>
 
-  {/* Stepper */}
-  <Container className="stepper-wrapper mx-auto mb-5">
-    <Stepper
-      initialStep={1}
-      onStepChange={(step) => console.log(step)}
-      onFinalStepCompleted={() => console.log("All steps completed!")}
-      backButtonText="Previous"
-      nextButtonText="Next"
-    >
-      <Step>
-        <img
-          className="img-fluid rounded mt-3"
-          style={{ height: "4em", objectFit: "cover", objectPosition: "center -0px" }}
-          src="/Pelago-Favicon.svg"
-          alt="Custom card preview"
-        />
-        <h2 className="fontNormal">Design Your Card</h2>
-        <p className="fontCondensed">Choose your layout, colour and contact info</p>
-      </Step>
-      <Step>
-        <img
-          className="img-fluid rounded mt-3"
-          style={{ height: "4em", objectFit: "cover", objectPosition: "center -0px" }}
-          src="/Pelago-Favicon.svg"
-          alt="Custom card preview"
-        />
-        <h2 className="fontNormal">Customise it</h2>
-        <p className="fontCondensed">Add logos, branding and personalised content</p>
-      </Step>
-      <Step>
-        <img
-          className="img-fluid rounded mt-3"
-          style={{ height: "4em", objectFit: "cover", objectPosition: "center -0px" }}
-          src="/Pelago-Favicon.svg"
-          alt="Custom card preview"
-        />
-        <h2 className="fontNormal">Share anywhere</h2>
-        <p className="fontCondensed">
-          Share via QR code or add to your Apple/Android wallet
-        </p>
-      </Step>
-      <Step>
-        <img
-          className="img-fluid rounded mt-3"
-          style={{ height: "5em", objectFit: "cover", objectPosition: "center -0px" }}
-          src="/Pelago-Favicon.svg"
-          alt="Custom card preview"
-        />
-        <h2 className='fontNormal pb-3 pt-1'>Benefits?</h2>
-        <ul className='list-unstyled text-center'>
-          <li><p className='fontCondensed'>100% Environmentally friendly</p></li>
-          <li><p className='fontCondensed'>Share your skills instantly</p></li>
-          <li><p className='fontCondensed'>10% of subscriptions go to a charity of your choice</p></li>
-        </ul>
-        
-        
-      </Step>
-    </Stepper>
-  </Container>
+      <div className="" id="scroll-stack" style={{ position: 'relative', width: '100%', height: '40rem' }}>
+        <ScrollStack style={{ height: '100%', overflowY: 'auto', paddingBottom: '3rem' }}  itemScale={0.04} itemDistance={80} blurAmount={1} baseScale={0.6}>
+          <ScrollStackItem>
+            <h1 className="step-heading fontNormal text-light fs-2">Design Your Card</h1>
+            <p className="fontCondensed text-light fs-5">Choose your layout, colour and contact info</p>
+            <img 
+              className="img-fluid rounded w-75 mx-auto" // makes image 75% of container width
+              src={cards[0]}
+              alt="" 
+            />
+          </ScrollStackItem>
 
-  
-</Container>
+          <ScrollStackItem>
+            <h2 className="step-heading fontNormal text-light">Customise it</h2>
+            <p className="fontCondensed text-light">Add branding, logos and premium designs</p>
+            <img 
+              className="img-fluid rounded" 
+              src={cards[1]}
+              alt="" 
+            />
+          </ScrollStackItem>
+
+          <ScrollStackItem>
+            <h2 className="step-heading fontNormal text-light">Share Anywhere</h2>
+            <p className="fontCondensed text-light">Send via QR code or add to your apple/android wallet</p>
+            <img 
+              className="img-fluid rounded" 
+              src={cards[2]}
+              alt="" 
+            />
+          </ScrollStackItem>
+
+          <ScrollStackItem>
+            <h2 className="step-heading fontNormal text-light">Done!</h2>
+            <p className="fontCondensed text-light">Plus 10% of subscriptions go to a charity of your choice!</p>
+            <img 
+              className="img-fluid rounded" 
+              src={cards[3]}
+              alt="" 
+            />
+          </ScrollStackItem>
+        </ScrollStack>
+      </div>
+
+      {/** 
+      <Row className="justify-content-center">
+        <Col md={6} className="step-col">
+          <div className="step-icon mt-4" aria-hidden="true">
+            <RiNumber1 className="step-number" size={'96px'} />
+          </div>
+
+          <h2 className="step-heading fontNormal" >Design Your Card</h2>
+          <p className='fontCondensed'>Choose your layout, colour and contact info</p>
+        </Col>
+      </Row>
+
+      <Row className="justify-content-center mt-5">
+        <Col md={6} className="step-col">
+          <div className="step-icon mt-4" aria-hidden="true">
+            <RiNumber2 className="step-number" size={'96px'} />
+          </div>
+
+          <h2 className="step-heading fontNormal">Customise it</h2>
+          <p className='fontCondensed'>Add branding, logos and premium designs</p>
+        </Col>
+      </Row>
+
+      <Row className="justify-content-center mt-5">
+        <Col md={6} className="step-col">
+          <div className="step-icon mt-4" aria-hidden="true">
+            <RiNumber3 className="step-number" size={'96px'} />
+          </div>
+
+          <h2 className="step-heading fontNormal">share anywhere</h2>
+          <p className='fontCondensed'>Send via QR code or add to your apple/android wallet</p>
+        </Col>
+      </Row>
+      */}
+
+    </Container>
   );
 }
 
