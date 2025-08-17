@@ -31,7 +31,7 @@
   
   .phone-outline {
     width: 280px;
-    height: 60vh; /* scales with viewport height */
+    height: 80vh; /* scales with viewport height */
     max-height: 580px; /* optional max size */
     border: 16px solid #333;
     border-radius: 40px;
