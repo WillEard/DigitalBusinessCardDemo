@@ -2,7 +2,7 @@
     position: fixed; /* <--- key! */
     bottom: 0;
     left: 0;
-    width: 100%;
+    width: 25%;
     background-color: #252a57 !important;
     color: #ffffff;
     padding: 16px;
@@ -16,20 +16,20 @@
   }
   
   .cookie-button {
-    margin: 0 8px;
     padding: 8px 16px;
     border: none;
-    border-radius: 4px;
-    color: #ffffff;
+    border-radius: 9999px; /* pill shape */
+    color: #fff;
     cursor: pointer;
+    font-weight: 500;
   }
   
   .cookie-button.accept {
-    background-color: #28a745; /* green */
+    background-color: #28a745;
   }
   
   .cookie-button.reject {
-    background-color: #6c757d; /* gray */
+    background-color: #6c757d;
   }
 
   .cookie-box {
