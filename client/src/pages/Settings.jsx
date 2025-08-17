@@ -17,7 +17,7 @@ import { AppContext } from '../context/AppContext';
 
 // Styles
 import '../styles/Settings.css';
-import '../styles/fonts.css'; 
+import '../styles/Fonts.css'; 
 
 
 const Settings = () => {
