@@ -10,11 +10,12 @@ import '../styles/PhoneCarousel.css'; // Import custom CSS for the carousel
 const PhoneCarousel = () => {
     const carouselRef = useRef(null);
 
-    const images = [
-    'https://placehold.co/496x1096/cyan/black?text=Pass+1',
-    'https://placehold.co/496x1096/white/black?text=Pass+2',
-    'https://placehold.co/496x1096/red/white?text=Pass+3',
-  ];
+    const passes = [
+      "/carousel/1.png",
+      "/carousel/2.png",
+      "/carousel/3.png",
+      "/carousel/4.png",
+    ];
 
   const handlePrev = useCallback(() => {
     carouselRef.current?.prev();
@@ -39,7 +40,7 @@ const PhoneCarousel = () => {
             interval={3000}
             ref={carouselRef}
           >
-            {images.map((src, idx) => (
+            {passes.map((src, idx) => (
               <Carousel.Item key={idx}>
                 <img src={src} alt={`Slide ${idx + 1}`} className="carousel-img" />
               </Carousel.Item>

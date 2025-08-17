@@ -15,8 +15,9 @@ function HowItWorks() {
     "/howitworks-img/1.png",
     "/howitworks-img/2.png",
     "/howitworks-img/3.png",
-    "/howitworks-img/4.png",
+    "howitworks-img/4.png",
   ]
+  
   return (
     <Container fluid id="howitworks" className="text-center howitworks-section">
       <h1 className=" display-3 fw-bold fontNormal">How it works</h1>

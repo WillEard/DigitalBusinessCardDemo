@@ -13,6 +13,8 @@ import '../styles/PhoneCarousel.css';
 
 
 function HowItWorks() {
+  
+
   return (
     <Container id="howitworks" className="text-center howitworks-section">
       {/* Carousel + Button */}
