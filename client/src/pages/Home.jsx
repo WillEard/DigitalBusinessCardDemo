@@ -14,7 +14,7 @@ import Features from '../components/Features';
 import Testimonials from '../components/Testimonials';
 
 import PhoneCarouselContainer from '../components/PhoneCarouselContainer'; // Carousel component
-
+import { CardNavbar } from '../components/react-bits/CardNav';
 
 import NavBanner from '../components/NavBanner'; // Promotion banner component - not used if no promotion
 

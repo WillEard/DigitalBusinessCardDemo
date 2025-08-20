@@ -1,9 +1,11 @@
-import { useLayoutEffect, useRef, useCallback } from "react";
+import { useLayoutEffect, useRef, useCallback, useState } from "react";
 import Lenis from "lenis";
 import "../../styles/react-bits/ScrollStack.css";
 
 export const ScrollStackItem = ({ children, itemClassName = "", style = {}, ...props }) => (
-  <div className={`scroll-stack-card ${itemClassName}`.trim()} style={style}>{children}</div>
+  <div className={`scroll-stack-card ${itemClassName}`.trim()} style={style}>
+    {children}
+  </div>
 );
 
 const ScrollStack = ({
@@ -15,11 +17,13 @@ const ScrollStack = ({
   stackPosition = "15%",
   scaleEndPosition = "5%",
   baseScale = 0.85,
-  scaleDuration = 0.5,
   rotationAmount = 0,
   blurAmount = 0,
   onStackComplete,
+  style = {}
 }) => {
+  const [visible, setVisible] = useState(true); // 👈 controls mounting
+
   const scrollerRef = useRef(null);
   const cardsRef = useRef([]);
   const lastTransformsRef = useRef(new Map());
@@ -37,7 +41,6 @@ const ScrollStack = ({
       : parseFloat(value);
   }, []);
 
-  // Returns a 0-1 progress ratio between start and end scroll positions
   const calculateProgress = useCallback((scrollTop, start, end) => {
     if (scrollTop < start) return 0;
     if (scrollTop > end) return 1;
@@ -70,12 +73,11 @@ const ScrollStack = ({
       const pinStart = triggerStart;
       const pinEnd = endElementTop - containerHeight / 2;
 
-      // Scale and rotation
+      // Scale, rotation, blur, etc.
       const scaleProgress = calculateProgress(scrollTop, triggerStart, triggerEnd);
       const scale = 1 - scaleProgress * (1 - (baseScale + i * itemScale));
       const rotation = rotationAmount ? i * rotationAmount * scaleProgress : 0;
 
-      // Blur effect
       let blur = 0;
       if (blurAmount) {
         let topCardIndex = 0;
@@ -86,7 +88,6 @@ const ScrollStack = ({
         if (i < topCardIndex) blur = Math.max(0, (topCardIndex - i) * blurAmount);
       }
 
-      // Vertical translation
       const lastCard = cardsRef.current[cardsRef.current.length - 1];
       const lastCardBottom = lastCard.offsetTop + lastCard.offsetHeight;
       const scrollerBottom = scrollTop + containerHeight;
@@ -101,34 +102,34 @@ const ScrollStack = ({
       }
 
       const newTransform = {
-        translateY: Math.round(translateY * 100) / 100,
-        scale: Math.round(scale * 1000) / 1000,
-        rotation: Math.round(rotation * 100) / 100,
-        blur: Math.round(blur * 100) / 100,
+        translateY,
+        scale,
+        rotation,
+        blur,
       };
 
-      const lastTransform = lastTransformsRef.current.get(i);
-      const changed =
-        !lastTransform ||
-        Math.abs(lastTransform.translateY - newTransform.translateY) > 0.1 ||
-        Math.abs(lastTransform.scale - newTransform.scale) > 0.001 ||
-        Math.abs(lastTransform.rotation - newTransform.rotation) > 0.1 ||
-        Math.abs(lastTransform.blur - newTransform.blur) > 0.1;
+      card.style.transform = `translate3d(0, ${translateY}px, 0) scale(${scale}) rotate(${rotation}deg)`;
+      card.style.filter = blur > 0 ? `blur(${blur}px)` : "";
 
-      if (changed) {
-        card.style.transform = `translate3d(0, ${newTransform.translateY}px, 0) scale(${newTransform.scale}) rotate(${newTransform.rotation}deg)`;
-        card.style.filter = newTransform.blur > 0 ? `blur(${newTransform.blur}px)` : "";
-        lastTransformsRef.current.set(i, newTransform);
-      }
-
-      // Check for stack completion
+      // ✅ Trigger removal when last card lands
       if (i === cardsRef.current.length - 1) {
         const inView = scrollTop >= pinStart && scrollTop <= pinEnd;
         if (inView && !stackCompletedRef.current) {
           stackCompletedRef.current = true;
           onStackComplete?.();
-        } else if (!inView && stackCompletedRef.current) {
-          stackCompletedRef.current = false;
+      
+          // Fade out & remove
+          const fadeOutDelay = 2000; // ms
+          const fadeOutDuration = 500; // ms
+      
+          setTimeout(() => {
+            if (scrollerRef.current) {
+              scrollerRef.current.style.transition = `opacity ${fadeOutDuration}ms`;
+              scrollerRef.current.style.opacity = 0;
+      
+              setTimeout(() => setVisible(false), fadeOutDuration);
+            }
+          }, fadeOutDelay);
         }
       }
     });
@@ -163,14 +164,6 @@ const ScrollStack = ({
       smoothWheel: true,
       touchMultiplier: 2,
       infinite: false,
-      gestureOrientationHandler: true,
-      normalizeWheel: true,
-      wheelMultiplier: 1,
-      touchInertiaMultiplier: 35,
-      lerp: 0.1,
-      syncTouch: true,
-      syncTouchLerp: 0.075,
-      touchInertia: 0.6,
     });
 
     lenis.on("scroll", handleScroll);
@@ -194,13 +187,6 @@ const ScrollStack = ({
 
     cards.forEach((card, i) => {
       if (i < cards.length - 1) card.style.marginBottom = `${itemDistance}px`;
-      Object.assign(card.style, {
-        willChange: "transform, filter",
-        transformOrigin: "top center",
-        backfaceVisibility: "hidden",
-        transform: "translateZ(0)",
-        perspective: "1000px",
-      });
     });
 
     setupLenis();
@@ -228,11 +214,14 @@ const ScrollStack = ({
     updateCardTransforms,
   ]);
 
+  // 👇 remove element from DOM after 3s
+  if (!visible) return null;
+
   return (
-    <div className={`scroll-stack-scroller ${className}`.trim()} ref={scrollerRef}>
+    <div className={`scroll-stack-scroller ${className}`.trim()} ref={scrollerRef} style={style}>
       <div className="scroll-stack-inner">
         {children}
-        <div className="scroll-stack-end" style={{ height: `${spacerHeight}px` }} />
+        <div className="scroll-stack-end" style={{ height: `${spacerHeight}px` }}  />
       </div>
     </div>
   );
