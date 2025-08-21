@@ -1,5 +1,5 @@
 // React & Routing
-import { useContext, useEffect, useRef, useCallback, useMemo } from 'react';
+import { useContext, useEffect, useRef, useCallback, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 // AppContext
@@ -15,6 +15,9 @@ import QRCode from 'react-qr-code';
 // Icons
 import { FaArrowTurnDown } from 'react-icons/fa6';
 
+import BlurText from "../assets/react-bits/BlurText";
+
+
 // Styles
 import '../styles/Hero.css';
 import '../styles/Fonts.css';
@@ -27,6 +30,14 @@ const Hero = () => {
 
   const siteURL = 'www.pelagopass.com';
   const profileUrl = useMemo(() => `${siteURL}/cv/${userData?.username}`, [userData]);
+
+  const [title, setTitle] = useState("");
+
+  useEffect(() => {
+    const randomIndex = Math.floor(Math.random() * titles.length);
+    setTitle(titles[randomIndex]);
+  }, []);
+
   
 
   useEffect(() => {
@@ -96,20 +107,41 @@ const Hero = () => {
   const goToSignUp = useCallback(() => {navigate('/Authenticate', { state: { authState: 'SignUp' } });}, [navigate]);
   const scrollToHowItWorks = useCallback(() => {const el = document.getElementById('howitworks');if (el) el.scrollIntoView({ behavior: 'smooth' });}, []);
 
+  const handleAnimationComplete = () => {
+    console.log('Animation completed!');
+  };
+
+  const titles = [
+    "ready to connect?",
+    "welcome back!",
+    "its been a while!"
+  ]
 
   return (
     <div id="home" className="hero-wrapper text-white">
       <div className="hero-overlay">
         <Container className="py-5 px-4">
+          
           {userData ? (
             <>
               {/* Desktop */}
               <Row className="d-none d-md-flex justify-content-center align-items-center row" >
                 <Col className="text-center">
-
+                <div className="flex flex-col items-center justify-center text-center">
                   <h1 className="display-4 fw-bold text-uppercase fontNormal">
-                    {userData.name?.split(' ')[0]}, ready to connect? <FaArrowTurnDown />
+                    <BlurText
+                      text={`${userData.name?.split(' ')[0]}, ${title}`}
+                      delay={150}
+                      animateBy="words"
+                      direction="top"
+                      onAnimationComplete={handleAnimationComplete}
+                      className="text-2xl fontNormal inline"
+                    />
+                    <span className="inline-block ml-2 align-middle">
+                      <FaArrowTurnDown className="text-2xl" />
+                    </span>
                   </h1>
+                </div>
                   
                   <Container className="col-lg-6 mx-auto">
                     <p className="lead mb-4 text-uppercase fontCondensed">

@@ -15,6 +15,9 @@ import { toast } from 'react-toastify';
 // App Context
 import { AppContext } from '../context/AppContext';
 
+import Aurora from '../assets/react-bits/Aurora';
+
+
 // Styles
 import '../styles/Settings.css';
 import '../styles/Fonts.css'; 
@@ -116,6 +119,13 @@ const Settings = () => {
   return (
     <div className="d-flex flex-column min-vh-100 login-wrapper text-white">
       <div className="login-overlay flex-grow-1">
+      <Aurora
+        colorStops={["#13152c", "#3A29FF", "#17192e"]}
+        blend={0.5}
+        amplitude={1.0}
+        speed={0.5}
+      />
+      
         <Navbar />
 
         <Container className="mt-5">

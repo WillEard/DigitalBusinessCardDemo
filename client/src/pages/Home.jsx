@@ -41,6 +41,7 @@ const Home = () => {
       <div className='fluid'>
         {/* Navbar top of webpage */}
         <Navbar />
+        
         {/*{showBanner && (<NavBanner onClose={() => setShowBanner(false)} />)} */}
 
         {/* Hero top of Homepage, Title & CTA */}

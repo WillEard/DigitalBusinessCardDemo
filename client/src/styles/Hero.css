@@ -57,3 +57,9 @@
 .mobile-container-width {
   max-width: 600px; /* Adjust as needed for mobile */
 } 
+
+.arrow-icon {
+  display: inline-block;
+  margin-left: 0.5rem;
+  vertical-align: middle;
+}
