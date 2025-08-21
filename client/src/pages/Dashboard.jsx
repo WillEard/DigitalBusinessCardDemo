@@ -14,37 +14,23 @@ import CVModal from '../components/CVModal';
 import Footer from '../components/Footer';
 import CreateCVModal from '../components/CreateCVModal';
 
-
 // Styles
 import '../styles/Dashboard.css';
 import '../styles/Fonts.css';
 
 
 const Dashboard = () => {
-  const {
-    userData,
-    getUserData,
-    cvData,
-    getCVData,
-    setCVData // in case we want to allow editing/saving
-  } = useContext(AppContext);
-
+  const { userData, getUserData, cvData, getCVData, setCVData } = useContext(AppContext);
   const navigate = useNavigate();
 
   const [selectedCv, setSelectedCv] = useState(null);
   const [showModal, setShowModal] = useState(false);
+  const [showCreateModal, setShowCreateModal] = useState(false); // useStates for CreateCVModal
 
-  const handleClose = useCallback(() => setShowModal(false), [setShowModal]);
-
-  
-
-  // useStates for CreateCVModal
-  const [showCreateModal, setShowCreateModal] = useState(false);
-
-  
   const siteURL = `www.pelagopass.com`;
   const firstName = userData?.name?.split(' ')[0] || 'User';
 
+  const handleClose = useCallback(() => setShowModal(false), [setShowModal]);
   const handleAddNewCv = useCallback(async(newCv) => {
     setCVData((prev) => ({
       ...prev,
@@ -158,7 +144,7 @@ const Dashboard = () => {
               <Row className="g-4">
               {cvData && Array.isArray(cvData[0]?.cvs) && cvData[0].cvs.length > 0 ? (
   cvData[0].cvs.map((cv) => {
-    const profileUrl = `cv/${userData?.username}`;
+    const profileUrl = `${siteURL}/cv/${userData?.username}`;
     return (
       <Col md={6} key={cv._id}>
         <Card className="p-3 shadow-sm border rounded-3">
