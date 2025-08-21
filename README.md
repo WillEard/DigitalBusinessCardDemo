@@ -3,6 +3,8 @@
 PelagoPass is a **full-stack web application** built with React, Vite, Express, and MongoDB.  
 It provides authentication, QR-based access, and a modern animated UI.
 
+**Create, customise and share your own digital pass showing all of your skills and experience in an instant. Share via QR code for easy fast access and create multiple passes for as many roles as you need. **
+
 ---
 
 ## 📦 Core Libraries
