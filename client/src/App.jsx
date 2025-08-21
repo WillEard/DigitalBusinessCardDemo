@@ -24,8 +24,13 @@ import CV from './pages/CV';
 import CookieBanner from './components/CookieBanner';
 
 
+
+
+
+
 const App = () => {
 
+  
 
   // UseEffect, display react-scan information in development environment
   useEffect(() => {
@@ -37,7 +42,7 @@ const App = () => {
     }
   }, []);
   return (
-    <div>
+    <div >
       <ToastContainer />
       <Routes>
         <Route path="/" element={<Home />} />
@@ -53,7 +58,9 @@ const App = () => {
         
         <Route path="*" element={<NotFound />} />
       </Routes>
+      
       <CookieBanner />
+      
     </div>
   );
 };

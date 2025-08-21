@@ -3,7 +3,7 @@ import '../styles/Banner.css';
 
 import PropTypes from 'prop-types';
 
-const Banner = ({ message = "Use code 'Conserve' for 5% off your first month", onClose }) => {
+const Banner = ({ message = "", onClose }) => {
   return (
     <div className="alert-banner text-center text-white px-3 py-2 d-flex justify-content-center align-items-center">
       <span>{message}</span>
@@ -22,7 +22,7 @@ Banner.propTypes = {
 };
 
 Banner.defaultProps = {
-  message: "Use code 'Conserve' for 5% off your first month", // default message
+  message: "Launching 2026", // default message
   onClose: null,                   // default to null if no onClose function is provided
 };
 
