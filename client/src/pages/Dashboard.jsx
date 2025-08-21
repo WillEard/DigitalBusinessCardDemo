@@ -82,10 +82,7 @@ const Dashboard = () => {
             <h2 className="fontCondensed">Subscription: {userData?.subscriptionType}</h2>
           </div>
           
-          <p className="mb-3 text-light fontCondensed" >70% complete</p>
-          <ProgressBar now={70} className="mb-4" variant="info" />
-
-          <Row className="g-2">
+          <Row className="g-2 mt-4">
             {userData?.subscriptionType === "Paid" && (
               <Col xs={12} md="auto">
                 <Button variant="outline-light" className="w-100 fontCondensed" onClick={handleOpenCreateModal}>
@@ -106,15 +103,16 @@ const Dashboard = () => {
               </Col>
             )}
 
+            
             <Col xs={12} md="auto">
-            <CVModal
-              profileUrl={selectedCv ? `${siteURL}/cv/${userData?.username}/${selectedCv._id}` : ''}
-              show={showModal}
-              handleClose={handleClose}  // <-- name it exactly as CVModal expects
-              cvItem={selectedCv}
-              setCVData={setCVData}
-              userData={userData}
-            />
+              <CVModal
+                profileUrl={selectedCv ? `${siteURL}/cv/${userData?.username}/${selectedCv._id}` : ''}
+                show={showModal}
+                handleClose={handleClose}  // <-- name it exactly as CVModal expects
+                cvItem={selectedCv}
+                setCVData={setCVData}
+                userData={userData}
+              />
             </Col>
 
             <Col xs={12} md="auto">
@@ -139,6 +137,7 @@ const Dashboard = () => {
           </Row>
 
           <Row className="mt-2 gy-2 align-items-start justify-content-center">
+          <hr />
             <Col md={8}>
               <h4 className="mb-2 fontNormal">Active Cards</h4>
               <Row className="g-4">
@@ -162,7 +161,7 @@ const Dashboard = () => {
               />
             </div>
             <div className="d-flex flex-wrap gap-2 mt-3">
-              <Button size="sm" variant="outline-dark">View</Button>
+              <Button size="sm" variant="outline-dark" onClick={() => navigate(`/cv/${userData?.username}`)}>View</Button>
               <Button
                 size="sm"
                 variant="outline-dark"
@@ -211,7 +210,7 @@ const Dashboard = () => {
           
           {userData?.subscriptionType === "Free" && (
             <div className="mt-5 p-3 rounded-5 bg-primary bg-opacity-25 text-light text-center fontCondensed w-50 mx-auto">
-              <strong>
+              <strong className='fontCondensed'>
                 Upgrade to{' '}
                 <a
                   className="text-info fontCondensed"
@@ -220,7 +219,7 @@ const Dashboard = () => {
                   Premium
                 </a>
               </strong>{' '}
-              for custom/multiple cards and deeper analytics →
+              for more customisation, analytics and to create multiple cards
             </div>
           )}
         </Container>
