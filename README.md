@@ -1,40 +1,47 @@
-<strong>PelagoPass</strong>
+# 🌍 PelagoPass
 
-<strong><u>Core Libraries</u></strong>
-React – Frontend framework for building UI
+PelagoPass is a **full-stack web application** built with React, Vite, Express, and MongoDB.  
+It provides authentication, QR-based access, and a modern animated UI.
 
-React Router DOM – Client-side routing
+---
 
-Axios – Promise-based HTTP client for API requests
+## 📦 Core Libraries
 
-Vite – Fast frontend build tool and dev server
+- **React** – Frontend framework for building UI  
+- **React Router DOM** – Client-side routing  
+- **Axios** – Promise-based HTTP client for API requests  
+- **Vite** – Fast frontend build tool and dev server  
 
-<strong><u>UI & Styling</u></strong>
-Bootstrap – Responsive UI components
+---
 
-React Bootstrap – Bootstrap components as React components
+## 🎨 UI & Styling
 
-MDB React UI Kit – Material Design UI components
+- **Bootstrap** – Responsive UI components  
+- **React Bootstrap** – Bootstrap components as React components  
+- **MDB React UI Kit** – Material Design UI components  
+- **@fortawesome/fontawesome-free** – Font Awesome icons  
+- **React Icons** – Icon set integration for various libraries  
 
-@fortawesome/fontawesome-free – Font Awesome icons
+---
 
-React Icons – Icon set integration for various libraries
+## ⚙️ Features & Utilities
 
-<strong><u>Features & Utilities</u></strong>
-React Toastify – Toast notifications
+- **React Toastify** – Toast notifications  
+- **React QR Code** – Generate QR codes  
+- **React Circular Progressbar** – Display progress in a circular bar  
+- **html-to-image** – Convert DOM nodes to images  
 
-React QR Code – Generate QR codes
+---
 
-React Circular Progressbar – Display progress in a circular bar
+## 🛠 Developer & Build Tools
 
-html-to-image – Convert DOM nodes to images
+- **ESLint** – Linter for code quality  
+- **@vitejs/plugin-react** – Vite plugin for React  
+- **@types/react / @types/react-dom** – TypeScript typings  
+- **Circum Icons React** – Clean and minimal icon set  
 
-<strong><u>Developer & Build Tools</u></strong>
-ESLint – Linter for code quality
+---
 
-@vitejs/plugin-react – Vite plugin for React
+## 🌐 Live Demo
 
-@types/react / @types/react-dom – TypeScript typings
-
-Circum Icons React – Clean and minimal icon set
-
+👉 [www.pelagopass.com](https://www.pelagopass.com)
