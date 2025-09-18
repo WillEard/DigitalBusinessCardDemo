@@ -20,7 +20,7 @@ const HowItWorks = () => {
   const navigate = useNavigate();
 
   const handleCustomise = useCallback(() => {
-      navigate('/customise');
+      navigate('/authenticate');
     }, []);
   
 

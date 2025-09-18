@@ -3,6 +3,8 @@ import { Container, Row, Col, Card, Button } from 'react-bootstrap';
 
 import { useNavigate } from 'react-router-dom';
 import { useCallback } from 'react';
+import { useContext } from 'react';
+import { AppContext } from '../context/AppContext';
 
 // Styles
 import '../styles/Fonts.css';
@@ -47,11 +49,22 @@ const plans = [
 
 const PricingContainer = () => {
 
+  const { userData, isLoadingUser } = useContext(AppContext);
+
+
   const naviagate = useNavigate();
 
   const handlePaymentPage = useCallback(async (e) => {
-      naviagate('/payment');
-    }, []);
+      if (!isLoadingUser && !userData) 
+      {
+        naviagate('/authenticate');
+      }
+      else
+      {
+        naviagate('/payment');
+      }
+      
+    }, [isLoadingUser, userData]);
 
     return (
       <Container fluid id="pricing" className="pricing py-5">
@@ -73,9 +86,31 @@ const PricingContainer = () => {
               )}
             </ul>
             <div className="text-center">
-              <Button className={`rounded-5 btn-lg ${buttonClass}`} onClick={handlePaymentPage}>
-                {buttonText}
-              </Button>
+              {!userData ? (
+                // Case 1: Not logged in → redirect to login
+                <Button 
+                  className={`rounded-5 btn-lg ${buttonClass}`} 
+                  onClick={() => router.push("/login")}
+                >
+                  {buttonText}
+                </Button>
+              ) : userData.subscriptionStatus === "free" ? (
+                // Case 2: Logged in with free subscription → redirect to payment
+                <Button 
+                  className={`rounded-5 btn-lg ${buttonClass}`} 
+                  onClick={() => router.push("/payment")}
+                >
+                  {buttonText}
+                </Button>
+              ) : (
+                // Case 3: Logged in with paid subscription → disable button
+                <Button 
+                  className={`rounded-5 btn-lg ${buttonClass}`} 
+                  disabled
+                >
+                  {buttonText}
+                </Button>
+              )}
             </div>
           </Card.Body>
         </Card>

@@ -213,7 +213,7 @@ const Hero = () => {
                       </div>
                     </div>
                     <div>
-                      <h3 className="fontCondensed mt-5">Trusted by professionals worldwide</h3>
+                      <h4 className="fontCondensed mt-5">Trusted worldwide</h4>
                       <hr />
                       <h4 className="fontCondensed mt-2">3,000+ cards created this year</h4>
                     </div>
