@@ -4,6 +4,9 @@ import { Container, Row, Col, Button } from 'react-bootstrap';
 import { useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+import { useContext } from 'react';
+import { AppContext } from '../context/AppContext';
+
 // Icons
 import { RiNumber1, RiNumber2, RiNumber3 } from "react-icons/ri";
 
@@ -19,9 +22,20 @@ const HowItWorks = () => {
 
   const navigate = useNavigate();
 
+  const { userData, isLoadingUser } = useContext(AppContext);
+  
+
   const handleCustomise = useCallback(() => {
-      navigate('/authenticate');
-    }, []);
+      if (!isLoadingUser && !userData)
+      {
+        navigate('/authenticate');
+      }
+      else if (!isLoadingUser && userData)
+      {
+        navigate('/customise');
+      }
+        
+    }, [isLoadingUser, userData]);
   
 
   return (
