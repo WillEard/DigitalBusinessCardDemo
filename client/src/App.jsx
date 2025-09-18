@@ -19,6 +19,7 @@ import Dashboard from './pages/Dashboard';
 import Payment from './pages/Payment';
 import AdminDashboard from './pages/AdminDashboard';
 import CV from './pages/CV';
+import { Customise } from './pages/Customise';
 
 // Cookie banner for Navbar
 import CookieBanner from './components/CookieBanner';
@@ -55,6 +56,7 @@ const App = () => {
         <Route path="/cv/:username" element={<CV />} /> 
         <Route path="/payment" element={<Payment />} />
         <Route path="/admin-dash" element={<AdminDashboard />} />
+        <Route path="/customise" element={<Customise />}></Route>
         
         <Route path="*" element={<NotFound />} />
       </Routes>

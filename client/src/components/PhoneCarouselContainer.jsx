@@ -1,6 +1,9 @@
 // React Bootstrap
 import { Container, Row, Col, Button } from 'react-bootstrap';
 
+import { useCallback } from 'react';
+import { useNavigate } from 'react-router-dom';
+
 // Icons
 import { RiNumber1, RiNumber2, RiNumber3 } from "react-icons/ri";
 
@@ -12,7 +15,13 @@ import '../styles/Fonts.css';
 import '../styles/PhoneCarousel.css'; 
 
 
-function HowItWorks() {
+const HowItWorks = () => {
+
+  const navigate = useNavigate();
+
+  const handleCustomise = useCallback(() => {
+      navigate('/customise');
+    }, []);
   
 
   return (
@@ -28,7 +37,7 @@ function HowItWorks() {
             <PhoneCarousel />
           </div>
 
-          <Button className="btn-lg rounded-5 fontCondensed mt-1">
+          <Button className="btn-lg rounded-5 fontCondensed mt-1" onClick={handleCustomise}>
             Start creating
           </Button>
         </Col>

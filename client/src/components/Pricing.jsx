@@ -1,6 +1,9 @@
 // React Bootstrap
 import { Container, Row, Col, Card, Button } from 'react-bootstrap';
 
+import { useNavigate } from 'react-router-dom';
+import { useCallback } from 'react';
+
 // Styles
 import '../styles/Fonts.css';
 import '../styles/Pricing.css'; // Import your pricing styles
@@ -42,7 +45,14 @@ const plans = [
   }
 ];
 
-function PricingContainer() {
+const PricingContainer = () => {
+
+  const naviagate = useNavigate();
+
+  const handlePaymentPage = useCallback(async (e) => {
+      naviagate('/payment');
+    }, []);
+
     return (
       <Container fluid id="pricing" className="pricing py-5">
   <h1 className="mb-4 pricing-heading text-center display-3">Pricing</h1>
@@ -63,7 +73,7 @@ function PricingContainer() {
               )}
             </ul>
             <div className="text-center">
-              <Button className={`rounded-5 btn-lg ${buttonClass}`}>
+              <Button className={`rounded-5 btn-lg ${buttonClass}`} onClick={handlePaymentPage}>
                 {buttonText}
               </Button>
             </div>

@@ -9,7 +9,7 @@ import '../styles/HowItWorks.css';
 
 import ScrollStack, { ScrollStackItem } from '../assets/react-bits/ScrollStack'; // ScrollStack component
 
-function HowItWorks() {
+const HowItWorks = () => { 
 
   const cards = [
     "/howitworks-img/1.png",

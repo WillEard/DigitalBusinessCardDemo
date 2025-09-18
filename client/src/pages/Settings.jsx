@@ -98,7 +98,7 @@ const Settings = () => {
   useEffect(() => {
     if (!isLoadingUser && !userData) {
       console.warn("Not logged in.");
-      // You might want to redirect here
+      navigate('/');
     }
   }, [isLoadingUser, userData]);
 

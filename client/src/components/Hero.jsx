@@ -113,8 +113,8 @@ const Hero = () => {
 
   const titles = [
     "ready to connect?",
-    "welcome back!",
-    "its been a while!"
+    "welcome back",
+    "its been a while"
   ]
 
   return (
@@ -129,14 +129,7 @@ const Hero = () => {
                 <Col className="text-center">
                 <div className="flex flex-col items-center justify-center text-center">
                   <h1 className="display-4 fw-bold text-uppercase fontNormal">
-                    <BlurText
-                      text={`${userData.name?.split(' ')[0]}, ${title}`}
-                      delay={150}
-                      animateBy="words"
-                      direction="top"
-                      onAnimationComplete={handleAnimationComplete}
-                      className="text-2xl fontNormal inline"
-                    />
+                  {userData.name?.split(' ')[0]}, {title}
                     <span className="inline-block ml-2 align-middle">
                       <FaArrowTurnDown className="text-2xl" />
                     </span>
