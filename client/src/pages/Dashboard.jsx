@@ -20,7 +20,7 @@ import '../styles/Fonts.css';
 
 
 const Dashboard = () => {
-  const { userData, getUserData, cvData, getCVData, setCVData } = useContext(AppContext);
+  const { userData, getUserData, cvData, getCVData, setCVData, isLoadingUser } = useContext(AppContext);
   const navigate = useNavigate();
 
   const [selectedCv, setSelectedCv] = useState(null);
@@ -48,6 +48,12 @@ const Dashboard = () => {
       getCVData(userData.username);
     }
   }, [userData, getCVData]);
+
+  useEffect(() => {
+    if (!isLoadingUser && !userData) {
+      navigate('/');
+    }
+  }, [isLoadingUser, userData]);
 
 
   const handleCloseCreateModal = useCallback (() => setShowCreateModal(false), [setShowCreateModal]);
