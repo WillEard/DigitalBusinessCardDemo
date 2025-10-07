@@ -4,7 +4,7 @@ import { useCallback } from 'react';
 
 import '../styles/Fonts.css';
 import '../styles/Footer.css';
-import PelagoPassLogo from '../assets/PelagoPassLogo.svg';
+import PelagoPassLogo from '/PelagoPassLogoWhite.svg';
 
 const navLinks = [
   { label: 'Home', hash: 'home' },
