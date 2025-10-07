@@ -1,6 +1,20 @@
 .button-border {
-    border-top-right-radius: 0;
-    border-bottom-right-radius: 0;
-    border-top-left-radius: 0.375rem;
-    border-bottom-left-radius: 0.375rem;
+  border-radius: 0.5rem !important;
+}
+
+.fontCondensed {
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+}
+
+.bg-light {
+  background-color: #f8f9fa !important;
+}
+
+.small {
+  font-size: 0.9rem;
+}
+
+.shadow {
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1) !important;
 }

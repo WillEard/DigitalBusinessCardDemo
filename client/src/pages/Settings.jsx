@@ -15,7 +15,6 @@ import { toast } from 'react-toastify';
 // App Context
 import { AppContext } from '../context/AppContext';
 
-import Aurora from '../assets/react-bits/Aurora';
 
 
 // Styles
@@ -117,28 +116,23 @@ const Settings = () => {
   const handleCloseConfirm = useCallback(() => {setShowConfirm(false);}, []);
   
   return (
-    <div className="d-flex flex-column min-vh-100 login-wrapper text-white">
+    <div className="d-flex flex-column min-vh-100 login-wrapper text-dark">
       <div className="login-overlay flex-grow-1">
-      <Aurora
-        colorStops={["#13152c", "#3A29FF", "#17192e"]}
-        blend={0.5}
-        amplitude={1.0}
-        speed={0.5}
-      />
       
         <Navbar />
 
         <Container className="mt-5">
-          <h1 className="text-center d-flex justify-content-center mb-2 fontNormal display-4">
+          <h1 className="text-center text-light d-flex justify-content-center mb-4 fontNormal display-4">
             Account Settings
           </h1>
 
-          <Row className="justify-content-center py-4">
-            <Col xl={6} md={8} sm={10}>
-              <div className="p-4 rounded bg-dark shadow">
-                {/* Password + Change Button */}
-                <Form.Group className="mb-4">
-                  <Form.Label className="text-light fontCondensed">Password</Form.Label>
+          {/* Row 1: Password + Mobile */}
+          <Row className="justify-content-center gy-4">
+            {/* Password */}
+            <Col lg={6} md={12}>
+              <div className="p-4 rounded bg-light text-dark shadow h-100">
+                <Form.Group className="mb-1">
+                  <Form.Label className="fontCondensed">Password</Form.Label>
                   <div className="d-flex">
                     <Button
                       href="/reset-pass"
@@ -152,89 +146,162 @@ const Settings = () => {
                       className="text-muted button-border"
                     />
                   </div>
+                  <p className="mb-0 text-muted small">Change your account password</p>
                 </Form.Group>
+              </div>
+            </Col>
 
-                {/* Mobile Number */}
-                <Form.Group className="mb-4">
-                  <Form.Label className="text-light fontCondensed">Mobile Number</Form.Label>
-                  <Form.Control value={userData?.phoneNumber || ''} disabled className="text-muted" />
-                </Form.Group>
-
-                {/* Verification Status */}
-                <Form.Group className="mb-4">
-                  <Form.Label className="text-light fontCondensed">Verification</Form.Label>
+            {/* Mobile Number */}
+            <Col lg={6} md={12}>
+              <div className="p-4 rounded bg-light text-dark shadow h-100">
+                <Form.Group className="mb-1">
+                  <Form.Label className="fontCondensed">Mobile Number</Form.Label>
                   <Form.Control
-                    value={userData?.isVerified ? 'Verified' : 'Not Verified'}
+                    value={userData?.phoneNumber || ""}
                     disabled
-                    className={`text-${userData?.isVerified ? 'success' : 'danger'}`}
+                    className="text-muted button-border"
                   />
-                </Form.Group>
-
-                {/* Subscription */}
-                <Form.Group className="mb-4">
-                  <Form.Label className="text-light fontCondensed">Subscription</Form.Label>
-                  <Form.Control value={userData?.subscriptionType} disabled />
-                </Form.Group>
-
-                {/* Show Phone Number Toggle */}
-                <Form.Group className="mb-4">
-                  {showPhoneNumber !== null && (
-                    <Form.Check
-                      type="switch"
-                      id="custom-switch"
-                      label="Show phone number to other users"
-                      checked={showPhoneNumber}
-                      onChange={handlePhoneNumber}
-                      disabled={isUpdatingSettings}
-                    />
-                  )}
-                </Form.Group>
-
-                {/* Delete Account */}
-                <Form.Group className="mb-4">
-                  <Form.Label className="text-light fontCondensed">Delete Account</Form.Label>
-                    <div className="d-flex">
-                      <Button
-                        variant="danger"
-                        className="bg-danger text-light px-3 fontCondensed shadow-none button-border"
-                        onClick={handleVerifyClick}
-                        disabled={verifying || deleting || password.trim() === ""}
-                        aria-label="Delete account"
-                      >
-                        {verifying ? <Spinner animation="border" size="sm" /> : "Delete"}
-                      </Button>
-
-                      <Form.Control
-                        type="password"
-                        value={password}
-                        onChange={handlePasswordChange}
-                        placeholder="Enter password to delete account"
-                        className="text-muted button-border"
-                      />
-                    </div>
-                    <Modal show={showConfirm} onHide={handleCloseConfirm} centered>
-                      <Modal.Header closeButton>
-                        <Modal.Title>Confirm Account Deletion</Modal.Title>
-                      </Modal.Header>
-                      <Modal.Body>
-                        Are you sure you want to permanently delete your account? This action cannot be undone.
-                      </Modal.Body>
-                      <Modal.Footer>
-                        <Button variant="secondary" onClick={handleCloseConfirm} disabled={deleting}>
-                          Cancel
-                        </Button>
-                        <Button variant="danger" onClick={handleConfirmDelete} disabled={deleting}>
-                          {deleting ? <Spinner animation="border" size="sm" /> : "Yes, Delete"}
-                        </Button>
-                      </Modal.Footer>
-                    </Modal>
+                  <p className="mb-0 text-muted small">Your registered mobile number</p>
                 </Form.Group>
               </div>
             </Col>
           </Row>
-        </Container>
-        <Footer />
+
+          {/* Row 2: Verification + Subscription */}
+          <Row className="justify-content-center gy-4 mt-3">
+            {/* Verification */}
+            <Col lg={6} md={12}>
+              <div className="p-4 rounded bg-light text-dark shadow h-100">
+                <Form.Group className="mb-1">
+                  <Form.Label className="fontCondensed">Verification</Form.Label>
+                  <Form.Control
+                    value={userData?.isVerified ? "Verified" : "Not Verified"}
+                    disabled
+                    className={`text-${userData?.isVerified ? "success" : "danger"} button-border`}
+                  />
+                  <p className="mb-0 text-muted small">
+                    {userData?.isVerified
+                      ? "Your email is verified"
+                      : "Your account is not yet verified"}
+                  </p>
+                </Form.Group>
+              </div>
+            </Col>
+
+            {/* Subscription */}
+            <Col lg={6} md={12}>
+              <div className="p-4 rounded bg-light text-dark shadow h-100">
+                <Form.Group className="mb-1">
+                  <Form.Label className="fontCondensed">Subscription</Form.Label>
+                  <Form.Control
+                    value={userData?.subscriptionType || "Free"}
+                    disabled
+                    className="text-muted button-border"
+                  />
+                  <p className="mb-0 text-muted small">
+                    Your current subscription plan
+                  </p>
+                </Form.Group>
+              </div>
+            </Col>
+          </Row>
+
+          {/* Row 3: Visibility + Delete */}
+          <Row className="justify-content-center gy-4 mt-3">
+            {/* Show Phone Number Toggle */}
+            <Col lg={6} md={12}>
+              <div className="p-4 rounded bg-light text-dark shadow h-100">
+                <Form.Group className="mb-1">
+                  <Form.Label className="fontCondensed">Profile Visibility</Form.Label>
+                  {showPhoneNumber !== null && (
+                    <Form.Check
+                      type="switch"
+                      id="custom-switch"
+                      label="Show my phone number to other users"
+                      checked={showPhoneNumber}
+                      onChange={handlePhoneNumber}
+                      disabled={isUpdatingSettings}
+                      className="mb-1"
+                    />
+                  )}
+                  <p className="mb-0 text-muted small">
+                    Control whether your phone number is visible to other users
+                  </p>
+                </Form.Group>
+              </div>
+            </Col>
+
+            {/* Delete Account */}
+            <Col lg={6} md={12}>
+              <div className="p-4 rounded bg-light text-dark shadow border border-danger h-100">
+                <Form.Group className="mb-1">
+                  <Form.Label className="fontCondensed text-danger">
+                    Delete Account
+                  </Form.Label>
+                  <div className="d-flex">
+                    <Button
+                      variant="danger"
+                      className="bg-danger text-light px-3 fontCondensed shadow-none button-border"
+                      onClick={handleVerifyClick}
+                      disabled={verifying || deleting || password.trim() === ""}
+                      aria-label="Delete account"
+                    >
+                      {verifying ? (
+                        <Spinner animation="border" size="sm" />
+                      ) : (
+                        "Delete"
+                      )}
+                    </Button>
+
+                    <Form.Control
+                      type="password"
+                      value={password}
+                      onChange={handlePasswordChange}
+                      placeholder="Enter password to delete account"
+                      className="text-muted button-border"
+                    />
+                  </div>
+                  <p className="mb-0 text-muted small">
+                    Permanently delete your account and all associated data
+                  </p>
+
+                  <Modal show={showConfirm} onHide={handleCloseConfirm} centered>
+                    <Modal.Header closeButton>
+                      <Modal.Title>Confirm Account Deletion</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                      Are you sure you want to permanently delete your account? This
+                      action cannot be undone.
+                    </Modal.Body>
+                    <Modal.Footer>
+                      <Button
+                        variant="secondary"
+                        onClick={handleCloseConfirm}
+                        disabled={deleting}
+                      >
+                        Cancel
+                      </Button>
+                      <Button
+                        variant="danger"
+                        onClick={handleConfirmDelete}
+                        disabled={deleting}
+                      >
+                        {deleting ? (
+                          <Spinner animation="border" size="sm" />
+                        ) : (
+                          "Yes, Delete"
+                        )}
+                      </Button>
+                    </Modal.Footer>
+                  </Modal>
+                </Form.Group>
+              </div>
+            </Col>
+          </Row>
+      </Container>
+      
       </div>
+      <Footer />
     </div>
   );
 };
