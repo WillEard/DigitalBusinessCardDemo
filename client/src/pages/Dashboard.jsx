@@ -58,6 +58,7 @@ const Dashboard = () => {
 
   const handleCloseCreateModal = useCallback (() => setShowCreateModal(false), [setShowCreateModal]);
   const handleOpenCreateModal = useCallback(() => setShowCreateModal(true), [setShowCreateModal]);
+  const handleCustomiseCard = useCallback(() => navigate('/customise'), [navigate]);
 
   const handleEditCv = useCallback((cv) => {setSelectedCv(cv);setShowModal(true);}, []);
   const handleVerifyEmail = useCallback(() => navigate('/verify-email'), [navigate]);
@@ -102,11 +103,18 @@ const Dashboard = () => {
           
           <Row className="g-2 mt-4">
             {userData?.subscriptionType === "Paid" && (
-              <Col xs={12} md="auto">
-                <Button variant="outline-light" className="w-100 fontCondensed" onClick={handleOpenCreateModal}>
-                  Create New Card
-                </Button>
-              </Col>
+              <div className="d-flex flex-wrap gap-2 justify-content-start mx-auto">
+                <Col xs={5} md="auto">
+                  <Button variant="outline-light" className="w-100 fontCondensed" onClick={handleOpenCreateModal}>
+                    Create New Card
+                  </Button>
+                </Col>
+                <Col xs={5} md="auto">
+                  <Button variant="outline-light" className="w-100 fontCondensed" onClick={handleCustomiseCard}>
+                    Customise Card
+                  </Button>
+                </Col>
+              </div>
             )}
 
             {userData?.subscriptionType === "Free" && (
@@ -189,6 +197,7 @@ const Dashboard = () => {
               </Button>
               <Button size="sm" variant="outline-dark">Share</Button>
               <Button size="sm" variant="outline-dark">Add to Wallet</Button>
+              <Button size="sm" variant="outline-danger">Delete</Button>
             </div>
           </Card.Body>
         </Card>

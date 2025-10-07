@@ -6,13 +6,18 @@ import { useNavigate } from 'react-router-dom';
 // App Context
 import { AppContext } from '../context/AppContext';
 
+import CustomiseTooltip from "../components/Customise-Tooltip";
+
 // React Bootstrap
-import { Container, Row, Col, Form, Button, Card } from "react-bootstrap";
+import { Container, Row, Col, Form, Button, Card, OverlayTrigger, Tooltip } from "react-bootstrap";
 
 // Components
 import Navbar from "../components/Navbar";
 
 import QRPNG from '/QR.png';
+
+import { IoIosInformationCircle } from "react-icons/io";
+
 
 // Styles
 import '../styles/Fonts.css';
@@ -78,8 +83,14 @@ export const Customise = () => {
       <div className="login-overlay flex-grow-1">
         <Navbar />
 
-        <div className="mt-5">
-            <h1 className="fontNormal text-center">Customise your pass</h1>
+        <div className="mt-5 d-flex justify-content-center align-items-center gap-2 flex-wrap">
+          <h1 className="fontNormal mb-0 text-center">Customise your pass</h1>
+
+          <OverlayTrigger trigger="click" placement="bottom" overlay={CustomiseTooltip}>
+            <Button variant="primary" className="p-1 d-flex align-items-center justify-content-center">
+              <IoIosInformationCircle size={20} />
+            </Button>
+          </OverlayTrigger>
         </div>
 
         <Container className="my-4">
@@ -143,6 +154,8 @@ export const Customise = () => {
               Save
             </Button>
           </Form>
+
+          
         </Col>
 
         {/* Preview */}
