@@ -169,20 +169,23 @@ const Settings = () => {
 
           {/* Row 2: Verification + Subscription */}
           <Row className="justify-content-center gy-4 mt-3">
-            {/* Verification */}
+
             <Col lg={6} md={12}>
               <div className="p-4 rounded bg-light text-dark shadow h-100">
-                <Form.Group className="mb-1">
-                  <Form.Label className="fontCondensed">Verification</Form.Label>
+                <Form.Group className="mb-3">
+                  <Form.Label className="fontCondensed">Next Payment Date</Form.Label>
                   <Form.Control
-                    value={userData?.isVerified ? "Verified" : "Not Verified"}
+                    type="date"
+                    value={
+                      userData?.nextPaymentDate
+                        ? new Date(userData.nextPaymentDate).toISOString().split('T')[0]
+                        : ''
+                    }
                     disabled
-                    className={`text-${userData?.isVerified ? "success" : "danger"} button-border`}
+                    className="text-muted button-border"
                   />
                   <p className="mb-0 text-muted small">
-                    {userData?.isVerified
-                      ? "Your email is verified"
-                      : "Your account is not yet verified"}
+                    Your next subscription payment date
                   </p>
                 </Form.Group>
               </div>
@@ -206,8 +209,26 @@ const Settings = () => {
             </Col>
           </Row>
 
-          {/* Row 3: Visibility + Delete */}
-          <Row className="justify-content-center gy-4 mt-3">
+          <Row className='className="justify-content-center gy-4 mt-3'>
+            {/* Verification */}
+            <Col lg={6} md={12}>
+              <div className="p-4 rounded bg-light text-dark shadow h-100">
+                <Form.Group className="mb-1">
+                  <Form.Label className="fontCondensed">Verification</Form.Label>
+                  <Form.Control
+                    value={userData?.isVerified ? "Verified" : "Not Verified"}
+                    disabled
+                    className={`text-${userData?.isVerified ? "success" : "danger"} button-border`}
+                  />
+                  <p className="mb-0 text-muted small">
+                    {userData?.isVerified
+                      ? "Your email is verified"
+                      : "Your account is not yet verified"}
+                  </p>
+                </Form.Group>
+              </div>
+            </Col>
+
             {/* Show Phone Number Toggle */}
             <Col lg={6} md={12}>
               <div className="p-4 rounded bg-light text-dark shadow h-100">
@@ -230,7 +251,10 @@ const Settings = () => {
                 </Form.Group>
               </div>
             </Col>
+          </Row>
 
+          {/* Row 3: Visibility + Delete */}
+          <Row className="justify-content-center gy-4 mt-3 mb-3">
             {/* Delete Account */}
             <Col lg={6} md={12}>
               <div className="p-4 rounded bg-light text-dark shadow border border-danger h-100">

@@ -78,14 +78,26 @@ const Dashboard = () => {
         <Navbar />
 
         <Container className="my-5">
-          <div className="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center gap-2">
-            <h1 className="mb-1 fw-semibold fontNormal">Welcome back, {firstName}</h1>
-            <span className="d-none d-md-inline">|</span>
-            <h2 className={userData?.isVerified ? 'fontCondensed' : 'text-danger fontCondensed'}>
-              {userData?.isVerified ? 'Verified' : 'Not Verified'}
-            </h2>
-            <span className="d-none d-md-inline">|</span>
-            <h2 className="fontCondensed">Subscription: {userData?.subscriptionType}</h2>
+          <div className="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center gap-2 py-2">
+            <h1 className="mb-0 fw-semibold fontNormal text-light">
+              Welcome back, {firstName}
+            </h1>
+
+            <div className="d-flex flex-column flex-md-row align-items-start align-items-md-center gap-3 text-light">
+              <div>
+                <h3 className={`mb-0 ${userData?.isVerified ? 'text-success' : 'text-danger'} fontCondensed`}>
+                  {userData?.isVerified ? 'Verified' : 'Not Verified'}
+                </h3>
+              </div>
+
+              <span className="d-none d-md-inline text-secondary">|</span>
+
+              <div>
+                <h3 className="mb-0 fontCondensed">
+                  Subscription: <span className="text-success fontCondensed">{userData?.subscriptionType}</span>
+                </h3>
+              </div>
+            </div>
           </div>
           
           <Row className="g-2 mt-4">
