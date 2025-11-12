@@ -43,7 +43,6 @@ const App = () => {
         <Route path="/verify-email" element={<VerifyEmail />} />
         <Route path="/reset-pass" element={<ResetPass />} />
         <Route path="/account" element={<Settings />} />
-        <Route path="/account" element={<Settings />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/cv/:username" element={<CV />} />
         <Route path="/payment" element={<Payment />} />

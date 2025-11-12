@@ -201,7 +201,7 @@ const Navigation = () => {
               <>
                 <Nav.Link
                   onClick={handleSignUpClick}
-                  className="fw-bold text-dark rounded signup mx-1 fontCondensed sign-up"
+                  className="fw-bold text-light rounded signup mx-1 fontCondensed sign-up bg-primary"
                 >
                   Sign Up
                 </Nav.Link>
