@@ -29,11 +29,17 @@ export const AuthProvider = ({ children }) => {
       const { data } = await axios.get(`${backendUrl}/api/user/data`, {
         withCredentials: true,
       });
-      if (data.success) setUserData(data.userData);
-      else setUserData(null);
+      if (data.success) {
+        setUserData(data.userData);
+        return data.userData; // ✅ return it
+      } else {
+        setUserData(null);
+        return null;
+      }
     } catch (error) {
       if (error.response?.status === 401) setUserData(null);
       else toast.error(`Error fetching user data: ${error.message}`);
+      return null;
     }
   }, [backendUrl]);
 
@@ -44,7 +50,12 @@ export const AuthProvider = ({ children }) => {
       });
       if (data.success) {
         setIsLoggedIn(true);
-        setUserData(data.user || (await getUserData()));
+        if (data.user) {
+          setUserData(data.user);
+        } else {
+          const user = await getUserData();
+          setUserData(user); // now always defined
+        }
       } else {
         setIsLoggedIn(false);
         setUserData(null);

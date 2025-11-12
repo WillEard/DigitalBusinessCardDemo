@@ -27,7 +27,8 @@ import { AuthContext } from "../context/AuthContext";
 import { CVContext } from "../context/CVContext";
 
 const Dashboard = () => {
-  const { userData, getUserData, isLoadingUser } = useContext(AuthContext);
+  const { userData, getUserData, isLoadingUser, isLoggedIn } =
+    useContext(AuthContext);
   const { cvData, getCVData, setCVData } = useContext(CVContext);
 
   const navigate = useNavigate();
@@ -62,7 +63,7 @@ const Dashboard = () => {
   }, [userData, getCVData]);
 
   useEffect(() => {
-    if (!isLoadingUser && !userData) {
+    if (!isLoadingUser && isLoggedIn === false) {
       navigate("/");
     }
   }, [isLoadingUser, userData]);
