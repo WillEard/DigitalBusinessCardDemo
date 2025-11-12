@@ -1,5 +1,4 @@
 import React from "react";
-import { AppConfigProvider } from "./AppConfigContext";
 import { AuthProvider } from "./AuthContext";
 import { UserProvider } from "./UserContext";
 import { CVProvider } from "./CVContext";
@@ -11,14 +10,12 @@ import { AdminProvider } from "./AdminContext";
  */
 export const AppContextProvider = ({ children }) => {
   return (
-    <AppConfigProvider>
-      <AuthProvider>
-        <UserProvider>
-          <CVProvider>
-            <AdminProvider>{children}</AdminProvider>
-          </CVProvider>
-        </UserProvider>
-      </AuthProvider>
-    </AppConfigProvider>
+    <AuthProvider>
+      <UserProvider>
+        <CVProvider>
+          <AdminProvider>{children}</AdminProvider>
+        </CVProvider>
+      </UserProvider>
+    </AuthProvider>
   );
 };

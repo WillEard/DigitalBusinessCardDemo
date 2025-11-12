@@ -21,7 +21,6 @@ import "../styles/Signup.css"; // Import custom styles for Signup component
 // Password Strength
 import zxcvbn from "zxcvbn";
 import PasswordStrengthBar from "react-password-strength-bar";
-import { AuthContext } from "../context/AuthContext";
 
 const SignupForm = () => {
   const navigate = useNavigate();

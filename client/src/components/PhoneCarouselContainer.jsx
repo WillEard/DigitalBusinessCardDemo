@@ -5,7 +5,6 @@ import { useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { useContext } from "react";
-import { AppContext } from "../context/AppContext";
 
 // Icons
 import { RiNumber1, RiNumber2, RiNumber3 } from "react-icons/ri";

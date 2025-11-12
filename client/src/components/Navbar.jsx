@@ -14,7 +14,6 @@ import logo from "../assets/Pelago-Header-Logo-white.svg";
 // Styles
 import "../styles/Navbar.css"; // Import custom CSS for Navbar
 import "../styles/Fonts.css"; // Import custom font styles
-import { AuthContext } from "../context/AuthContext";
 
 const Navigation = () => {
   const navigate = useNavigate(); // Navigation
