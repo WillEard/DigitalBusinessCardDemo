@@ -1,49 +1,50 @@
 // React
-import { useState, useEffect, useContext, useCallback } from 'react';
-import PropTypes from 'prop-types';
-
-// App Context
-import { AppContext } from '../context/AppContext';
+import { useState, useEffect, useContext, useCallback } from "react";
+import PropTypes from "prop-types";
 
 // React Bootstrap
-import { Button, Modal, Form, Row, Col } from 'react-bootstrap';
+import { Button, Modal, Form, Row, Col } from "react-bootstrap";
 
 // Toast - user slide in messages
-import { toast } from 'react-toastify';
+import { toast } from "react-toastify";
 
 // Axios for queries
-import axios from 'axios';
+import axios from "axios";
 
-import '../styles/Fonts.css'; // Import custom font styles
-import '../styles/CVModal.css'; // Import custom styles for CV Modal
+import "../styles/Fonts.css"; // Import custom font styles
+import "../styles/CVModal.css"; // Import custom styles for CV Modal
+
+// Contexts
+import { AuthContext } from "../context/AuthContext";
+import { CVContext } from "../context/CVContext";
 
 const fields = [
-  { label: 'Title', key: 'title', rows: 5 },
-  { label: 'Education', key: 'education', rows: 5 },
-  { label: 'Skills', key: 'skills', rows: 5 },
-  { label: 'Projects', key: 'projects', rows: 5 },
-  { label: 'Hobbies', key: 'hobbies', rows: 3 },
-  { label: 'Experience', key: 'experience', rows: 5 },
-  { label: 'Certifications', key: 'certifications', rows: 5 },
-  { label: 'Languages', key: 'languages', rows: 2 },
-  { label: 'Personal Achievements', key: 'achievements', rows: 4 },
+  { label: "Title", key: "title", rows: 5 },
+  { label: "Education", key: "education", rows: 5 },
+  { label: "Skills", key: "skills", rows: 5 },
+  { label: "Projects", key: "projects", rows: 5 },
+  { label: "Hobbies", key: "hobbies", rows: 3 },
+  { label: "Experience", key: "experience", rows: 5 },
+  { label: "Certifications", key: "certifications", rows: 5 },
+  { label: "Languages", key: "languages", rows: 2 },
+  { label: "Personal Achievements", key: "achievements", rows: 4 },
 ];
 
-const CVModal = ({ show, handleClose, cvItem  }) => {
-
-  const { backendUrl, userData, getCVData } = useContext(AppContext);
+const CVModal = ({ show, handleClose, cvItem }) => {
+  const { backendUrl, userData } = useContext(AuthContext);
+  const { getCVData } = useContext(CVContext);
 
   // Form States
   const [formData, setFormData] = useState({
-    title: '',
-    education: '',
-    experience: '',
-    skills: '',
-    certifications: '',
-    projects: '',
-    languages: '',
-    hobbies: '',
-    achievements: '',
+    title: "",
+    education: "",
+    experience: "",
+    skills: "",
+    certifications: "",
+    projects: "",
+    languages: "",
+    hobbies: "",
+    achievements: "",
   });
 
   const handleChange = useCallback(
@@ -52,21 +53,20 @@ const CVModal = ({ show, handleClose, cvItem  }) => {
     },
     [setFormData]
   );
-  
 
   // Update form when cvItem changes (modal opened with new data)
   useEffect(() => {
     if (cvItem) {
       setFormData({
-        title: cvItem.title || '',
-        education: cvItem.education || '',
-        experience: cvItem.experience || '',
-        skills: cvItem.skills || '',
-        certifications: cvItem.certifications || '',
-        projects: cvItem.projects || '',
-        languages: cvItem.languages || '',
-        hobbies: cvItem.hobbies || '',
-        achievements: cvItem.achievements || '',
+        title: cvItem.title || "",
+        education: cvItem.education || "",
+        experience: cvItem.experience || "",
+        skills: cvItem.skills || "",
+        certifications: cvItem.certifications || "",
+        projects: cvItem.projects || "",
+        languages: cvItem.languages || "",
+        hobbies: cvItem.hobbies || "",
+        achievements: cvItem.achievements || "",
       });
     }
   }, [cvItem]);
@@ -74,15 +74,17 @@ const CVModal = ({ show, handleClose, cvItem  }) => {
   // Save changes to backend
   const handleSave = useCallback(async () => {
     if (!cvItem?._id) {
-      toast.error('CV item is not defined');
+      toast.error("CV item is not defined");
       return;
     }
 
     try {
-      await axios.put(`${backendUrl}/api/cv/${userData.username}/${cvItem._id}`, formData
+      await axios.put(
+        `${backendUrl}/api/cv/${userData.username}/${cvItem._id}`,
+        formData
       );
 
-      toast.success('CV updated successfully');
+      toast.success("CV updated successfully");
 
       // Refresh CV data after saving
       if (userData?.username) {
@@ -111,25 +113,41 @@ const CVModal = ({ show, handleClose, cvItem  }) => {
         </Modal.Title>
       </Modal.Header>
 
-      <Modal.Body className="px-4 py-3 backgroundColour" >
+      <Modal.Body className="px-4 py-3 backgroundColour">
         <Form>
           <Row className="gy-4 gx-5">
             <Col md={6}>
               {/* User info */}
               <Form.Group>
-                <Form.Label className="text-dark fontNormal">Full Name</Form.Label>
-                <Form.Control className="p-3" type="text" value={userData?.name || ''} disabled />
+                <Form.Label className="text-dark fontNormal">
+                  Full Name
+                </Form.Label>
+                <Form.Control
+                  className="p-3"
+                  type="text"
+                  value={userData?.name || ""}
+                  disabled
+                />
               </Form.Group>
 
               <Form.Group>
-                <Form.Label className="text-dark mt-3 fontNormal">Phone Number</Form.Label>
-                <Form.Control className="p-3" type="tel" value={userData?.phoneNumber || ''} disabled />
+                <Form.Label className="text-dark mt-3 fontNormal">
+                  Phone Number
+                </Form.Label>
+                <Form.Control
+                  className="p-3"
+                  type="tel"
+                  value={userData?.phoneNumber || ""}
+                  disabled
+                />
               </Form.Group>
 
               {/* Editable fields */}
               {fields.map((field) => (
                 <Form.Group key={field.key}>
-                  <Form.Label className="text-dark mt-3 fontNormal">{field.label}</Form.Label>
+                  <Form.Label className="text-dark mt-3 fontNormal">
+                    {field.label}
+                  </Form.Label>
                   <Form.Control
                     as="textarea"
                     rows={field.rows}
@@ -143,8 +161,15 @@ const CVModal = ({ show, handleClose, cvItem  }) => {
             <Col md={6}>
               {/* User email */}
               <Form.Group>
-                <Form.Label className="text-dark fontNormal">Email Address</Form.Label>
-                <Form.Control className="p-3" type="email" value={userData?.email || ''} disabled />
+                <Form.Label className="text-dark fontNormal">
+                  Email Address
+                </Form.Label>
+                <Form.Control
+                  className="p-3"
+                  type="email"
+                  value={userData?.email || ""}
+                  disabled
+                />
               </Form.Group>
             </Col>
           </Row>
@@ -152,10 +177,18 @@ const CVModal = ({ show, handleClose, cvItem  }) => {
       </Modal.Body>
 
       <Modal.Footer className="border-0 px-4 pb-4 pt-2 bg-dark">
-        <Button variant="secondary" className="fontCondensed" onClick={handleClose}>
+        <Button
+          variant="secondary"
+          className="fontCondensed"
+          onClick={handleClose}
+        >
           Close
         </Button>
-        <Button variant="primary" className="fontCondensed" onClick={handleSave}>
+        <Button
+          variant="primary"
+          className="fontCondensed"
+          onClick={handleSave}
+        >
           Update
         </Button>
       </Modal.Footer>

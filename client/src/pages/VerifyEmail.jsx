@@ -1,7 +1,7 @@
 // Components
-import EmailVerification from '../components/VerifyAccount';
-import Navbar from '../components/Navbar';
-import Footer from '../components/Footer';
+import EmailVerification from "../components/VerifyAccount";
+import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
 
 const VerifyEmail = () => {
   return (

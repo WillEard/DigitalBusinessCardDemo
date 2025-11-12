@@ -9,7 +9,7 @@ import { EMAIL_VERIFY_TEMPLATE, PASSWIRD_RESET_TEMPLATE, REGISTER_TEMPLATE } fro
 
 // Registration
 export const register = async (req, res) => {
-    const {name, username, email, password, phoneNumber, role, subscriptionType, education, experience, skills, certifications, projects, languages, hobbies, achievements} = req.body;
+    const {name, username, email, password, phoneNumber, role, subscriptionType, education, experience, skills, certifications, projects, languages, hobbies, achievements, textColor, backgroundColor} = req.body;
 
     if (!name || !email || !password || !username)
     {
@@ -34,7 +34,7 @@ export const register = async (req, res) => {
         const user = new userModel({name, username, email, password: hashedPW, phoneNumber, subscriptionType, role});
         await user.save();
 
-        const cv = new cvModel({ user_id: user._id, education, experience, skills, certifications, projects, languages, hobbies, achievements});
+        const cv = new cvModel({ user_id: user._id, education, experience, skills, certifications, projects, languages, hobbies, achievements, textColor, backgroundColor});
         await cv.save();
 
         const token = jwt.sign({id: user._id}, process.env.JWT_SECRET, {expiresIn: '7d'});
@@ -301,7 +301,7 @@ export const resetPassword = async (req, res) => {
 }
 
 export const saveCV = async (req, res) => {
-    const {userId, education, experience, skills, certifications, projects, languages, hobbies, achievements} = req.body;
+    const {userId, education, experience, skills, certifications, projects, languages, hobbies, achievements, textColor, backgroundColor} = req.body;
 
     if (!userId) {
         return res.json({success: false, message: "User ID is required"});
@@ -322,6 +322,8 @@ export const saveCV = async (req, res) => {
         cv.languages = languages;
         cv.hobbies = hobbies;
         cv.achievements = achievements;
+        cv.textColor = textColor;
+        cv.backgroundColor = backgroundColor;
 
         await cv.save();
 

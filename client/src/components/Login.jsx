@@ -1,108 +1,126 @@
 // React Bootstrap
-import { Button, Form, FloatingLabel, Container } from 'react-bootstrap';
+import { Button, Form, FloatingLabel, Container } from "react-bootstrap";
 
 // React
-import { useContext, useState, useCallback } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useContext, useState, useCallback } from "react";
+import { useNavigate } from "react-router-dom";
 
 // App Context
-import { AppContext } from '../context/AppContext';
+import { AuthContext } from "../context/AuthContext";
 
 // Axios for api calling
-import axios from 'axios';
+import axios from "axios";
 
 // Toast for user messages
-import { toast } from 'react-toastify';
+import { toast } from "react-toastify";
 
 // Styles
-import '../styles/Fonts.css'; // Import custom font styles
-import '../styles/Login.css'; // Import custom styles for login
+import "../styles/Fonts.css"; // Import custom font styles
+import "../styles/Login.css"; // Import custom styles for login
 
 const LoginForm = () => {
-
   const navigate = useNavigate(); // Navigate to other routes
 
-  const { backendUrl, setIsLoggedIn, getUserData } = useContext(AppContext); // Access context values
+  const { backendUrl, setIsLoggedIn, getUserData } = useContext(AuthContext);
 
   // State for form fields
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   // Validation state
   const [emailTouched, setEmailTouched] = useState(false);
   const [passwordTouched, setPasswordTouched] = useState(false);
   const [formSubmitted, setFormSubmitted] = useState(false);
 
-
   // Validation checks
   const emailIsValid = /^\S+@\S+\.\S+$/.test(email);
-  const passwordlengthRequirement = 8 // Change here for password length requirement
-  const passwordIsValid = password.length >= passwordlengthRequirement;  // example rule: min 6 chars
+  const passwordlengthRequirement = 8; // Change here for password length requirement
+  const passwordIsValid = password.length >= passwordlengthRequirement; // example rule: min 6 chars
 
   const formIsValid = emailIsValid && passwordIsValid; // Overall form validity
 
   // Handlers for input changes and validation
-  const handleEmailChange = useCallback((e) => {setEmail(e.target.value);}, []);
-  const handleEmailBlur = useCallback(() => {setEmailTouched(true);}, []);
-  const handlePasswordChange = useCallback((e) => {setPassword(e.target.value);}, []);
-  const handlePasswordBlur = useCallback(() => {setPasswordTouched(true);}, []);
-  const handleSignUpNavigate = useCallback(() => {navigate('/Authenticate', { state: { authState: 'SignUp' } });}, [navigate]);
+  const handleEmailChange = useCallback((e) => {
+    setEmail(e.target.value);
+  }, []);
+  const handleEmailBlur = useCallback(() => {
+    setEmailTouched(true);
+  }, []);
+  const handlePasswordChange = useCallback((e) => {
+    setPassword(e.target.value);
+  }, []);
+  const handlePasswordBlur = useCallback(() => {
+    setPasswordTouched(true);
+  }, []);
+  const handleSignUpNavigate = useCallback(() => {
+    navigate("/Authenticate", { state: { authState: "SignUp" } });
+  }, [navigate]);
 
-  const onSubmitHandler = useCallback(async (e) => {
-    try {
-      e.preventDefault();
-  
-      setEmailTouched(true);
-      setPasswordTouched(true);
-      setFormSubmitted(true);
-  
-      if (!formIsValid) return;
-  
-      const { data } = await axios.post(backendUrl + '/api/auth/login', {
-        email,
-        password,
-      });
-  
-      if (data.success) {
-        setIsLoggedIn(true);
-        getUserData();
-        navigate('/');
-        toast.success('Logged in!', {
-          position: 'top-right',
-          autoClose: 3000,
-          hideProgressBar: false,
-          closeOnClick: false,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: 'colored',
+  const onSubmitHandler = useCallback(
+    async (e) => {
+      try {
+        e.preventDefault();
+
+        setEmailTouched(true);
+        setPasswordTouched(true);
+        setFormSubmitted(true);
+
+        if (!formIsValid) return;
+
+        const { data } = await axios.post(backendUrl + "/api/auth/login", {
+          email,
+          password,
         });
-      } else {
-        toast.error(data.message, {
-          position: 'top-right',
+
+        if (data.success) {
+          setIsLoggedIn(true);
+          getUserData();
+          navigate("/");
+          toast.success("Logged in!", {
+            position: "top-right",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: false,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+          });
+        } else {
+          toast.error(data.message, {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: false,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+          });
+        }
+      } catch (error) {
+        toast.error(error.message, {
+          position: "top-right",
           autoClose: 5000,
           hideProgressBar: false,
           closeOnClick: false,
           pauseOnHover: true,
           draggable: true,
           progress: undefined,
-          theme: 'colored',
+          theme: "colored",
         });
       }
-    } catch (error) {
-      toast.error(error.message, {
-        position: 'top-right',
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: false,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: 'colored',
-      });
-    }
-  }, [backendUrl, email, password, formIsValid, setIsLoggedIn, getUserData, navigate]);
-    
+    },
+    [
+      backendUrl,
+      email,
+      password,
+      formIsValid,
+      setIsLoggedIn,
+      getUserData,
+      navigate,
+    ]
+  );
 
   return (
     <Container className="mx-auto col-lg-5 mt-2 mt-lg-1 pt-2 pt-lg-3 pb-3">
@@ -114,7 +132,11 @@ const LoginForm = () => {
             className="w-100 formWidth"
             noValidate
           >
-            <FloatingLabel controlId="formEmail" label="Email address" className="text-dark mb-4">
+            <FloatingLabel
+              controlId="formEmail"
+              label="Email address"
+              className="text-dark mb-4"
+            >
               <Form.Control
                 type="email"
                 placeholder="Enter email"
@@ -131,19 +153,26 @@ const LoginForm = () => {
               )}
             </FloatingLabel>
 
-            <FloatingLabel controlId="formPassword" label="Password" className="text-dark mb-4">
+            <FloatingLabel
+              controlId="formPassword"
+              label="Password"
+              className="text-dark mb-4"
+            >
               <Form.Control
                 type="password"
                 placeholder="Password"
                 value={password}
                 onChange={handlePasswordChange}
                 onBlur={handlePasswordBlur}
-                isInvalid={(passwordTouched || formSubmitted) && !passwordIsValid}
+                isInvalid={
+                  (passwordTouched || formSubmitted) && !passwordIsValid
+                }
                 required
               />
               {(passwordTouched || formSubmitted) && !passwordIsValid && (
                 <Form.Control.Feedback type="invalid">
-                  Password must be at least {passwordlengthRequirement} characters.
+                  Password must be at least {passwordlengthRequirement}{" "}
+                  characters.
                 </Form.Control.Feedback>
               )}
             </FloatingLabel>

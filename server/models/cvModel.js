@@ -12,6 +12,9 @@ const cvSchema = new mongoose.Schema({
     languages: {type: String, default: 'Add your languages here'},
     hobbies: {type: String, default: 'Add your hobbies here'},
     achievements: {type: String, default: 'Add your achievements here'},
+    textColor: { type: String, default: '#000000', required: true },
+    backgroundColor: { type: String, default: '#ffffff', required: true },
+    profilePicture: { type: String, default: '' },
 });
   
 const CV = mongoose.models.CV || mongoose.model('CV', cvSchema);
