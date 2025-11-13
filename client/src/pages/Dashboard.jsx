@@ -101,8 +101,8 @@ const Dashboard = () => {
   );
 
   return (
-    <div className="d-flex flex-column min-vh-100 login-wrapper text-white">
-      <div className="login-overlay flex-grow-1">
+    <div className="d-flex flex-column min-vh-100 dashboard-wrapper text-white">
+      <div className="dashboard-overlay flex-grow-1">
         <Navbar />
 
         <Container className="my-5">

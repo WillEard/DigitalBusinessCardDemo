@@ -1,10 +1,10 @@
 .footer {
-    background-color: #1a1d3d;
+  background-color: #1a1d3d;
+  position: static;
 }
 
 .footer-logo {
-    width: 150px;
-    height: auto;
-    fill: white;
-  }
-
+  width: 150px;
+  height: auto;
+  fill: white;
+}

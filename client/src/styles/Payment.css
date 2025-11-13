@@ -1,18 +1,50 @@
+.payment-wrapper {
+  position: relative;
+  background: url("/testimonial-bg.png") center center / cover no-repeat;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  overflow: hidden;
+}
+
+.payment-overlay {
+  background-color: rgba(0, 0, 0, 0.5);
+  flex-grow: 1;
+  width: 100%;
+  padding-top: 80px;
+  position: relative;
+  z-index: 1;
+}
+
+/* gradient only for styling effect – must stay within 100% width */
+.payment-wrapper::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 150px;
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, white 100%);
+  z-index: 2;
+  pointer-events: none;
+}
+
 /* Add spacing between label and input */
 .form-group label {
-    display: block;
-    margin-bottom: 0.5rem;
-  }
-  
-  /* Add spacing below input for the error message */
-  .form-control.is-invalid {
-    margin-bottom: -0.1rem;
-  }
-  
-  /* Style the feedback message to appear below input */
-  .invalid-feedback {
-    display: block;
-    margin-top: 0.25rem;
-    margin-bottom: 1rem;
-    font-size: 0.875rem;
-  }
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+/* Add spacing below input for the error message */
+.form-control.is-invalid {
+  margin-bottom: -0.1rem;
+}
+
+/* Style the feedback message to appear below input */
+.invalid-feedback {
+  display: block;
+  margin-top: 0.25rem;
+  margin-bottom: 1rem;
+  font-size: 0.875rem;
+}

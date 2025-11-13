@@ -82,8 +82,8 @@ export const Customise = () => {
   }, [isLoadingUser, userData]);
 
   return (
-    <div className="d-flex flex-column min-vh-100 login-wrapper text-white">
-      <div className="login-overlay flex-grow-1">
+    <div className="d-flex flex-column min-vh-100 customise-wrapper text-white">
+      <div className="customise-overlay flex-grow-1">
         <Navbar />
 
         <div className="mt-5 d-flex justify-content-center align-items-center gap-2 flex-wrap">

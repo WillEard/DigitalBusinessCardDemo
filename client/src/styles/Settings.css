@@ -1,9 +1,41 @@
+.settings-wrapper {
+  position: relative;
+  background: url("/testimonial-bg.png") center center / cover no-repeat;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  overflow: hidden;
+}
+
+.settings-overlay {
+  background-color: rgba(0, 0, 0, 0.5);
+  flex-grow: 1;
+  width: 100%;
+  padding-top: 80px;
+  position: relative;
+  z-index: 1;
+}
+
+/* gradient only for styling effect – must stay within 100% width */
+.settings-wrapper::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 150px;
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, white 100%);
+  z-index: 2;
+  pointer-events: none;
+}
+
 .button-border {
   border-radius: 0.5rem !important;
 }
 
 .fontCondensed {
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
   font-weight: 600;
 }
 
@@ -16,5 +48,9 @@
 }
 
 .shadow {
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1) !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1) !important;
+}
+
+.deletion {
+  margin-bottom: 100px !important;
 }

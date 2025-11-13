@@ -1,4 +1,4 @@
-.login-wrapper {
+.notfound-wrapper {
   position: relative;
   background: url("/testimonial-bg.png") center center / cover no-repeat;
   color: white;
@@ -8,7 +8,7 @@
   overflow: hidden;
 }
 
-.login-overlay {
+.notfound-overlay {
   background-color: rgba(0, 0, 0, 0.5) !important;
   flex-grow: 1;
   width: 100%;
@@ -18,7 +18,7 @@
 }
 
 /* gradient only for styling effect – must stay within 100% width */
-.login-wrapper::after {
+.notfound-wrapper::after {
   content: "";
   position: absolute;
   bottom: 0;

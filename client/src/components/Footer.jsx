@@ -1,17 +1,17 @@
-import { Container, Image } from 'react-bootstrap';
-import { useNavigate } from 'react-router-dom';
-import { useCallback } from 'react';
+import { Container, Image } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { useCallback } from "react";
 
-import '../styles/Fonts.css';
-import '../styles/Footer.css';
-import PelagoPassLogo from '/PelagoPassLogoWhite.svg';
+import "../styles/Fonts.css";
+import "../styles/Footer.css";
+import PelagoPassLogo from "/PelagoPassLogoWhite.svg";
 
 const navLinks = [
-  { label: 'Home', hash: 'home' },
-  { label: 'How it works', hash: 'howitworks' },
-  { label: 'Features', hash: 'features' },
-  { label: 'Testimonials', hash: 'testimonials' },
-  { label: 'Pricing', hash: 'pricing' },
+  { label: "Home", hash: "home" },
+  { label: "How it works", hash: "howitworks" },
+  { label: "Features", hash: "features" },
+  { label: "Testimonials", hash: "testimonials" },
+  { label: "Pricing", hash: "pricing" },
 ];
 
 const Footer = () => {
@@ -20,11 +20,11 @@ const Footer = () => {
   const handleScrollOrNavigate = useCallback(
     (hash) => (e) => {
       e.preventDefault();
-      if (window.location.pathname === '/') {
+      if (window.location.pathname === "/") {
         const el = document.getElementById(hash);
-        if (el) el.scrollIntoView({ behavior: 'smooth' });
+        if (el) el.scrollIntoView({ behavior: "smooth" });
       } else {
-        navigate('/' + (hash ? `#${hash}` : ''));
+        navigate("/" + (hash ? `#${hash}` : ""));
       }
     },
     [navigate]
@@ -35,7 +35,11 @@ const Footer = () => {
       <div className="w-100 w-sm-50">
         <Container>
           <footer className="py-3 my-4 text-center">
-            <Image className="footer-logo" src={PelagoPassLogo} alt="Pelago Logo" />
+            <Image
+              className="footer-logo"
+              src={PelagoPassLogo}
+              alt="Pelago Logo"
+            />
             <ul className="nav justify-content-center border-bottom pb-3 mb-3">
               {navLinks.map((link) => (
                 <li className="nav-item" key={link.hash}>
