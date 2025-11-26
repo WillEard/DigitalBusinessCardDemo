@@ -139,11 +139,11 @@ const Settings = () => {
   }, []);
 
   return (
-    <div className="d-flex flex-column min-vh-100 settings-wrapper text-dark">
+    <div className="d-flex flex-column settings-wrapper text-dark">
       <Navbar />
 
       <div className="settings-overlay flex-grow-1">
-        <Container className="py-5" style={{ maxWidth: "1200px" }}>
+        <Container className="py-3 pb-5">
           {/* Header */}
           <div className="text-center mb-5">
             <h1 className="text-light fontNormal display-4 mb-2">
@@ -452,62 +452,62 @@ const Settings = () => {
               </Card.Body>
             </Card>
           </div>
-
-          {/* Confirmation Modal */}
-          <Modal show={showConfirm} onHide={handleCloseConfirm} centered>
-            <Modal.Header closeButton className="border-0">
-              <Modal.Title className="fontCondensed">
-                Confirm Account Deletion
-              </Modal.Title>
-            </Modal.Header>
-            <Modal.Body className="pt-0">
-              <div className="text-center mb-3">
-                <div className="bg-danger bg-opacity-10 rounded-circle d-inline-flex p-3 mb-3">
-                  <svg
-                    width="48"
-                    height="48"
-                    fill="currentColor"
-                    className="text-danger"
-                  >
-                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z" />
-                  </svg>
-                </div>
-              </div>
-              <p className="text-center mb-0">
-                Are you sure you want to permanently delete your account? All
-                your data will be lost and this action cannot be undone.
-              </p>
-            </Modal.Body>
-            <Modal.Footer className="border-0">
-              <Button
-                variant="light"
-                onClick={handleCloseConfirm}
-                disabled={deleting}
-                className="fontCondensed"
-              >
-                Cancel
-              </Button>
-              <Button
-                variant="danger"
-                onClick={handleConfirmDelete}
-                disabled={deleting}
-                className="fontCondensed"
-              >
-                {deleting ? (
-                  <>
-                    <Spinner animation="border" size="sm" className="me-2" />
-                    Deleting...
-                  </>
-                ) : (
-                  "Yes, Delete My Account"
-                )}
-              </Button>
-            </Modal.Footer>
-          </Modal>
         </Container>
       </div>
 
       <Footer />
+
+      {/* Confirmation Modal */}
+      <Modal show={showConfirm} onHide={handleCloseConfirm} centered>
+        <Modal.Header closeButton className="border-0">
+          <Modal.Title className="fontCondensed">
+            Confirm Account Deletion
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body className="pt-0">
+          <div className="text-center mb-3">
+            <div className="bg-danger bg-opacity-10 rounded-circle d-inline-flex p-3 mb-3">
+              <svg
+                width="48"
+                height="48"
+                fill="currentColor"
+                className="text-danger"
+              >
+                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z" />
+              </svg>
+            </div>
+          </div>
+          <p className="text-center mb-0">
+            Are you sure you want to permanently delete your account? All your
+            data will be lost and this action cannot be undone.
+          </p>
+        </Modal.Body>
+        <Modal.Footer className="border-0">
+          <Button
+            variant="light"
+            onClick={handleCloseConfirm}
+            disabled={deleting}
+            className="fontCondensed"
+          >
+            Cancel
+          </Button>
+          <Button
+            variant="danger"
+            onClick={handleConfirmDelete}
+            disabled={deleting}
+            className="fontCondensed"
+          >
+            {deleting ? (
+              <>
+                <Spinner animation="border" size="sm" className="me-2" />
+                Deleting...
+              </>
+            ) : (
+              "Yes, Delete My Account"
+            )}
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </div>
   );
 };
