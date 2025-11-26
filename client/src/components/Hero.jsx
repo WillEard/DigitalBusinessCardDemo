@@ -268,42 +268,43 @@ const Hero = () => {
               {/* Mobile */}
               <Row className="d-md-none justify-content-center align-items-center text-center row">
                 <Col>
-                  <h1 className="fw-bold text-uppercase mb-4 fontNormal mobile-h1-size">
+                  <h1 className="fw-bold text-uppercase mb-4 fontNormal mobile-h1-size mt-4">
                     Your digital business card, <br /> reimagined
                   </h1>
                   <Container className="mobile-container-width">
                     <p className="lead mb-4 fontCondensed mobile-p-size">
                       Share info instantly with a tap, no paper, no hassle.
                     </p>
-                    <div className="d-grid gap-3 mb-4">
+                    <div className="d-grid gap-2 ">
                       <Button
                         variant="primary"
-                        size="lg"
+                        size="md"
                         className="rounded-5 w-100 fontNormal"
                         onClick={goToSignUp}
                       >
                         Create your free pass
                       </Button>
-                      <p className="fw-bold mb-0 fontCondensed mobile-p-size">
+                      <p className="fw-bold mb-0 fontCondensed mobile-p-size fs-6">
                         No credit card needed.
                       </p>
 
                       <Button
                         variant="secondary"
-                        size="lg"
-                        className="rounded-5 w-100 fontNormal"
+                        size="md"
+                        className="rounded-5 w-100 fontNormal mt-2"
                         onClick={scrollToHowItWorks}
                       >
                         See how it works
                       </Button>
-                      <p className="pt-2 fw-bold mb-0 fontCondensed mobile-p-size">
+                      <p className="fw-bold mb-0 fontCondensed mobile-p-size fs-6">
                         No wasted time.
                       </p>
                     </div>
-                    <div className="mt-5">
-                      <h4 className="fontCondensed">
+                    <div className="mt-4">
+                      <h5 className="fontCondensed">
                         Trusted by 5,000+ professionals
-                      </h4>
+                      </h5>
+                      <hr />
                       <h5 className="fontCondensed">
                         3,124 cards created this week
                       </h5>

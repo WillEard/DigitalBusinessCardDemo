@@ -101,7 +101,7 @@ const Navigation = () => {
           className="border border-light"
         />
         <Navbar.Collapse id="responsive-navbar-nav">
-          <Nav className="justify-content-center mx-auto">
+          <Nav className="justify-content-center mx-auto d-none d-md-flex">
             <li className="nav-item">
               <a
                 href="#home"
@@ -153,7 +153,58 @@ const Navigation = () => {
               </a>
             </li>
           </Nav>
-          <Nav>
+
+          {/* Mobile Navigation */}
+          <Nav className="d-flex d-md-none justify-content-between">
+            <Nav.Item>
+              <Nav.Link
+                href="#home"
+                onClick={handleHomeClick}
+                className="text-light fontCondensed text-center"
+              >
+                Home
+              </Nav.Link>
+            </Nav.Item>
+            <Nav.Item>
+              <Nav.Link
+                href="/#howitworks"
+                onClick={handleHowItWorksClick}
+                className="text-light fontCondensed text-center"
+              >
+                How it works
+              </Nav.Link>
+            </Nav.Item>
+            <Nav.Item>
+              <Nav.Link
+                href="/#features"
+                onClick={handleFeaturesClick}
+                className="text-light fontCondensed text-center"
+              >
+                Features
+              </Nav.Link>
+            </Nav.Item>
+            <Nav.Item>
+              <Nav.Link
+                href="/#testimonials"
+                onClick={handleTestimonialsClick}
+                className="text-light fontCondensed text-center"
+              >
+                Testimonials
+              </Nav.Link>
+            </Nav.Item>
+            <Nav.Item>
+              <Nav.Link
+                href="/#pricing"
+                onClick={handlePricingClick}
+                className="text-light fontCondensed text-center"
+              >
+                Pricing
+              </Nav.Link>
+            </Nav.Item>
+          </Nav>
+
+          {/* Account Menu (Desktop) */}
+          <Nav className="d-none d-md-flex">
             {userData ? (
               <>
                 <NavDropdown
@@ -207,10 +258,81 @@ const Navigation = () => {
                 </Nav.Link>
                 <Nav.Link
                   onClick={handleLoginClick}
-                  className="fw-bold text-light login rounded fontCondensed"
+                  className="fw-bold text-light login rounded fontCondensed "
                 >
                   Login
                 </Nav.Link>
+              </>
+            )}
+          </Nav>
+
+          {/* Account Menu (Mobile) */}
+          <Nav className="d-flex d-md-none">
+            {userData ? (
+              <>
+                <hr />
+                <Nav.Item>
+                  <Nav.Link
+                    href="/dashboard"
+                    className="fontCondensed text-center text-light"
+                  >
+                    Dashboard
+                  </Nav.Link>
+                </Nav.Item>
+                <Nav.Item>
+                  <Nav.Link
+                    href="/account"
+                    className="fontCondensed text-center text-light"
+                  >
+                    Account
+                  </Nav.Link>
+                </Nav.Item>
+                {!userData.isVerified ? (
+                  <Nav.Item>
+                    <Nav.Link
+                      onClick={sendVerifyOTP}
+                      className="fontCondensed text-center text-light"
+                    >
+                      Verify Account
+                    </Nav.Link>
+                  </Nav.Item>
+                ) : (
+                  <Nav.Item>
+                    <Nav.Link
+                      disabled
+                      className="fontCondensed text-center text-light"
+                    >
+                      Verified
+                    </Nav.Link>
+                  </Nav.Item>
+                )}
+                <Nav.Item>
+                  <Nav.Link
+                    onClick={logout}
+                    className="fw-bold fontCondensed text-center text-light"
+                  >
+                    Logout
+                  </Nav.Link>
+                </Nav.Item>
+              </>
+            ) : (
+              <>
+                <Nav.Item>
+                  <Nav.Link
+                    onClick={handleSignUpClick}
+                    className="fw-bold text-light rounded signup fontCondensed text-center bg-primary"
+                  >
+                    Sign Up
+                  </Nav.Link>
+                </Nav.Item>
+                <Nav.Item>
+                  <Nav.Link
+                    onClick={handleLoginClick}
+                    className="fw-bold text-light login rounded fontCondensed text-center"
+                  >
+                    Login
+                  </Nav.Link>
+                </Nav.Item>
               </>
             )}
           </Nav>
