@@ -1,39 +1,40 @@
 @font-face {
-    font-family: 'Sailor';
-    src: url('../assets/fonts/Sailors.otf') format('opentype');
-    font-weight: normal;
-    font-style: normal;
-    font-display: swap;
-  }
-  
-  @font-face {
-    font-family: 'Sailor Condensed';
-    src: url('../assets/fonts/SailorsCondensed.otf') format('opentype');
-    font-weight: normal;
-    font-style: normal;
-    font-display: swap;
-  }
-  
-  @font-face {
-    font-family: 'Sailor Condensed Italic';
-    src: url('../assets/fonts/SailorsCondensedSlant-Italic.otf') format('opentype');
-    font-weight: normal;
-    font-style: italic;
-    font-display: swap;
-  }
-  
-  @font-face {
-    font-family: 'Sailor Rough';
-    src: url('../assets/fonts/SailorsRough.otf') format('opentype');
-    font-weight: normal;
-    font-style: normal;
-    font-display: swap;
-  }
-  
-  @font-face {
-    font-family: 'Sailor Italic';
-    src: url('../assets/fonts/SailorsSlant-Italic.otf') format('opentype');
-    font-weight: normal;
-    font-style: italic;
-    font-display: swap;
-  }
+  font-family: "Sailor";
+  src: url("../assets/fonts/Sailors.otf") format("opentype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Sailor Condensed";
+  src: url("../assets/fonts/SailorsCondensed.otf") format("opentype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Sailor Condensed Italic";
+  src: url("../assets/fonts/SailorsCondensedSlant-Italic.otf")
+    format("opentype");
+  font-weight: normal;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Sailor Rough";
+  src: url("../assets/fonts/SailorsRough.otf") format("opentype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Sailor Italic";
+  src: url("../assets/fonts/SailorsSlant-Italic.otf") format("opentype");
+  font-weight: normal;
+  font-style: italic;
+  font-display: swap;
+}

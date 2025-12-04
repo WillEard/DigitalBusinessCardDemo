@@ -105,125 +105,115 @@ const Dashboard = () => {
       <div className="dashboard-overlay flex-grow-1">
         <Navbar />
 
-        <Container className="my-5">
-          <div className="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center gap-2 py-2">
-            <h1 className="mb-0 fw-semibold fontNormal text-light">
+        <Container className="my-3 my-md-5 pb-4">
+          {/* Header Section */}
+          <div className="d-flex flex-column gap-3 py-2">
+            <h1 className="mb-0 fw-semibold fontNormal text-light fs-3 fs-md-1">
               Welcome back, {firstName}
             </h1>
 
-            <div className="d-flex flex-column flex-md-row align-items-start align-items-md-center gap-3 text-light">
-              <div>
-                <h3
-                  className={`mb-0 ${
-                    userData?.isVerified ? "text-success" : "text-danger"
-                  } fontCondensed`}
-                >
-                  {userData?.isVerified ? "Verified" : "Not Verified"}
-                </h3>
-              </div>
+            <div className="d-flex flex-column flex-sm-row align-items-start gap-2 gap-sm-3 text-light">
+              <h3
+                className={`mb-0 fs-6 ${
+                  userData?.isVerified ? "text-success" : "text-danger"
+                } fontCondensed`}
+              >
+                {userData?.isVerified ? "✓ Verified" : "⚠ Not Verified"}
+              </h3>
 
-              <span className="d-none d-md-inline text-secondary">|</span>
+              <span className="d-none d-sm-inline text-secondary">|</span>
 
-              <div>
-                <h3 className="mb-0 fontCondensed">
-                  Subscription:{" "}
-                  <span className="text-success fontCondensed">
-                    {userData?.subscriptionType}
-                  </span>
-                </h3>
-              </div>
+              <h3 className="mb-0 fs-6 fontCondensed">
+                Subscription:{" "}
+                <span className="text-success fontCondensed">
+                  {userData?.subscriptionType}
+                </span>
+              </h3>
             </div>
           </div>
 
-          <Row className="g-2 mt-4">
+          {/* Action Buttons */}
+          <div className="d-flex flex-wrap gap-2 mt-3 mt-md-4">
             {userData?.subscriptionType === "Paid" && (
-              <div className="d-flex flex-wrap gap-2 justify-content-start mx-auto">
-                <Col xs={5} md="auto">
-                  <Button
-                    variant="outline-light"
-                    className="w-100 fontCondensed"
-                    onClick={handleOpenCreateModal}
-                  >
-                    Create New Card
-                  </Button>
-                </Col>
-                <Col xs={5} md="auto">
-                  <Button
-                    variant="outline-light"
-                    className="w-100 fontCondensed"
-                    onClick={handleCustomiseCard}
-                  >
-                    Customise Card
-                  </Button>
-                </Col>
-              </div>
+              <>
+                <Button
+                  variant="outline-light"
+                  className="fontCondensed flex-grow-1 flex-sm-grow-0"
+                  onClick={handleOpenCreateModal}
+                >
+                  Create New Card
+                </Button>
+                <Button
+                  variant="outline-light"
+                  className="fontCondensed flex-grow-1 flex-sm-grow-0"
+                  onClick={handleCustomiseCard}
+                >
+                  Customise Card
+                </Button>
+              </>
             )}
 
             {userData?.subscriptionType === "Free" && (
-              <Col xs={12} md="auto">
-                <Button
-                  variant="success"
-                  className="w-100 fontCondensed rounded-5"
-                  onClick={handlePayment}
-                >
-                  Go premium
-                </Button>
-              </Col>
+              <Button
+                variant="success"
+                className="fontCondensed rounded-5 flex-grow-1 flex-sm-grow-0"
+                onClick={handlePayment}
+              >
+                Go Premium
+              </Button>
             )}
-
-            <Col xs={12} md="auto">
-              <CVModal
-                profileUrl={
-                  selectedCv
-                    ? `${siteURL}/cv/${userData?.username}/${selectedCv._id}`
-                    : ""
-                }
-                show={showModal}
-                handleClose={handleClose} // <-- name it exactly as CVModal expects
-                cvItem={selectedCv}
-                setCVData={setCVData}
-                userData={userData}
-              />
-            </Col>
-
-            <Col xs={12} md="auto">
-              <CreateCVModal
-                show={showCreateModal}
-                onHide={handleCloseCreateModal}
-                onSave={handleAddNewCv}
-              />
-            </Col>
 
             {!userData?.isVerified && (
-              <Col xs={12} md="auto">
-                <Button
-                  variant="primary"
-                  className="w-100 fontCondensed rounded-5"
-                  onClick={handleVerifyEmail}
-                >
-                  Verify Account
-                </Button>
-              </Col>
+              <Button
+                variant="primary"
+                className="fontCondensed rounded-5 flex-grow-1 flex-sm-grow-0"
+                onClick={handleVerifyEmail}
+              >
+                Verify Account
+              </Button>
             )}
-          </Row>
+          </div>
 
-          <Row className="mt-2 gy-2 align-items-start justify-content-center">
-            <hr />
-            <Col md={8}>
-              <h4 className="mb-2 fontNormal">Active Cards</h4>
-              <Row className="g-4">
+          {/* Modals */}
+          <CVModal
+            profileUrl={
+              selectedCv
+                ? `${siteURL}/cv/${userData?.username}/${selectedCv._id}`
+                : ""
+            }
+            show={showModal}
+            handleClose={handleClose}
+            cvItem={selectedCv}
+            setCVData={setCVData}
+            userData={userData}
+          />
+
+          <CreateCVModal
+            show={showCreateModal}
+            onHide={handleCloseCreateModal}
+            onSave={handleAddNewCv}
+          />
+
+          {/* Main Content */}
+          <Row className="mt-4 gy-4">
+            <hr className="my-3" />
+
+            {/* Active Cards Section - Full width on mobile, 8 cols on desktop */}
+            <Col xs={12} lg={8}>
+              <h4 className="mb-3 fontNormal">Active Cards</h4>
+              <Row className="g-3">
                 {cvData &&
                 Array.isArray(cvData[0]?.cvs) &&
                 cvData[0].cvs.length > 0 ? (
                   cvData[0].cvs.map((cv) => {
                     const profileUrl = `${siteURL}/cv/${userData?.username}`;
                     return (
-                      <Col md={6} key={cv._id}>
-                        <Card className="p-3 shadow-sm border rounded-3">
+                      <Col xs={12} sm={6} key={cv._id}>
+                        <Card className="p-2 p-md-3 shadow-sm border rounded-3 h-100">
                           <Card.Body>
-                            <div className="d-flex align-items-center justify-content-between mb-2">
-                              <div>
-                                <h5 className="mb-1 fontCondensed">
+                            <div className="d-flex align-items-start justify-content-between mb-3 flex-wrap gap-2">
+                              <div className="flex-grow-1">
+                                <h5 className="mb-1 fontCondensed fs-6">
                                   {userData?.name}
                                 </h5>
                                 <div className="text-muted small fontCondensed">
@@ -231,13 +221,15 @@ const Dashboard = () => {
                                 </div>
                               </div>
                               <img
-                                src={`https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=${encodeURIComponent(
+                                src={`https://api.qrserver.com/v1/create-qr-code/?size=80x80&data=${encodeURIComponent(
                                   profileUrl
                                 )}`}
                                 alt="QR"
+                                className="qr-code"
+                                style={{ width: "80px", height: "80px" }}
                               />
                             </div>
-                            <div className="d-flex flex-wrap gap-2 mt-3">
+                            <div className="d-flex flex-wrap gap-2">
                               <Button
                                 size="sm"
                                 variant="outline-dark"
@@ -257,7 +249,11 @@ const Dashboard = () => {
                               <Button size="sm" variant="outline-dark">
                                 Share
                               </Button>
-                              <Button size="sm" variant="outline-dark">
+                              <Button
+                                size="sm"
+                                variant="outline-dark"
+                                className="d-none d-sm-inline-block"
+                              >
                                 Add to Wallet
                               </Button>
                               <Button size="sm" variant="outline-danger">
@@ -270,14 +266,16 @@ const Dashboard = () => {
                     );
                   })
                 ) : (
-                  <Col>
+                  <Col xs={12}>
                     <p className="text-light fontCondensed">No cards yet</p>
                   </Col>
                 )}
               </Row>
             </Col>
 
-            <Col md={4} className="align-self-start">
+            {/* Analytics & Notifications - Full width on mobile, 4 cols on desktop */}
+            <Col xs={12} lg={4}>
+              <h4 className="mb-1 fontNormal">Notifications / Analytics</h4>
               <Card className="mb-3 shadow-sm analytics">
                 <Card.Body>
                   <h6 className="fw-semibold fs-5 fontNormal">Analytics</h6>
@@ -290,13 +288,14 @@ const Dashboard = () => {
                   </Button>
                 </Card.Body>
               </Card>
-              <Card className="shadow-sm">
+
+              <Card className="shadow-sm mb-3">
                 <Card.Body>
                   <h6 className="fw-semibold fs-5 fontNormal">Notifications</h6>
                   <p className="mb-0 fw-normal fs-6 fontCondensed">
                     Your card was scanned 3 times today
                   </p>
-                  <p className="text-muted fw-normal fs-6 fontCondensed">
+                  <p className="text-muted fw-normal fs-6 fontCondensed mb-0">
                     Find out who using{" "}
                     <span className="text-info">Premium</span>
                   </p>
@@ -305,11 +304,19 @@ const Dashboard = () => {
             </Col>
           </Row>
 
+          {/* Premium Upgrade Banner */}
           {userData?.subscriptionType === "Free" && (
-            <div className="mt-5 p-3 rounded-5 bg-primary bg-opacity-25 text-light text-center fontCondensed w-50 mx-auto">
+            <div
+              className="mt-4 mt-md-5 p-3 rounded-4 bg-primary bg-opacity-25 text-light text-center fontCondensed mx-auto"
+              style={{ maxWidth: "600px" }}
+            >
               <strong className="fontCondensed">
                 Upgrade to{" "}
-                <a className="text-info fontCondensed" onClick={handlePayment}>
+                <a
+                  className="text-info fontCondensed text-decoration-underline"
+                  onClick={handlePayment}
+                  style={{ cursor: "pointer" }}
+                >
                   Premium
                 </a>
               </strong>{" "}
