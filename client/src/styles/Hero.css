@@ -3,19 +3,19 @@
   margin-top: -80px; /* adjust if navbar height changes */
   height: 100vh;
   width: 100%;
-  background: url('/hero-bg.png') no-repeat center center;
+  background: url("/hero-bg.jpeg") no-repeat center center;
   background-size: cover;
   background-attachment: scroll; /* or fixed for parallax */
   color: white;
   overflow: hidden;
-  display: flex;                /* enable flexbox */
-  align-items: center;          /* vertical centering */
-  justify-content: center;      /* horizontal centering */
-  text-align: center;           /* center text inside */
+  display: flex; /* enable flexbox */
+  align-items: center; /* vertical centering */
+  justify-content: center; /* horizontal centering */
+  text-align: center; /* center text inside */
 }
 
 .hero-wrapper::after {
-  content: '';
+  content: "";
   position: absolute;
   bottom: -1px; /* Slight overlap to blend */
   left: 0;
@@ -30,21 +30,19 @@
   background-color: rgba(0, 0, 0, 0.5); /* darken the image for readability */
   height: 100%;
   width: 100%;
-  display: flex;            /* enable flex for centering content inside */
-  align-items: center;      /* vertical centering */
-  justify-content: center;  /* horizontal centering */
-  padding-top: 0;           /* remove previous top padding */
+  display: flex; /* enable flex for centering content inside */
+  align-items: center; /* vertical centering */
+  justify-content: center; /* horizontal centering */
+  padding-top: 0; /* remove previous top padding */
   position: relative;
-  z-index: 3;               /* ensure it's above the gradient */
-  flex-direction: column;   /* stack children vertically */
+  z-index: 3; /* ensure it's above the gradient */
+  flex-direction: column; /* stack children vertically */
 }
 
 .hero-container {
-  max-width: 800px;          /* limit content width */
-  padding: 0 1rem;           /* horizontal padding */
+  max-width: 800px; /* limit content width */
+  padding: 0 1rem; /* horizontal padding */
 }
-
-
 
 .mobile-h1-size {
   font-size: 3em; /* Adjust as needed for mobile */
@@ -56,7 +54,7 @@
 
 .mobile-container-width {
   max-width: 600px; /* Adjust as needed for mobile */
-} 
+}
 
 .arrow-icon {
   display: inline-block;
