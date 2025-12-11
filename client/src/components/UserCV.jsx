@@ -61,90 +61,84 @@ const UserCV = () => {
     setSelectedCV(cv);
   }, []);
 
-  if (loading) return <p>Loading...</p>;
-  if (!selectedCV) return <p>No CV data found.</p>;
+  const cvFields = [
+    { label: "Education", key: "education" },
+    { label: "Experience", key: "experience" },
+    { label: "Skills", key: "skills" },
+    { label: "Certifications", key: "certifications" },
+    { label: "Projects", key: "projects" },
+    { label: "Languages", key: "languages" },
+    { label: "Hobbies", key: "hobbies" },
+    { label: "Achievements", key: "achievements" },
+  ];
 
   return (
-    <Container className="d-flex flex-column justify-content-center align-items-center mt-5 container">
+    <Container className="py-5">
       {loading ? (
-        <p>Loading...</p>
+        <div className="text-center">
+          <p>Loading...</p>
+        </div>
       ) : cvs.length === 0 ? (
         <h2 className="text-center fontNormal">No CV&apos;s were found</h2>
       ) : (
         <>
           {cvs.length > 1 && (
-            <Dropdown className="mb-4 cv-width">
-              <Dropdown.Toggle
-                variant="primary"
-                className="w-100 text-truncate fontCondensed rounded-5"
-              >
-                {selectedCV?.title || "Select a CV"}
-              </Dropdown.Toggle>
-              <Dropdown.Menu className="w-100 dropdown-menu">
-                {cvs.map((cv) => (
-                  <Dropdown.Item
-                    key={cv._id}
-                    onClick={() => handleSelectCV(cv)}
+            <Row className="justify-content-center mb-4">
+              <Col xs={12} md={10} lg={8}>
+                <Dropdown>
+                  <Dropdown.Toggle
+                    variant="primary"
+                    className="w-100 text-truncate fontCondensed rounded-5"
                   >
-                    {cv.title || `CV ${cv._id}`}
-                  </Dropdown.Item>
-                ))}
-              </Dropdown.Menu>
-            </Dropdown>
+                    {selectedCV?.title || "Select a CV"}
+                  </Dropdown.Toggle>
+                  <Dropdown.Menu className="w-100">
+                    {cvs.map((cv) => (
+                      <Dropdown.Item
+                        key={cv._id}
+                        onClick={() => handleSelectCV(cv)}
+                      >
+                        {cv.title || `CV ${cv._id}`}
+                      </Dropdown.Item>
+                    ))}
+                  </Dropdown.Menu>
+                </Dropdown>
+              </Col>
+            </Row>
           )}
 
           {selectedCV && (
-            <Row className="w-100 justify-content-center">
-              <Col
-                md={8}
-                lg={6}
-                className="border rounded p-4 shadow-sm bg-dark"
-              >
-                <h2 className="mb-3 text-center fontNormal">
-                  {selectedCV.title}
-                </h2>
-                <ul className="fontCondensed text-white">
-                  <p>
-                    <strong className="fontCondensed">Education:</strong>{" "}
-                    {selectedCV.education || "N/A"}
-                  </p>
-                  <p>
-                    <strong className="fontCondensed">Experience:</strong>{" "}
-                    {selectedCV.experience || "N/A"}
-                  </p>
-                  <p>
-                    <strong className="fontCondensed">Skills:</strong>{" "}
-                    {selectedCV.skills || "N/A"}
-                  </p>
-                  <p>
-                    <strong className="fontCondensed">Certifications:</strong>{" "}
-                    {selectedCV.certifications || "N/A"}
-                  </p>
-                  <p>
-                    <strong className="fontCondensed">Projects:</strong>{" "}
-                    {selectedCV.projects || "N/A"}
-                  </p>
-                  <p>
-                    <strong className="fontCondensed">Languages:</strong>{" "}
-                    {selectedCV.languages || "N/A"}
-                  </p>
-                  <p>
-                    <strong className="fontCondensed">Hobbies:</strong>{" "}
-                    {selectedCV.hobbies || "N/A"}
-                  </p>
-                  <p>
-                    <strong className="fontCondensed">Achievements:</strong>{" "}
-                    {selectedCV.achievements || "N/A"}
-                  </p>
-                </ul>
+            <Row className="justify-content-center">
+              <Col xs={12} md={11} lg={10} xl={9}>
+                <div className="border rounded p-4 shadow-sm bg-dark">
+                  <h2 className="mb-4 pb-3 text-center fontNormal border-bottom border-secondary">
+                    {selectedCV.title}
+                  </h2>
 
-                <div className="mx-auto mt-4 d-flex justify-content-center">
-                  <Button className="fontCondensed rounded-5">
-                    Add to contacts
-                  </Button>
+                  <Row className="g-4">
+                    {cvFields.map((field) => (
+                      <Col xs={12} lg={6} key={field.key}>
+                        <div className="mb-3">
+                          <h5 className="fontCondensed text-info mb-2">
+                            {field.label}
+                          </h5>
+                          <p
+                            className="fontCondensed text-white mb-0"
+                            style={{ lineHeight: "1.6" }}
+                          >
+                            {selectedCV[field.key] || "N/A"}
+                          </p>
+                        </div>
+                      </Col>
+                    ))}
+                  </Row>
+
+                  <div className="mt-4 pt-3 d-flex justify-content-center border-top border-secondary">
+                    <Button className="fontCondensed rounded-5 px-4">
+                      Add to contacts
+                    </Button>
+                  </div>
                 </div>
-
-                {/* Add other CV fields here */}
               </Col>
             </Row>
           )}
