@@ -7,10 +7,10 @@
 }
 
 .step-col {
-    position: relative;
-    z-index: 1;
-  }
-  
+  position: relative;
+  z-index: 1;
+}
+
 .step-icon {
   position: absolute;
   top: 50%;
