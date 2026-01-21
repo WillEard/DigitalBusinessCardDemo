@@ -1,6 +1,6 @@
 .home-section-bg {
   width: 100%;
-  background-image: url('/home-bg.png'); /* make sure this path is correct */
+  background-image: url("/home-bg.jpeg"); /* make sure this path is correct */
   background-size: auto;
   background-position: center center; /* ← centers both horizontally & vertically */
   background-repeat: no-repeat;
