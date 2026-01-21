@@ -167,10 +167,17 @@ export default function CustomizeCardContent({ userData }) {
               />
             )}
             <div>
-              <h4 className="fontNormal mb-2">{userData?.name || "Your Name"}</h4>
+              <h4 className="fontNormal mb-2">
+                {userData?.name || "Your Name"}
+              </h4>
               <p className="fontCondensed mb-3">{customization.description}</p>
             </div>
-            <div style={{ borderTop: `2px solid ${customization.accentColor}`, paddingTop: "1rem" }}>
+            <div
+              style={{
+                borderTop: `2px solid ${customization.accentColor}`,
+                paddingTop: "1rem",
+              }}
+            >
               <small>Digital Business Card</small>
             </div>
           </Card>

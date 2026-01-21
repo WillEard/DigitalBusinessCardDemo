@@ -3,14 +3,7 @@ import { useContext, useEffect, useState, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 
 // React Bootstrap
-import {
-  Container,
-  Row,
-  Col,
-  Button,
-  Card,
-  Nav,
-} from "react-bootstrap";
+import { Container, Row, Col, Button, Card, Nav } from "react-bootstrap";
 
 // Components
 import Navbar from "../components/Navbar";
@@ -74,10 +67,7 @@ const Dashboard = () => {
     () => setShowCreateModal(false),
     []
   );
-  const handleOpenCreateModal = useCallback(
-    () => setShowCreateModal(true),
-    []
-  );
+  const handleOpenCreateModal = useCallback(() => setShowCreateModal(true), []);
   const handleCustomiseCard = useCallback(
     () => setActiveSection("customize"),
     []
@@ -109,15 +99,11 @@ const Dashboard = () => {
             <Col xs={12} md={3} className="dashboard-sidebar">
               <div className="mb-4">
                 <h5 className="text-light fontNormal mb-3">Welcome</h5>
-                <p className="text-light fs-6 fontCondensed">
-                  {firstName}
-                </p>
+                <p className="text-light fs-6 fontCondensed">{firstName}</p>
                 <div className="d-flex flex-column gap-2 mb-3">
                   <span
                     className={`badge fs-6 fontCondensed ${
-                      userData?.isVerified
-                        ? "bg-success"
-                        : "bg-danger"
+                      userData?.isVerified ? "bg-success" : "bg-danger"
                     }`}
                   >
                     {userData?.isVerified ? "✓ Verified" : "⚠ Not Verified"}
@@ -283,16 +269,11 @@ const Dashboard = () => {
                                   <Button
                                     size="sm"
                                     variant="outline-dark"
-                                    onClick={() =>
-                                      handleEditCvById(cv._id)
-                                    }
+                                    onClick={() => handleEditCvById(cv._id)}
                                   >
                                     Edit
                                   </Button>
-                                  <Button
-                                    size="sm"
-                                    variant="outline-dark"
-                                  >
+                                  <Button size="sm" variant="outline-dark">
                                     Share
                                   </Button>
                                   <Button
@@ -302,10 +283,7 @@ const Dashboard = () => {
                                   >
                                     Add to Wallet
                                   </Button>
-                                  <Button
-                                    size="sm"
-                                    variant="outline-danger"
-                                  >
+                                  <Button size="sm" variant="outline-danger">
                                     Delete
                                   </Button>
                                 </div>
@@ -316,9 +294,7 @@ const Dashboard = () => {
                       })
                     ) : (
                       <Col xs={12}>
-                        <p className="text-light fontCondensed">
-                          No cards yet
-                        </p>
+                        <p className="text-light fontCondensed">No cards yet</p>
                       </Col>
                     )}
                   </Row>
@@ -343,10 +319,7 @@ const Dashboard = () => {
                           <p className="text-muted fontCondensed mb-0">
                             Mon 3rd – Most Active Day
                           </p>
-                          <Button
-                            variant="link"
-                            className="p-0 fontCondensed"
-                          >
+                          <Button variant="link" className="p-0 fontCondensed">
                             View Full Analytics
                           </Button>
                         </Card.Body>
