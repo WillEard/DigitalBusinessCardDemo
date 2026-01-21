@@ -1,8 +1,9 @@
 /* HowItWorks.css */
 .howitworks-section {
   margin-top: 8rem;
-  padding-left: 0;
-  padding-right: 0;
+  padding: 4rem 2rem;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  min-height: auto;
 }
 
 .step-col {
@@ -29,6 +30,48 @@
   margin-bottom: 0.5rem;
 }
 
+.howitworks-section h1 {
+  color: white;
+  margin-bottom: 2rem;
+}
+
+.howitworks-scroll-container {
+  position: relative;
+  max-width: 800px;
+  margin: 0 auto;
+  border-radius: 1rem;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+}
+
+/* ScrollStack container styling */
+.howitworks-section > div[style*="position: relative"] {
+  border-radius: 1rem;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+}
+
+/* Custom scrollbar styling */
+.howitworks-section ::-webkit-scrollbar {
+  width: 8px;
+}
+
+.howitworks-section ::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.howitworks-section ::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 4px;
+}
+
+.howitworks-section ::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.5);
+}
+
+.howitworks-section p {
+  font-size: 0.9rem;
+  opacity: 0.8;
+}
 
 .scroll-stack-scroller {
   transition: opacity 0.5s;
@@ -41,4 +84,14 @@
 
 .fade-out.hide {
   opacity: 0;
+}
+
+@media (max-width: 768px) {
+  .howitworks-section {
+    padding: 2rem 1rem;
+  }
+
+  .howitworks-section h1 {
+    font-size: 1.75rem;
+  }
 }
