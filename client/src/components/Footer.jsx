@@ -31,33 +31,25 @@ const Footer = () => {
   );
 
   return (
-    <div className="footer py-5 d-flex justify-content-center mt-auto ">
-      <div className="w-100 w-sm-50">
-        <Container>
-          <footer className="py-3 my-4 text-center">
-            <Image
-              className="footer-logo"
-              src={PelagoPassLogo}
-              alt="Pelago Logo"
-            />
-            <ul className="nav justify-content-center border-bottom pb-3 mb-3">
-              {navLinks.map((link) => (
-                <li className="nav-item" key={link.hash}>
-                  <a
-                    href={`#${link.hash}`}
-                    onClick={handleScrollOrNavigate(link.hash)}
-                    className="nav-link px-2 text-light fontCondensed"
-                  >
-                    {link.label}
-                  </a>
-                </li>
-              ))}
-            </ul>
-            <p className="text-center text-light fontCondensed">©2025 Pelago</p>
-          </footer>
-        </Container>
-      </div>
-    </div>
+    <Container fluid className="footer">
+      <footer className=" footer py-3 my-4 text-center">
+        <Image className="footer-logo" src={PelagoPassLogo} alt="Pelago Logo" />
+        <ul className="nav justify-content-center border-bottom pb-3 mb-3">
+          {navLinks.map((link) => (
+            <li className="nav-item" key={link.hash}>
+              <a
+                href={`#${link.hash}`}
+                onClick={handleScrollOrNavigate(link.hash)}
+                className="nav-link px-2 text-light fontCondensed"
+              >
+                {link.label}
+              </a>
+            </li>
+          ))}
+        </ul>
+        <p className="text-center text-light fontCondensed">©2025 Pelago</p>
+      </footer>
+    </Container>
   );
 };
 

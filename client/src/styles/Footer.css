@@ -1,8 +1,10 @@
 .footer {
   background-color: #1a1d3d;
   position: relative;
-  flex-shrink: 0; /* Prevent footer from shrinking */
-  margin-top: auto; /* Push to bottom when content is short */
+  flex-shrink: 0;
+  width: 100%;
+  z-index: 10;
+  margin-top: auto;
 }
 
 .footer-logo {

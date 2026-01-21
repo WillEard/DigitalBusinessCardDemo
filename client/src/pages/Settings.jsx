@@ -8,6 +8,7 @@ import {
   Modal,
   Spinner,
   Card,
+  Nav,
 } from "react-bootstrap";
 
 // React
@@ -52,6 +53,9 @@ const Settings = () => {
   const [deleting, setDeleting] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
   const [error, setError] = useState("");
+
+  // Sidebar state
+  const [activeSection, setActiveSection] = useState("account");
 
   // Sync checkbox state from userData when available
   useEffect(() => {
@@ -100,7 +104,6 @@ const Settings = () => {
       setShowPhoneNumber(newValue);
       try {
         await updateUserSetting("showMobile", newValue);
-        //toast.success("Privacy settings updated");
       } catch (err) {
         console.error("Failed to update setting", err);
         setShowPhoneNumber(!newValue);
@@ -139,109 +142,143 @@ const Settings = () => {
   }, []);
 
   return (
-    <div className="d-flex flex-column settings-wrapper text-dark">
+    <div className="d-flex flex-column min-vh-100 settings-wrapper text-dark">
       <Navbar />
 
       <div className="settings-overlay flex-grow-1">
-        <Container className="py-3 pb-5">
-          {/* Header */}
-          <div className="text-center mb-5">
-            <h1 className="text-light fontNormal display-4 mb-2">
-              Account Settings
-            </h1>
-            <p className="text-light opacity-75 fontCondensed">
-              Manage your account preferences and security
-            </p>
-          </div>
+        <Container fluid className="py-3">
+          <Row className="h-100 g-0">
+            {/* Sidebar */}
+            <Col xs={12} md={3} className="settings-sidebar">
+              <Nav className="flex-column gap-2">
+                <Nav.Link
+                  onClick={() => setActiveSection("account")}
+                  className={`fontCondensed ${
+                    activeSection === "account" ? "active" : ""
+                  }`}
+                >
+                  <div className="d-flex align-items-center gap-2">
+                    <svg
+                      width="20"
+                      height="20"
+                      fill="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z" />
+                    </svg>
+                    Account
+                  </div>
+                </Nav.Link>
 
-          {/* Account Information Section */}
-          <div className="mb-4">
-            <h3 className="text-light fontCondensed mb-3 ps-2">
-              Account Information
-            </h3>
-            <Row className="g-4">
-              {/* Password */}
-              <Col lg={6}>
-                <Card className="h-100 shadow-sm border-0">
-                  <Card.Body className="p-4">
-                    <div className="d-flex align-items-center mb-3">
-                      <div className="bg-primary bg-opacity-10 rounded-circle p-2 me-3">
-                        <svg
-                          width="24"
-                          height="24"
-                          fill="currentColor"
-                          className="text-primary"
-                        >
-                          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z" />
-                        </svg>
-                      </div>
-                      <div>
-                        <h5 className="fontCondensed mb-0">Password</h5>
-                        <small className="text-muted">
-                          Secure your account
-                        </small>
-                      </div>
+                <Nav.Link
+                  onClick={() => setActiveSection("privacy")}
+                  className={`fontCondensed ${
+                    activeSection === "privacy" ? "active" : ""
+                  }`}
+                >
+                  <div className="d-flex align-items-center gap-2">
+                    <svg
+                      width="20"
+                      height="20"
+                      fill="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z" />
+                    </svg>
+                    Privacy & Security
+                  </div>
+                </Nav.Link>
+
+                <Nav.Link
+                  onClick={() => setActiveSection("danger")}
+                  className={`fontCondensed text-danger ${
+                    activeSection === "danger" ? "active" : ""
+                  }`}
+                >
+                  <div className="d-flex align-items-center gap-2">
+                    <svg
+                      width="20"
+                      height="20"
+                      fill="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z" />
+                    </svg>
+                    Delete Account
+                  </div>
+                </Nav.Link>
+              </Nav>
+            </Col>
+
+            {/* Content */}
+            <Col xs={12} md={9} className="settings-content">
+              {/* Account Information Section */}
+              {activeSection === "account" && (
+                <div className="settings-section">
+                  <h2 className="text-light fontNormal mb-4">
+                    Account Information
+                  </h2>
+
+                  {/* Password */}
+                  <div className="settings-item mb-4">
+                    <div className="d-flex align-items-center mb-2">
+                      <svg
+                        width="24"
+                        height="24"
+                        fill="currentColor"
+                        className="text-primary me-2"
+                        viewBox="0 0 24 24"
+                      >
+                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z" />
+                      </svg>
+                      <h5 className="fontCondensed mb-0">Password</h5>
                     </div>
+                    <p className="text-muted fontCondensed mb-3 ms-4">
+                      Secure your account with a strong password
+                    </p>
                     <Button
                       href="/reset-pass"
-                      className="w-100 bg-primary border-0 fontCondensed py-2"
+                      className="bg-primary border-0 fontCondensed ms-4"
                     >
                       Change Password
                     </Button>
-                  </Card.Body>
-                </Card>
-              </Col>
+                  </div>
 
-              {/* Mobile Number */}
-              <Col lg={6}>
-                <Card className="h-100 shadow-sm border-0">
-                  <Card.Body className="p-4">
-                    <div className="d-flex align-items-center mb-3">
-                      <div className="bg-success bg-opacity-10 rounded-circle p-2 me-3">
-                        <svg
-                          width="24"
-                          height="24"
-                          fill="currentColor"
-                          className="text-success"
-                        >
-                          <path d="M17 1.01L7 1c-1.1 0-2 .9-2 2v18c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V3c0-1.1-.9-1.99-2-1.99zM17 19H7V5h10v14z" />
-                        </svg>
-                      </div>
-                      <div>
-                        <h5 className="fontCondensed mb-0">Mobile Number</h5>
-                        <small className="text-muted">
-                          Contact information
-                        </small>
-                      </div>
+                  {/* Mobile Number */}
+                  <div className="settings-item mb-4">
+                    <div className="d-flex align-items-center mb-2">
+                      <svg
+                        width="24"
+                        height="24"
+                        fill="currentColor"
+                        className="text-success me-2"
+                        viewBox="0 0 24 24"
+                      >
+                        <path d="M17 1.01L7 1c-1.1 0-2 .9-2 2v18c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V3c0-1.1-.9-1.99-2-1.99zM17 19H7V5h10v14z" />
+                      </svg>
+                      <h5 className="fontCondensed mb-0">Mobile Number</h5>
                     </div>
                     <Form.Control
                       value={userData?.phoneNumber || "Not provided"}
                       disabled
-                      className="border-0 fw-bold"
+                      className="border-0 fw-bold ms-4"
+                      style={{ maxWidth: "300px" }}
                     />
-                  </Card.Body>
-                </Card>
-              </Col>
+                  </div>
 
-              {/* Next Payment */}
-              <Col lg={6}>
-                <Card className="h-100 shadow-sm border-0">
-                  <Card.Body className="p-4">
-                    <div className="d-flex align-items-center mb-3">
-                      <div className="bg-info bg-opacity-10 rounded-circle p-2 me-3">
-                        <svg
-                          width="24"
-                          height="24"
-                          fill="currentColor"
-                          className="text-info"
-                        >
-                          <path d="M9 11H7v2h2v-2zm4 0h-2v2h2v-2zm4 0h-2v2h2v-2zm2-7h-1V2h-2v2H8V2H6v2H5c-1.11 0-1.99.9-1.99 2L3 20c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V9h14v11z" />
-                        </svg>
-                      </div>
-                      <div>
-                        <h5 className="fontCondensed mb-0">Next Payment</h5>
-                        <small className="text-muted">Billing cycle</small>
-                      </div>
+                  {/* Next Payment */}
+                  <div className="settings-item mb-4">
+                    <div className="d-flex align-items-center mb-2">
+                      <svg
+                        width="24"
+                        height="24"
+                        fill="currentColor"
+                        className="text-info me-2"
+                        viewBox="0 0 24 24"
+                      >
+                        <path d="M9 11H7v2h2v-2zm4 0h-2v2h2v-2zm4 0h-2v2h2v-2zm2-7h-1V2h-2v2H8V2H6v2H5c-1.11 0-1.99.9-1.99 2L3 20c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V9h14v11z" />
+                      </svg>
+                      <h5 className="fontCondensed mb-0">Next Payment</h5>
                     </div>
                     <Form.Control
                       type="date"
@@ -253,126 +290,92 @@ const Settings = () => {
                           : ""
                       }
                       disabled
-                      className="fw-bold border-0"
+                      className="fw-bold border-0 ms-4"
+                      style={{ maxWidth: "300px" }}
                     />
-                  </Card.Body>
-                </Card>
-              </Col>
+                  </div>
 
-              {/* Subscription */}
-              <Col lg={6}>
-                <Card className="h-100 shadow-sm border-0">
-                  <Card.Body className="p-4">
-                    <div className="d-flex align-items-center mb-3">
-                      <div className="bg-warning bg-opacity-10 rounded-circle p-2 me-3">
-                        <svg
-                          width="24"
-                          height="24"
-                          fill="currentColor"
-                          className="text-warning"
-                        >
-                          <path d="M12 2L2 7v10c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V7l-10-5zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V9h7V2.99c3.72 1.15 6.47 4.82 7 8.94h-7v1.06z" />
-                        </svg>
-                      </div>
-                      <div>
-                        <h5 className="fontCondensed mb-0">
-                          Subscription Plan
-                        </h5>
-                        <small className="text-muted">Current plan</small>
-                      </div>
+                  {/* Subscription */}
+                  <div className="settings-item">
+                    <div className="d-flex align-items-center mb-2">
+                      <svg
+                        width="24"
+                        height="24"
+                        fill="currentColor"
+                        className="text-warning me-2"
+                        viewBox="0 0 24 24"
+                      >
+                        <path d="M12 2L2 7v10c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V7l-10-5zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V9h7V2.99c3.72 1.15 6.47 4.82 7 8.94h-7v1.06z" />
+                      </svg>
+                      <h5 className="fontCondensed mb-0">Subscription Plan</h5>
                     </div>
-                    <div className="d-flex align-items-center justify-content-between">
+                    <div className="ms-4">
                       <span className="fw-bold text-light fs-5 bg-dark rounded px-3 py-2">
                         {userData?.subscriptionType || "Free Plan"}
                       </span>
                       {userData?.subscriptionType !== "Paid" && (
                         <Button
-                          size="md"
+                          size="sm"
                           variant="primary"
-                          className="fontCondensed"
+                          className="fontCondensed ms-2"
                         >
                           Upgrade
                         </Button>
                       )}
                     </div>
-                  </Card.Body>
-                </Card>
-              </Col>
-            </Row>
-          </div>
+                  </div>
+                </div>
+              )}
 
-          {/* Privacy & Security Section */}
-          <div className="mb-4">
-            <h3 className="text-light fontCondensed mb-3 ps-2">
-              Privacy & Security
-            </h3>
-            <Row className="g-4">
-              {/* Verification */}
-              <Col lg={6}>
-                <Card className="h-100 shadow-sm border-0">
-                  <Card.Body className="p-4">
+              {/* Privacy & Security Section */}
+              {activeSection === "privacy" && (
+                <div className="settings-section">
+                  <h2 className="text-light fontNormal mb-4">
+                    Privacy & Security
+                  </h2>
+
+                  {/* Verification */}
+                  <div className="settings-item mb-4">
                     <div className="d-flex align-items-center justify-content-between">
                       <div className="d-flex align-items-center">
-                        <div
-                          className={`bg-${
-                            userData?.isVerified ? "success" : "danger"
-                          } bg-opacity-10 rounded-circle p-2 me-3`}
-                        >
-                          <svg
-                            width="24"
-                            height="24"
-                            fill="currentColor"
-                            className={`text-${
-                              userData?.isVerified ? "success" : "danger"
-                            }`}
-                          >
-                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" />
-                          </svg>
-                        </div>
-                        <div>
-                          <h5 className="fontCondensed mb-0">
-                            Verification Status
-                          </h5>
-                          <small className="text-muted">
-                            Email verification
-                          </small>
-                        </div>
-                      </div>
-                      <span
-                        className={`badge bg-${
-                          userData?.isVerified ? "success" : "danger"
-                        } px-4 py-3 fs-6`}
-                      >
-                        {userData?.isVerified ? "Verified" : "Not Verified"}
-                      </span>
-                    </div>
-                  </Card.Body>
-                </Card>
-              </Col>
-
-              {/* Profile Visibility */}
-              <Col lg={6}>
-                <Card className="h-100 shadow-sm border-0">
-                  <Card.Body className="p-4">
-                    <div className="d-flex align-items-center mb-3">
-                      <div className="bg-secondary bg-opacity-10 rounded-circle p-2 me-3">
                         <svg
                           width="24"
                           height="24"
                           fill="currentColor"
-                          className="text-secondary"
+                          className={`me-2 text-${
+                            userData?.isVerified ? "success" : "danger"
+                          }`}
+                          viewBox="0 0 24 24"
                         >
-                          <path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z" />
+                          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" />
                         </svg>
-                      </div>
-                      <div>
                         <h5 className="fontCondensed mb-0">
-                          Profile Visibility
+                          Email Verification
                         </h5>
-                        <small className="text-muted">
-                          Control who can see your info
-                        </small>
                       </div>
+                      <span
+                        className={`badge bg-${
+                          userData?.isVerified ? "success" : "danger"
+                        } px-4 py-2`}
+                      >
+                        {userData?.isVerified ? "Verified" : "Not Verified"}
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* Profile Visibility */}
+                  <div className="settings-item">
+                    <div className="d-flex align-items-center mb-3">
+                      <svg
+                        width="24"
+                        height="24"
+                        fill="currentColor"
+                        className="text-secondary me-2"
+                        viewBox="0 0 24 24"
+                      >
+                        <path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z" />
+                      </svg>
+                      <h5 className="fontCondensed mb-0">Profile Visibility</h5>
                     </div>
                     {showPhoneNumber !== null && (
                       <Form.Check
@@ -382,76 +385,59 @@ const Settings = () => {
                         checked={showPhoneNumber}
                         onChange={handlePhoneNumber}
                         disabled={isUpdatingSettings}
-                        className="mt-2"
+                        className="ms-4"
                       />
-                    )}
-                  </Card.Body>
-                </Card>
-              </Col>
-            </Row>
-          </div>
-
-          {/* Danger Zone */}
-          <div className="mb-5 deletion">
-            <h3 className="text-danger fontCondensed mb-3 ps-2">
-              Terminate Account
-            </h3>
-            <Card className="shadow-sm border-danger">
-              <Card.Body className="p-4">
-                <div className="d-flex align-items-start mb-3">
-                  <div className="bg-danger bg-opacity-10 rounded-circle p-2 me-3 mt-1">
-                    <svg
-                      width="24"
-                      height="24"
-                      fill="currentColor"
-                      className="text-danger"
-                    >
-                      <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z" />
-                    </svg>
-                  </div>
-                  <div className="flex-grow-1">
-                    <h5 className="fontCondensed text-danger mb-1">
-                      Delete Account
-                    </h5>
-                    <p className="text-muted small mb-3">
-                      Once you delete your account, there is no going back. All
-                      data associated with your account will be permanently
-                      removed. Please be certain.
-                    </p>
-                    <div className="d-flex gap-2 flex-wrap">
-                      <Form.Control
-                        type="password"
-                        value={password}
-                        onChange={handlePasswordChange}
-                        placeholder="Enter your password to confirm"
-                        className="flex-grow-1"
-                        style={{ maxWidth: "400px" }}
-                      />
-                      <Button
-                        variant="danger"
-                        onClick={handleVerifyClick}
-                        disabled={
-                          verifying || deleting || password.trim() === ""
-                        }
-                        className="fontCondensed px-4"
-                      >
-                        {verifying ? (
-                          <Spinner animation="border" size="sm" />
-                        ) : (
-                          "Delete Account"
-                        )}
-                      </Button>
-                    </div>
-                    {error && (
-                      <small className="text-danger d-block mt-2">
-                        {error}
-                      </small>
                     )}
                   </div>
                 </div>
-              </Card.Body>
-            </Card>
-          </div>
+              )}
+
+              {/* Danger Zone Section */}
+              {activeSection === "danger" && (
+                <div className="settings-section">
+                  <h2 className="text-danger fontNormal mb-4">
+                    Delete Account
+                  </h2>
+                  <Card className="shadow-sm border-danger">
+                    <Card.Body className="p-4">
+                      <p className="text-muted mb-3">
+                        Once you delete your account, there is no going back.
+                        All data associated with your account will be
+                        permanently removed. Please be certain.
+                      </p>
+                      <div className="d-flex gap-2 flex-wrap mb-3">
+                        <Form.Control
+                          type="password"
+                          value={password}
+                          onChange={handlePasswordChange}
+                          placeholder="Enter your password to confirm"
+                          className="flex-grow-1"
+                          style={{ maxWidth: "300px" }}
+                        />
+                        <Button
+                          variant="danger"
+                          onClick={handleVerifyClick}
+                          disabled={
+                            verifying || deleting || password.trim() === ""
+                          }
+                          className="fontCondensed px-4"
+                        >
+                          {verifying ? (
+                            <Spinner animation="border" size="sm" />
+                          ) : (
+                            "Delete Account"
+                          )}
+                        </Button>
+                      </div>
+                      {error && (
+                        <small className="text-danger d-block">{error}</small>
+                      )}
+                    </Card.Body>
+                  </Card>
+                </div>
+              )}
+            </Col>
+          </Row>
         </Container>
       </div>
 
@@ -472,6 +458,7 @@ const Settings = () => {
                 height="48"
                 fill="currentColor"
                 className="text-danger"
+                viewBox="0 0 24 24"
               >
                 <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z" />
               </svg>

@@ -3,15 +3,30 @@
 }
 
 .navbar-scrolled {
-  background-color: rgba(0, 0, 0, 0.7) !important; /* or whatever color you prefer */
+  background-color: rgba(
+    0,
+    0,
+    0,
+    0.7
+  ) !important; /* or whatever color you prefer */
 }
 
 .signup:hover {
-  background-color: rgba(0, 0, 0, 0.1) !important; /* Change to your desired hover color */
+  background-color: rgba(
+    0,
+    0,
+    0,
+    0.1
+  ) !important; /* Change to your desired hover color */
 }
 
 .login:hover {
-  background-color: rgba(0, 0, 0, 0.1) !important; /* Change to your desired hover color */
+  background-color: rgba(
+    0,
+    0,
+    0,
+    0.1
+  ) !important; /* Change to your desired hover color */
 }
 
 .navelement:hover {
@@ -29,7 +44,7 @@
 
 .navbrand {
   width: 120px;
-  height: 40px; 
+  height: 40px;
   margin-right: 10px;
 }
 
@@ -37,4 +52,13 @@
   background-color: #b4d4ed;
   color: #000;
   font-weight: bold;
+}
+
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  z-index: 1000;
 }

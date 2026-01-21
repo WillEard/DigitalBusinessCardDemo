@@ -1,20 +1,80 @@
 .settings-wrapper {
   position: relative;
   background: url("/testimonial-bg.png") center center / cover no-repeat;
+  background-attachment: fixed;
   color: white;
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
+  height: 100vh;
   overflow: hidden;
 }
 
 .settings-overlay {
-  background-color: rgba(0, 0, 0, 0.5);
-  flex-grow: 1;
+  background-color: rgba(0, 0, 0, 0.3);
+  flex: 1;
   width: 100%;
-  padding-top: 80px;
   position: relative;
-  z-index: 1;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  padding-top: 80px;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.settings-overlay > .container {
+  flex-shrink: 0;
+  padding-bottom: 2rem;
+}
+
+.settings-overlay > .container-fluid {
+  flex-shrink: 0;
+  padding-bottom: 2rem;
+}
+
+.settings-sidebar {
+  padding: 2rem 1rem;
+  background-color: rgba(0, 0, 0, 0.2);
+}
+
+.settings-sidebar .nav-link {
+  color: rgba(255, 255, 255, 0.7);
+  border-radius: 0.5rem;
+  padding: 0.75rem 1rem;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.settings-sidebar .nav-link:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: white;
+}
+
+.settings-sidebar .nav-link.active {
+  background-color: rgba(102, 126, 234, 0.3);
+  color: white;
+  border-left: 3px solid #667eea;
+  padding-left: calc(1rem - 3px);
+}
+
+.settings-content {
+  padding: 2rem;
+}
+
+.settings-section {
+  background-color: rgba(255, 255, 255, 0.95);
+  border-radius: 0.75rem;
+  padding: 2rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.settings-item {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  padding-bottom: 1.5rem;
+}
+
+.settings-item:last-child {
+  border-bottom: none;
 }
 
 /* gradient only for styling effect – must stay within 100% width */
@@ -52,5 +112,25 @@
 }
 
 .deletion {
-  margin-bottom: 100px !important;
+  margin-bottom: 0 !important;
+}
+
+@media (max-width: 768px) {
+  .settings-sidebar {
+    padding: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .settings-content {
+    padding: 1rem;
+  }
+
+  .settings-section {
+    padding: 1.5rem;
+  }
+
+  .settings-sidebar .nav-link {
+    font-size: 0.9rem;
+    padding: 0.5rem 0.75rem;
+  }
 }
