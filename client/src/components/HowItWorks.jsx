@@ -21,7 +21,7 @@ const HowItWorks = () => {
   const [fadeLast, setFadeLast] = useState(false);
   const [hideLastElement, setHideLastElement] = useState(false);
 
-  const handleScroll = (e) => {
+  const handleScroll = () => {
     const scroller = scrollerRef.current;
     if (!scroller) return;
 
@@ -56,10 +56,7 @@ const HowItWorks = () => {
           width: "100%",
           height: "40rem",
           overflowY: "auto",
-          margin: "0 auto",
-          maxWidth: "800px",
-          borderRadius: "1rem",
-          boxShadow: "0 10px 40px rgba(0, 0, 0, 0.2)",
+          overscrollBehavior: "contain",
         }}
         itemScale={0.04}
         itemDistance={80}

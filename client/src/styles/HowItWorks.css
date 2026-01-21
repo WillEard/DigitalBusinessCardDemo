@@ -2,8 +2,8 @@
 .howitworks-section {
   margin-top: 8rem;
   padding: 4rem 2rem;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   min-height: auto;
+  position: relative;
 }
 
 .step-col {
@@ -35,21 +35,6 @@
   margin-bottom: 2rem;
 }
 
-.howitworks-scroll-container {
-  position: relative;
-  max-width: 800px;
-  margin: 0 auto;
-  border-radius: 1rem;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
-  overflow: hidden;
-}
-
-/* ScrollStack container styling */
-.howitworks-section > div[style*="position: relative"] {
-  border-radius: 1rem;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
-}
-
 /* Custom scrollbar styling */
 .howitworks-section ::-webkit-scrollbar {
   width: 8px;
@@ -71,6 +56,7 @@
 .howitworks-section p {
   font-size: 0.9rem;
   opacity: 0.8;
+  color: rgba(255, 255, 255, 0.9);
 }
 
 .scroll-stack-scroller {
@@ -82,6 +68,19 @@
   transition: opacity 0.5s ease;
 }
 
+.fade-out.hide {
+  opacity: 0;
+}
+
+@media (max-width: 768px) {
+  .howitworks-section {
+    padding: 2rem 1rem;
+  }
+
+  .howitworks-section h1 {
+    font-size: 1.75rem;
+  }
+}
 .fade-out.hide {
   opacity: 0;
 }
