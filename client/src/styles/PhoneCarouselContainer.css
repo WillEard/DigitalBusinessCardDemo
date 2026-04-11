@@ -1,0 +1,38 @@
+.phone-carousel-section {
+  padding: 4rem 2rem;
+  background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+  min-height: auto;
+  position: relative;
+}
+
+.phone-carousel-section h2 {
+  color: white;
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.carousel-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+.carousel-item-wrapper {
+  flex: 0 1 auto;
+}
+
+@media (max-width: 768px) {
+  .phone-carousel-section {
+    padding: 2rem 1rem;
+  }
+
+  .phone-carousel-section h2 {
+    font-size: 1.75rem;
+  }
+
+  .carousel-container {
+    gap: 1rem;
+  }
+}

@@ -1,0 +1,10 @@
+.alert-banner {
+    position: fixed;
+    top: 64px; /* Sit right below the navbar */
+    width: 100%;
+    background-color: #b63211;
+    font-weight: bold;
+    font-family: 'Sailor Condensed', sans-serif;
+    z-index: 1031; /* Above the navbar */
+    padding: 10px 0;
+  }

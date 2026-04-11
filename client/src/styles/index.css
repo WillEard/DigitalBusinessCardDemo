@@ -1,0 +1,91 @@
+
+
+:root {
+  margin: 0;
+  padding: 0;
+  height: 100% !important;
+  background-color: black !important; /* optional fallback */
+  overflow-x: hidden !important;
+}
+
+* {
+  font-family: Roboto, Helvetica, Arial, sans-serif;
+}
+
+/* Custom Resume Dark Theme */
+body {
+  background-color: #1f1f1f;
+  color: #f3f4f6; /* Light gray text */
+}
+
+.resume-container {
+  background-color: #242424;
+  border-radius: 12px;
+  padding: 2rem;
+}
+
+.resume-label {
+  color: #d1d5db;
+  font-weight: 500;
+}
+
+.resume-input,
+.resume-textarea {
+  background-color: #1f2937; /* Dark slate */
+  color: #f9fafb;
+  border: 1px solid #374151;
+  border-radius: 8px;
+}
+
+.resume-input:focus,
+.resume-textarea:focus {
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 0.2rem rgba(59, 130, 246, 0.5);
+}
+
+.resume-btn {
+  background-color: #3b82f6;
+  border: none;
+  transition: 0.3s ease;
+}
+
+.resume-btn:hover {
+  background-color: #2563eb;
+}
+
+.accordion-button.custom-header {
+  background-color: #212529; /* Dark background */
+  color: #fff;               /* White text */
+}
+
+.accordion-button.custom-header:not(.collapsed) {
+  background-color: #343a40; /* Slightly lighter when expanded */
+  color: #fff;
+}
+
+.accordion-body {
+  background-color: #fff;    /* White body */
+  color: #212529;            /* Dark text */
+}
+
+.ocean-background {
+  background: #b4d4ed
+}
+
+.custom-qr-button {
+  background-color: #9E9E9E;
+  color: white;
+  border: none;
+  outline: none;
+  box-shadow: none;
+  transition: background-color 0.2s ease;
+}
+
+.custom-qr-button:hover,
+.custom-qr-button:focus,
+.custom-qr-button:active {
+  background-color: #219EBC !important;
+  color: white !important;
+  box-shadow: none !important;
+}
+
