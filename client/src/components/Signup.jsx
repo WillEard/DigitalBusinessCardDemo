@@ -73,8 +73,10 @@ const SignupForm = () => {
           });
         }
       } catch (error) {
-        console.error(error);
-        toast.error(error.message, {
+        console.error("Signup error:", error);
+        const errorMessage =
+          error.response?.data?.message || error.message || "Signup failed";
+        toast.error(errorMessage, {
           position: "top-right",
           autoClose: 5000,
           hideProgressBar: false,
@@ -96,7 +98,7 @@ const SignupForm = () => {
       setIsLoggedIn,
       getUserData,
       username,
-    ]
+    ],
   );
 
   const goToLogin = useCallback(() => {
@@ -105,17 +107,17 @@ const SignupForm = () => {
   const handleNameChange = useCallback((e) => setName(e.target.value), []);
   const handleUsernameChange = useCallback(
     (e) => setUsername(e.target.value),
-    []
+    [],
   );
   const handleEmailChange = useCallback((e) => setEmail(e.target.value), []);
   const handlePhoneNumberChange = useCallback(
     (e) => setPhoneNumber(e.target.value),
-    []
+    [],
   );
 
   const handleConfirmPasswordChange = useCallback(
     (e) => setConfirmPassword(e.target.value),
-    []
+    [],
   );
   const handleConfirmBlur = useCallback(() => setConfirmTouched(true), []);
 

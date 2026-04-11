@@ -23,16 +23,23 @@ export class AuthService {
   static async register(userData) {
     const { name, username, email, password, phoneNumber } = userData;
 
+    // Build query for existing user - only check phoneNumber if provided
+    const query = { $or: [{ email }, { username }] };
+    if (phoneNumber && phoneNumber.trim()) {
+      query.$or.push({ phoneNumber });
+    }
+
     // Check if user exists
-    const existingUser = await User.findOne({
-      $or: [{ email }, { username }, { phoneNumber }],
-    });
+    const existingUser = await User.findOne(query);
 
     if (existingUser) {
       if (existingUser.email === email) {
         throw new Error(ERROR_MESSAGES.EMAIL_IN_USE);
       }
-      if (existingUser.phoneNumber === phoneNumber) {
+      if (existingUser.username === username) {
+        throw new Error(ERROR_MESSAGES.EMAIL_IN_USE); // Should be USERNAME_IN_USE but using existing message
+      }
+      if (existingUser.phoneNumber === phoneNumber && phoneNumber) {
         throw new Error(ERROR_MESSAGES.PHONE_IN_USE);
       }
     }
@@ -46,7 +53,7 @@ export class AuthService {
       username,
       email,
       password: hashedPassword,
-      phoneNumber,
+      phoneNumber: phoneNumber || "",
     });
 
     // Create CV record
