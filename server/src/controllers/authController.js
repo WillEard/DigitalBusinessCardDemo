@@ -15,6 +15,13 @@ export const register = async (req, res, next) => {
   try {
     const { name, username, email, password, phoneNumber } = req.body;
 
+    console.log("Register attempt with:", {
+      name,
+      username,
+      email,
+      phoneNumber,
+    });
+
     if (!name || !username || !email || !password) {
       return res.status(400).json({
         success: false,
@@ -38,6 +45,7 @@ export const register = async (req, res, next) => {
       user: result.user,
     });
   } catch (error) {
+    console.error("Register error:", error.message);
     res.status(400).json({ success: false, message: error.message });
   }
 };
